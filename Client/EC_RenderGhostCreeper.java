@@ -9,6 +9,16 @@ public class EC_RenderGhostCreeper extends RenderLiving
 	public EC_RenderGhostCreeper() {
 		super(new ModelCreeper(), 0.5F);
 	}
+	
+	@Override
+	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.3F);
+		super.doRenderLiving(par1EntityLiving, par2, par4, par6, par8, par9);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	}
 
 	protected void updateCreeperScale(EntityCreeper par1EntityCreeper, float par2) {
 		float var4 = par1EntityCreeper.setCreeperFlashTime(par2);

@@ -9,6 +9,16 @@ public class EC_EntityElementalCreeper extends EntityCreeper {
 	public EC_EntityElementalCreeper(World par1World) {
 		super(par1World);
 	}
+	
+	@Override
+	public void onDeath(DamageSource par1DamageSource) {
+		super.onDeath(par1DamageSource);
+		if(worldObj.rand.nextInt(100) < mod_ElementalCreepers.ghostCreeperChance && !worldObj.isRemote) {
+			EC_EntityGhostCreeper gc = new EC_EntityGhostCreeper(worldObj);
+			gc.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
+			worldObj.spawnEntityInWorld(gc);
+		}
+	}
 
 	public void onUpdate() {
 		if(isEntityAlive()) {

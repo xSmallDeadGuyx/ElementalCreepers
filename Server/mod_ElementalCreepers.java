@@ -3,11 +3,7 @@ package net.minecraft.src;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.lwjgl.input.Keyboard;
-
-import net.minecraft.client.Minecraft;
-
-public class mod_ElementalCreepers extends BaseMod {
+public class mod_ElementalCreepers extends BaseModMp {
 
 	@MLProp public static int waterCreeperSpawn = 5;
 	@MLProp public static int fireCreeperSpawn = 5;
@@ -40,7 +36,7 @@ public class mod_ElementalCreepers extends BaseMod {
 	
 	@Override
 	public String getVersion() {
-		return "1.2.4";
+		return "1.2.5";
 	}
 
 	@Override
@@ -75,23 +71,4 @@ public class mod_ElementalCreepers extends BaseMod {
 		if(darkCreeperSpawn > 0) ModLoader.addSpawn("DarkCreeper", darkCreeperSpawn, 1, 3, EnumCreatureType.monster);
 		if(reverseCreeperSpawn > 0) ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.monster);
 	}
-
-	@Override
-	public void addRenderer(Map map) {
-		map.put(EC_EntityWaterCreeper.class, new RenderCreeper());
-		map.put(EC_EntityFireCreeper.class, new RenderCreeper());
-		map.put(EC_EntityIceCreeper.class, new RenderCreeper());
-		map.put(EC_EntityElectricCreeper.class, new RenderCreeper());
-		map.put(EC_EntityEarthCreeper.class, new RenderCreeper());
-		map.put(EC_EntityPsychicCreeper.class, new RenderCreeper());
-		map.put(EC_EntityCookieCreeper.class, new RenderCreeper());
-		map.put(EC_EntityMagmaCreeper.class, new RenderCreeper());
-		map.put(EC_EntityGhostCreeper.class, new EC_RenderGhostCreeper());
-		map.put(EC_EntityFriendlyCreeper.class, new EC_RenderFriendlyCreeper());
-		map.put(EC_EntityIllusionCreeper.class, new RenderCreeper());
-		map.put(EC_EntityFakeIllusionCreeper.class, new RenderCreeper());
-		map.put(EC_EntityLightCreeper.class, new RenderCreeper());
-		map.put(EC_EntityDarkCreeper.class, new RenderCreeper());
-		map.put(EC_EntityReverseCreeper.class, new RenderCreeper());
-    }
 }
