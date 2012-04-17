@@ -18,12 +18,19 @@ public class EC_EntityReverseCreeper extends EC_EntityElementalCreeper {
 		for(int x = (int) -radius - 1; x <= radius; x++) {
 			for(int y = (int) -radius - 1; y <= radius; y++) {
 				for(int z = (int) -radius - 1; z <= radius; z++) {
-					int id = worldObj.getBlockId((int) posX + x, (int) posY + y, (int) posZ + z);
-					blocks[x + (int) radius + 1][y + (int) radius + 1][z + (int) radius + 1] = -1;
-					if(id > -1 && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius) {
-						blocks[x + (int) radius + 1][y + (int) radius + 1][z + (int) radius + 1] = id;
-						metas[x + (int) radius + 1][y + (int) radius + 1][z + (int) radius + 1] = worldObj.getBlockMetadata((int) posX + x, (int) posY + y, (int) posZ + z);
-						TEs[x + (int) radius + 1][y + (int) radius + 1][z + (int) radius + 1] = worldObj.getBlockTileEntity((int) posX + x, (int) posY + y, (int) posZ + z);
+					int ax = x + (int) radius + 1;
+					int ay = y + (int) radius + 1;
+					int az = z + (int) radius + 1;
+					int ex = (int) posX + x;
+					int ey = (int) posY + y;
+					int ez = (int) posZ + z;
+					int id = worldObj.getBlockId(ex, ey, ez);
+					blocks[ax][ay][az] = -1;
+
+					if(id > -1 && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius && ey > -1) {
+						blocks[ax][ay][az] = id;
+						metas[ax][ay][az] = worldObj.getBlockMetadata(ex, ey, ez);
+						TEs[ax][ay][az] = worldObj.getBlockTileEntity(ex, ey, ez);
 					}
 				}
 			}
