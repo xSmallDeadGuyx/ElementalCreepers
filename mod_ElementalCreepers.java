@@ -84,67 +84,67 @@ public class mod_ElementalCreepers extends NetworkMod
 
         if (waterCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("WaterCreeper", waterCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("WaterCreeper", waterCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (fireCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("FireCreeper", fireCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("FireCreeper", fireCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (iceCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("IceCreeper", iceCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("IceCreeper", iceCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (electricCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("ElectricCreeper", electricCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("ElectricCreeper", electricCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (earthCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("EarthCreeper", earthCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("EarthCreeper", earthCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (psychicCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("PsychicCreeper", psychicCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("PsychicCreeper", psychicCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (cookieCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("CookieCreeper", cookieCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("CookieCreeper", cookieCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (magmaCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("MagmaCreeper", magmaCreeperSpawn, 1, 2, EnumCreatureType.monster, new BiomeBase[] {BiomeBase.HELL});
+            ModLoader.addSpawn("MagmaCreeper", magmaCreeperSpawn, 1, 2, EnumCreatureType.MONSTER, new BiomeBase[] {BiomeBase.HELL});
         }
 
         if (friendlyCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("FriendlyCreeper", friendlyCreeperSpawn, 1, 1, EnumCreatureType.creature);
+            ModLoader.addSpawn("FriendlyCreeper", friendlyCreeperSpawn, 1, 1, EnumCreatureType.CREATURE);
         }
 
         if (illusionCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("IllusionCreeper", illusionCreeperSpawn, 1, 1, EnumCreatureType.monster);
+            ModLoader.addSpawn("IllusionCreeper", illusionCreeperSpawn, 1, 1, EnumCreatureType.MONSTER);
         }
 
         if (lightCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("LightCreeper", lightCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("LightCreeper", lightCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (darkCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("DarkCreeper", darkCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("DarkCreeper", darkCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
 
         if (reverseCreeperSpawn > 0)
         {
-            ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.monster);
+            ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.MONSTER);
         }
     }
 

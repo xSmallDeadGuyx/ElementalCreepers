@@ -161,7 +161,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameableAnimal
     public boolean damageEntity(DamageSource var1, int var2)
     {
         Entity var3 = var1.getEntity();
-        this.a.func_48210_a(false);
+        this.a.a(false);
 
         if (var3 != null && !(var3 instanceof EntityHuman) && !(var3 instanceof EntityArrow))
         {
@@ -201,15 +201,15 @@ public class EC_EntityFriendlyCreeper extends EntityTameableAnimal
                         this.setTamed(true);
                         this.setPathEntity((PathEntity)null);
                         this.b((EntityLiving)null);
-                        this.a.func_48210_a(true);
+                        this.a.a(true);
                         this.setHealth(20);
                         this.setOwnerName(var1.name);
-                        this.func_48370_a(true);
+                        this.a(true);
                         this.world.broadcastEntityEffect(this, (byte)7);
                     }
                     else
                     {
-                        this.func_48370_a(false);
+                        this.a(false);
                         this.world.broadcastEntityEffect(this, (byte)6);
                     }
                 }
@@ -234,7 +234,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameableAnimal
 
             if (var1.name.equalsIgnoreCase(this.getOwnerName()) && !this.world.isStatic && !this.a(var2))
             {
-                this.a.func_48210_a(!this.isSitting());
+                this.a.a(!this.isSitting());
                 this.aZ = false;
                 this.setPathEntity((PathEntity)null);
             }
