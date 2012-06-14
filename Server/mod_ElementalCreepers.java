@@ -3,7 +3,9 @@ package net.minecraft.src;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class mod_ElementalCreepers extends BaseModMp {
+import net.minecraft.src.forge.*;
+
+public class mod_ElementalCreepers extends NetworkMod {
 
 	@MLProp public static int waterCreeperSpawn = 5;
 	@MLProp public static int fireCreeperSpawn = 5;
@@ -71,4 +73,17 @@ public class mod_ElementalCreepers extends BaseModMp {
 		if(darkCreeperSpawn > 0) ModLoader.addSpawn("DarkCreeper", darkCreeperSpawn, 1, 3, EnumCreatureType.monster);
 		if(reverseCreeperSpawn > 0) ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.monster);
 	}
+
+    @Override
+    public boolean clientSideRequired()
+    {
+            return true;
+    }
+
+    @Override
+    public boolean serverSideRequired()
+    {
+            return false;
+    }
+
 }
