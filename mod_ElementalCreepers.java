@@ -1,6 +1,8 @@
-package net.minecraft.src;
+package net.minecraft.server;
 
-public class mod_ElementalCreepers extends BaseModMp
+import forge.*;
+
+public class mod_ElementalCreepers extends NetworkMod
 {
     @MLProp
     public static int waterCreeperSpawn = 5;
@@ -144,5 +146,17 @@ public class mod_ElementalCreepers extends BaseModMp
         {
             ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.monster);
         }
+    }
+
+    @Override
+    public boolean clientSideRequired()
+    {
+            return true;
+    }
+
+    @Override
+    public boolean serverSideRequired()
+    {
+            return false;
     }
 }

@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package net.minecraft.server;
 
 public class EC_EntityWaterCreeper extends EC_EntityElementalCreeper
 {

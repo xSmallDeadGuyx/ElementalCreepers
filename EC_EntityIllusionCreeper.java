@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package net.minecraft.server;
 
 public class EC_EntityIllusionCreeper extends EC_EntityElementalCreeper
 {

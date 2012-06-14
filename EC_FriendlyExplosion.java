@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package net.minecraft.server;
 
 import java.util.List;
 import java.util.Random;
