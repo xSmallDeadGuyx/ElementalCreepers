@@ -61,7 +61,7 @@ public class mod_ElementalCreepers extends NetworkMod
 
     public String getVersion()
     {
-        return "1.2.5";
+        return "1.2.4";
     }
 
     public void load()
