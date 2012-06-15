@@ -14,7 +14,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 		super(par1World);
 		texture = "/mob/friendlycreeper0.png";
 		moveSpeed = 0.3F;
-		getNavigator().func_48664_a(true);
+		getNavigator().setAvoidsWater(true);
 		tasks.addTask(1, new EntityAISwimming(this));
 		tasks.addTask(2, aiSit);
 		tasks.addTask(3, new EC_EntityAIFriendlyCreeperSwell(this));
@@ -103,7 +103,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		Entity var3 = par1DamageSource.getEntity();
-		aiSit.func_48407_a(false);
+		aiSit.setIsSitting(false);
 
 		if (var3 != null && !(var3 instanceof EntityPlayer) && !(var3 instanceof EntityArrow))
 			par2 = (par2 + 1) / 2;
@@ -130,14 +130,14 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 						setTamed(true);
 						setPathToEntity((PathEntity)null);
 						setAttackTarget((EntityLiving)null);
-						aiSit.func_48407_a(true);
+						aiSit.setIsSitting(true);
 						setEntityHealth(20);
 						setOwner(par1EntityPlayer.username);
-						func_48142_a(true);
+						playTameEffect(true);
 						worldObj.setEntityState(this, (byte)7);
 					}
 					else {
-						func_48142_a(false);
+						playTameEffect(false);
 						worldObj.setEntityState(this, (byte)6);
 					}
 				}
@@ -159,7 +159,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 			}
 
 			if (par1EntityPlayer.username.equalsIgnoreCase(getOwnerName()) && !worldObj.isRemote && !isWheat(var2)) {
-				aiSit.func_48407_a(!isSitting());
+				aiSit.setIsSitting(!isSitting());
 				isJumping = false;
 				setPathToEntity((PathEntity)null);
 			}
