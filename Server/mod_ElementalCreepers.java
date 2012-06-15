@@ -56,7 +56,7 @@ public class mod_ElementalCreepers extends NetworkMod {
 	
 	@Override
 	public String getVersion() {
-		return "1.2.4";
+		return "1.2.5";
 	}
 
 	@Override
