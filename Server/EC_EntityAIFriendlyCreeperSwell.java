@@ -30,7 +30,7 @@ public class EC_EntityAIFriendlyCreeperSwell extends EntityAIBase {
 			swellingCreeper.setCreeperState(-1);
 		else if (swellingCreeper.getDistanceSqToEntity(creeperAttackTarget) > 49.0D)
 			swellingCreeper.setCreeperState(-1);
-		else if (!swellingCreeper.func_48318_al().canSee(creeperAttackTarget))
+		else if (!swellingCreeper.getEntitySenses().canSee(creeperAttackTarget))
 			swellingCreeper.setCreeperState(-1);
 		else
 			swellingCreeper.setCreeperState(1);
