@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class mod_ElementalCreepers extends BaseModMp {
+public class mod_ElementalCreepers extends NetworkMod {
 
 	@MLProp public static int waterCreeperSpawn = 5;
 	@MLProp public static int fireCreeperSpawn = 5;
