@@ -18,7 +18,7 @@ public class EC_EntityIceCreeper extends EC_EntityElementalCreeper {
 					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.ice.blockID);
 				else if(worldObj.getBlockMaterial((int) posX + x, (int) posY + y, (int) posZ + z) == Material.lava && worldObj.getBlockMetadata((int) posX + x, (int) posY + y, (int) posZ + z) == 0)
 					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.obsidian.blockID);
-				else if(worldObj.canBlockBePlacedAt(Block.snow.blockID, (int) posX + x, (int) posY + y, (int) posZ + z, false, 0) && !worldObj.canBlockBePlacedAt(Block.snow.blockID, (int) posX + x, (int) posY + y - 1, (int) posZ + z, false, 0))
+				else if(Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && !Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y - 1, (int) posZ + z))
 					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.snow.blockID);
 			}
 

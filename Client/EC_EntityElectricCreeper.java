@@ -12,7 +12,7 @@ public class EC_EntityElectricCreeper extends EC_EntityElementalCreeper {
 	@Override
 	public void creeperEffect() {
 		int radius = getPowered() ? (int) (mod_ElementalCreepers.electricCreeperRadius * 1.5F) : mod_ElementalCreepers.electricCreeperRadius;
-		List list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityLiving.class, AxisAlignedBB.getBoundingBoxFromPool(posX, posY, posZ, posX + 1.0D, posY + 1.0D, posZ + 1.0D).expand(radius, radius, radius));
+		List list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityLiving.class, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX + 1.0D, posY + 1.0D, posZ + 1.0D).expand(radius, radius, radius));
 		for(int j = 0; j < list.size(); j++)
 		{
 			EntityLiving entityliving = (EntityLiving)list.get(j);

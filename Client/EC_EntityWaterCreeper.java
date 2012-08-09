@@ -15,7 +15,7 @@ public class EC_EntityWaterCreeper extends EC_EntityElementalCreeper {
 		for(int x = (int) -radius - 1; x <= radius; x++) {
 			for(int y = (int) -radius - 1; y <= radius; y++) {
 				for(int z = (int) -radius - 1; z <= radius; z++) {
-					if(worldObj.canBlockBePlacedAt(Block.waterStill.blockID, (int) posX + x, (int) posY + y, (int) posZ + z, false, 0) && Math.sqrt(Math.pow(x, 2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius) {
+					if(Block.waterStill.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && Math.sqrt(Math.pow(x, 2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius) {
 						worldObj.setBlockAndMetadataWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.waterMoving.blockID, 4);
 					}
 				}

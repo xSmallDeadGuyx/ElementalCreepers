@@ -13,8 +13,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 	public EC_EntityFriendlyCreeper(World par1World) {
 		super(par1World);
 		texture = "/mob/friendlycreeper0.png";
-		moveSpeed = 0.3F;
-		getNavigator().func_48664_a(true);
+		getNavigator().setAvoidsWater(true);
 		tasks.addTask(1, new EntityAISwimming(this));
 		tasks.addTask(2, aiSit);
 		tasks.addTask(3, new EC_EntityAIFriendlyCreeperSwell(this));
@@ -23,11 +22,11 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 		tasks.addTask(6, new EntityAIMate(this, moveSpeed));
 		tasks.addTask(7, new EntityAIWander(this, moveSpeed));
 		tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		tasks.addTask(9, new EntityAILookIdle(this));
+		tasks.addTask(10, new EntityAILookIdle(this));
 		targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-		tasks.addTask(10, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 0.25F, 0.3F));
+		tasks.addTask(11, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 0.25F, 0.3F));
 	}
 
 	public boolean isAIEnabled() {
@@ -57,7 +56,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 	}
 
 	protected boolean canTriggerWalking() {
-		return false;
+		return true;
 	}
 
 	public String getTexture() {
@@ -103,7 +102,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		Entity var3 = par1DamageSource.getEntity();
-		aiSit.func_48407_a(false);
+		aiSit.setSitting(false);
 
 		if (var3 != null && !(var3 instanceof EntityPlayer) && !(var3 instanceof EntityArrow))
 			par2 = (par2 + 1) / 2;
@@ -130,14 +129,14 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 						setTamed(true);
 						setPathToEntity((PathEntity)null);
 						setAttackTarget((EntityLiving)null);
-						aiSit.func_48407_a(true);
+						aiSit.setSitting(true);
 						setEntityHealth(20);
 						setOwner(par1EntityPlayer.username);
-						func_48142_a(true);
+						playTameEffect(true);
 						worldObj.setEntityState(this, (byte)7);
 					}
 					else {
-						func_48142_a(false);
+						playTameEffect(false);
 						worldObj.setEntityState(this, (byte)6);
 					}
 				}
@@ -159,7 +158,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 			}
 
 			if (par1EntityPlayer.username.equalsIgnoreCase(getOwnerName()) && !worldObj.isRemote && !isWheat(var2)) {
-				aiSit.func_48407_a(!isSitting());
+				aiSit.setSitting(!isSitting());
 				isJumping = false;
 				setPathToEntity((PathEntity)null);
 			}
@@ -214,7 +213,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 
 	@Override
 	public void onUpdate() {
-		if (isEntityAlive()) {
+		if(isEntityAlive()) {
 			lastActiveTime = timeSinceIgnited;
 			int var1 = getCreeperState();
 
@@ -235,6 +234,7 @@ public class EC_EntityFriendlyCreeper extends EntityTameable {
 		}
 
 		super.onUpdate();
+		if(isSitting()) this.rotationPitch = 45.0F;
 	}
 
 	public void onDeath(DamageSource par1DamageSource) {

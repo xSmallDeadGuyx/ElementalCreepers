@@ -16,7 +16,7 @@ public class EC_EntityAIFriendlyCreeperSwell extends EntityAIBase {
 	}
 
 	public void startExecuting() {
-		swellingCreeper.getNavigator().clearPathEntity();
+		//swellingCreeper.getNavigator().clearPathEntity();
 		creeperAttackTarget = swellingCreeper.getAttackTarget();
 	}
 
@@ -26,11 +26,12 @@ public class EC_EntityAIFriendlyCreeperSwell extends EntityAIBase {
 
 	public void updateTask()
 	{
+		creeperAttackTarget = swellingCreeper.getAttackTarget();
 		if (creeperAttackTarget == null)
 			swellingCreeper.setCreeperState(-1);
 		else if (swellingCreeper.getDistanceSqToEntity(creeperAttackTarget) > 49.0D)
 			swellingCreeper.setCreeperState(-1);
-		else if (!swellingCreeper.func_48090_aM().canSee(creeperAttackTarget))
+		else if (!swellingCreeper.getEntitySenses().canSee(creeperAttackTarget))
 			swellingCreeper.setCreeperState(-1);
 		else
 			swellingCreeper.setCreeperState(1);

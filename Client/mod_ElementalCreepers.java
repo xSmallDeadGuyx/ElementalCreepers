@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class mod_ElementalCreepers extends BaseMod {
+public class mod_ElementalCreepers extends BaseModMp {
 
 	@MLProp public static int waterCreeperSpawn = 5;
 	@MLProp public static int fireCreeperSpawn = 5;
@@ -12,10 +12,10 @@ public class mod_ElementalCreepers extends BaseMod {
 	@MLProp public static int earthCreeperSpawn = 5;
 	@MLProp public static int psychicCreeperSpawn = 5;
 	@MLProp public static int cookieCreeperSpawn = 1;
-	@MLProp public static int magmaCreeperSpawn = 5;
+	@MLProp public static int magmaCreeperSpawn = 3;
 	@MLProp public static int friendlyCreeperSpawn = 1;
-	@MLProp public static int illusionCreeperSpawn = 2;
-	@MLProp public static int lightCreeperSpawn = 5;
+	@MLProp public static int illusionCreeperSpawn = 3;
+	@MLProp public static int lightCreeperSpawn = 2;
 	@MLProp public static int darkCreeperSpawn = 5;
 	@MLProp public static int reverseCreeperSpawn = 3;
 	
@@ -30,32 +30,51 @@ public class mod_ElementalCreepers extends BaseMod {
 	@MLProp public static int magmaCreeperRadius = 3;
 	@MLProp public static int ghostCreeperRadius = 5;
 	@MLProp public static int ghostCreeperChance = 35;
-	@MLProp public static int lightCreeperRadius = 8;
+	@MLProp public static int lightCreeperRadius = 4;
 	@MLProp public static int darkCreeperRadius = 12;
 	@MLProp public static int reverseCreeperRadius = 8;
 	
+	@MLProp public static int waterCreeperId = 12;
+	@MLProp public static int fireCreeperId = 13;
+	@MLProp public static int iceCreeperId = 14;
+	@MLProp public static int electricCreeperId = 15;
+	@MLProp public static int earthCreeperId = 16;
+	@MLProp public static int psychicCreeperId = 17;
+	@MLProp public static int cookieCreeperId = 8;
+	@MLProp public static int magmaCreeperId = 19;
+	@MLProp public static int ghostCreeperId = 20;
+	@MLProp public static int friendlyCreeperId = 21;
+	@MLProp public static int illusionCreeperId = 22;
+	@MLProp public static int fakeIllusionCreeperId = 23;
+	@MLProp public static int lightCreeperId = 24;
+	@MLProp public static int darkCreeperId = 25;
+	@MLProp public static int reverseCreeperId = 26;
+	
 	@Override
 	public String getVersion() {
-		return "1.2.5";
+		return "1.3.1";
 	}
 
 	@Override
 	public void load() {
-		ModLoader.registerEntityID(EC_EntityWaterCreeper.class, "WaterCreeper", 12);
-		ModLoader.registerEntityID(EC_EntityFireCreeper.class, "FireCreeper", 13);
-		ModLoader.registerEntityID(EC_EntityIceCreeper.class, "IceCreeper", 14);
-		ModLoader.registerEntityID(EC_EntityElectricCreeper.class, "ElectricCreeper", 15);
-		ModLoader.registerEntityID(EC_EntityEarthCreeper.class, "EarthCreeper", 16);
-		ModLoader.registerEntityID(EC_EntityPsychicCreeper.class, "PsychicCreeper", 17);
-		ModLoader.registerEntityID(EC_EntityCookieCreeper.class, "CookieCreeper", 18);
-		ModLoader.registerEntityID(EC_EntityMagmaCreeper.class, "MagmaCreeper", 19);
-		ModLoader.registerEntityID(EC_EntityGhostCreeper.class, "GhostCreeper", 20);
-		ModLoader.registerEntityID(EC_EntityFriendlyCreeper.class, "FriendlyCreeper", 21);
-		ModLoader.registerEntityID(EC_EntityIllusionCreeper.class, "IllusionCreeper", 22);
-		ModLoader.registerEntityID(EC_EntityFakeIllusionCreeper.class, "FakeIllusionCreeper", 23);
-		ModLoader.registerEntityID(EC_EntityLightCreeper.class, "LightCreeper", 24);
-		ModLoader.registerEntityID(EC_EntityDarkCreeper.class, "DarkCreeper", 25);
-		ModLoader.registerEntityID(EC_EntityReverseCreeper.class, "ReverseCreeper", 26);
+		// COMMENT THIS LINE BEFORE RELEASE
+		// ModLoader.addRecipe(new ItemStack(Block.mobSpawner), new Object[] {"x", Character.valueOf('x'), Block.dirt});
+		
+		ModLoader.registerEntityID(EC_EntityWaterCreeper.class, "WaterCreeper", waterCreeperId);
+		ModLoader.registerEntityID(EC_EntityFireCreeper.class, "FireCreeper", fireCreeperId);
+		ModLoader.registerEntityID(EC_EntityIceCreeper.class, "IceCreeper", iceCreeperId);
+		ModLoader.registerEntityID(EC_EntityElectricCreeper.class, "ElectricCreeper", electricCreeperId);
+		ModLoader.registerEntityID(EC_EntityEarthCreeper.class, "EarthCreeper", earthCreeperId);
+		ModLoader.registerEntityID(EC_EntityPsychicCreeper.class, "PsychicCreeper", psychicCreeperId);
+		ModLoader.registerEntityID(EC_EntityCookieCreeper.class, "CookieCreeper", cookieCreeperId);
+		ModLoader.registerEntityID(EC_EntityMagmaCreeper.class, "MagmaCreeper", magmaCreeperId);
+		ModLoader.registerEntityID(EC_EntityGhostCreeper.class, "GhostCreeper", ghostCreeperId);
+		ModLoader.registerEntityID(EC_EntityFriendlyCreeper.class, "FriendlyCreeper", friendlyCreeperId);
+		ModLoader.registerEntityID(EC_EntityIllusionCreeper.class, "IllusionCreeper", illusionCreeperId);
+		ModLoader.registerEntityID(EC_EntityFakeIllusionCreeper.class, "FakeIllusionCreeper", fakeIllusionCreeperId);
+		ModLoader.registerEntityID(EC_EntityLightCreeper.class, "LightCreeper", lightCreeperId);
+		ModLoader.registerEntityID(EC_EntityDarkCreeper.class, "DarkCreeper", darkCreeperId);
+		ModLoader.registerEntityID(EC_EntityReverseCreeper.class, "ReverseCreeper", reverseCreeperId);
 		
 		if(waterCreeperSpawn > 0) ModLoader.addSpawn("WaterCreeper", waterCreeperSpawn, 1, 3, EnumCreatureType.monster);
 		if(fireCreeperSpawn > 0) ModLoader.addSpawn("FireCreeper", fireCreeperSpawn, 1, 3, EnumCreatureType.monster);

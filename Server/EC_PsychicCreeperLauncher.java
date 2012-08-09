@@ -46,8 +46,8 @@ public class EC_PsychicCreeperLauncher {
 		int var29 = MathHelper.floor_double(explosionY + (double)explosionSize + 1.0D);
 		int var7 = MathHelper.floor_double(explosionZ - (double)explosionSize - 1.0D);
 		int var30 = MathHelper.floor_double(explosionZ + (double)explosionSize + 1.0D);
-		List var9 = worldObj.getEntitiesWithinAABBExcludingEntity(exploder, AxisAlignedBB.getBoundingBoxFromPool((double)var3, (double)var5, (double)var7, (double)var4, (double)var29, (double)var30));
-		Vec3D var31 = Vec3D.createVector(explosionX, explosionY, explosionZ);
+		List var9 = worldObj.getEntitiesWithinAABBExcludingEntity(exploder, AxisAlignedBB.getAABBPool().addOrModifyAABBInPool((double)var3, (double)var5, (double)var7, (double)var4, (double)var29, (double)var30));
+		Vec3 var31 = Vec3.func_72437_a().func_72345_a(explosionX, explosionY, explosionZ);
 
 		for (int var11 = 0; var11 < var9.size(); ++var11) {
 			Entity var32 = (Entity)var9.get(var11);
