@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import java.awt.Color;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -89,5 +90,33 @@ public class mod_ElementalCreepers extends BaseModMp {
 		if(lightCreeperSpawn > 0) ModLoader.addSpawn("LightCreeper", lightCreeperSpawn, 1, 3, EnumCreatureType.monster);
 		if(darkCreeperSpawn > 0) ModLoader.addSpawn("DarkCreeper", darkCreeperSpawn, 1, 3, EnumCreatureType.monster);
 		if(reverseCreeperSpawn > 0) ModLoader.addSpawn("ReverseCreeper", reverseCreeperSpawn, 1, 3, EnumCreatureType.monster);
+	
+		EntityList.entityEggs.put(Integer.valueOf(waterCreeperId), new EntityEggInfo(waterCreeperId, 894731, new Color(59, 115, 205).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(fireCreeperId), new EntityEggInfo(fireCreeperId, 894731, new Color(227, 111, 24).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(iceCreeperId), new EntityEggInfo(iceCreeperId, 894731, Color.white.getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(electricCreeperId), new EntityEggInfo(electricCreeperId, 894731, new Color(251, 234, 57).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(earthCreeperId), new EntityEggInfo(earthCreeperId, 894731, new Color(93, 50, 0).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(psychicCreeperId), new EntityEggInfo(psychicCreeperId, 894731, new Color(121, 51, 142).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(cookieCreeperId), new EntityEggInfo(cookieCreeperId, 894731, new Color(202, 147, 98).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(magmaCreeperId), new EntityEggInfo(magmaCreeperId, 894731, new Color(165, 0, 16).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(friendlyCreeperId), new EntityEggInfo(friendlyCreeperId, 894731, new Color(215, 113, 211).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(illusionCreeperId), new EntityEggInfo(illusionCreeperId, 894731, new Color(158, 158, 158).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(lightCreeperId), new EntityEggInfo(lightCreeperId, 894731, new Color(255, 244, 125).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(darkCreeperId), new EntityEggInfo(darkCreeperId, 894731, new Color(50, 50, 50).getRGB()));
+		EntityList.entityEggs.put(Integer.valueOf(reverseCreeperId), new EntityEggInfo(reverseCreeperId, 0, 894731));
+		
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, waterCreeperId), new Object[] {Item.bucketWater, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, fireCreeperId), new Object[] {Item.flintAndSteel, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, iceCreeperId), new Object[] {Item.snowball, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, electricCreeperId), new Object[] {Item.redstone, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, earthCreeperId), new Object[] {Block.dirt, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, psychicCreeperId), new Object[] {Item.feather, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, cookieCreeperId), new Object[] {Item.cookie, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, magmaCreeperId), new Object[] {Item.bucketLava, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, friendlyCreeperId), new Object[] {Item.sugar, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, illusionCreeperId), new Object[] {Item.compass, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, lightCreeperId), new Object[] {Item.lightStoneDust, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, darkCreeperId), new Object[] {Item.coal, new ItemStack(Item.monsterPlacer, 1, 50)});
+		ModLoader.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, reverseCreeperId), new Object[] {Item.eyeOfEnder, new ItemStack(Item.monsterPlacer, 1, 50)});
 	}
 }
