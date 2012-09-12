@@ -22,8 +22,7 @@ public class PsychicCreeperLauncher {
 	public Entity exploder;
 	public float explosionSize;
 
-	public PsychicCreeperLauncher(World par1World, Entity par2Entity, double par3, double par5, double par7, float par9)
-	{
+	public PsychicCreeperLauncher(World par1World, Entity par2Entity, double par3, double par5, double par7, float par9) {
 		worldObj = par1World;
 		exploder = par2Entity;
 		explosionSize = par9;
@@ -32,11 +31,8 @@ public class PsychicCreeperLauncher {
 		explosionZ = par7;
 	}
 
-	/**
-	 * Does the first part of explosion (destroy blocks)
-	 */
-	public void doExplosionA()
-	{
+	
+	public void doExplosionA() {
 		float var1 = explosionSize;
 		byte var2 = 16;
 		int var3;

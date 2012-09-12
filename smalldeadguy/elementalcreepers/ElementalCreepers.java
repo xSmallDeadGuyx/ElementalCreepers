@@ -194,5 +194,7 @@ public class ElementalCreepers {
 		LanguageRegistry.instance().addStringLocalization("entity.LightCreeper.name", "Light Creeper");
 		LanguageRegistry.instance().addStringLocalization("entity.DarkCreeper.name", "Dark Creeper");
 		LanguageRegistry.instance().addStringLocalization("entity.ReverseCreeper.name", "Reverse Creeper");
+		
+		proxy.registerRenderers();
 	}
 }

@@ -1,5 +1,7 @@
 package smalldeadguy.elementalcreepers;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
@@ -8,15 +10,16 @@ import net.minecraft.src.RenderLiving;
 
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderFriendlyCreeper extends RenderLiving {
-	private ModelBase field_27008_a = new ModelCreeper(2.0F);
+	private ModelBase creeperModel = new ModelCreeper(2.0F);
 
 	public RenderFriendlyCreeper() {
 		super(new ModelCreeper(), 0.5F);
 	}
 
-	protected void updateCreeperScale(EntityFriendlyCreeper par1EC_EntityFriendlyCreeper, float par2) {
-		float var4 = par1EC_EntityFriendlyCreeper.setCreeperFlashTime(par2);
+	protected void updateCreeperScale(EntityFriendlyCreeper par1EntityCreeper, float par2) {
+		float var4 = par1EntityCreeper.setCreeperFlashTime(par2);
 		float var5 = 1.0F + MathHelper.sin(var4 * 100.0F) * var4 * 0.01F;
 
 		if (var4 < 0.0F)
@@ -32,18 +35,19 @@ public class RenderFriendlyCreeper extends RenderLiving {
 		GL11.glScalef(var6, var7, var6);
 	}
 
-	protected int updateCreeperColorMultiplier(EntityFriendlyCreeper par1EC_EntityFriendlyCreeper, float par2, float par3) {
-		float var5 = par1EC_EntityFriendlyCreeper.setCreeperFlashTime(par3);
+	
+	protected int updateCreeperColorMultiplier(EntityFriendlyCreeper par1EntityCreeper, float par2, float par3) {
+		float var5 = par1EntityCreeper.setCreeperFlashTime(par3);
 
-		if ((int)(var5 * 10.0F) % 2 == 0)
+		if((int)(var5 * 10.0F) % 2 == 0)
 			return 0;
 		else {
 			int var6 = (int)(var5 * 0.2F * 255.0F);
 
-			if (var6 < 0)
+			if(var6 < 0)
 				var6 = 0;
 
-			if (var6 > 255)
+			if(var6 > 255)
 				var6 = 255;
 
 			short var7 = 255;
@@ -53,17 +57,17 @@ public class RenderFriendlyCreeper extends RenderLiving {
 		}
 	}
 
-	protected int func_27006_a(EntityFriendlyCreeper par1EC_EntityFriendlyCreeper, int par2, float par3) {
-		if (par1EC_EntityFriendlyCreeper.getPowered()) {
-			if (par2 == 1) {
-				float var4 = (float)par1EC_EntityFriendlyCreeper.ticksExisted + par3;
-				loadTexture("/armor/power.png");
+	protected int renderCreeperPassModel(EntityFriendlyCreeper par1EntityCreeper, int par2, float par3) {
+		if(par1EntityCreeper.getPowered()) {
+			if(par2 == 1) {
+				float var4 = (float)par1EntityCreeper.ticksExisted + par3;
+				this.loadTexture("/armor/power.png");
 				GL11.glMatrixMode(GL11.GL_TEXTURE);
 				GL11.glLoadIdentity();
 				float var5 = var4 * 0.01F;
 				float var6 = var4 * 0.01F;
 				GL11.glTranslatef(var5, var6, 0.0F);
-				setRenderPassModel(field_27008_a);
+				this.setRenderPassModel(this.creeperModel);
 				GL11.glMatrixMode(GL11.GL_MODELVIEW);
 				GL11.glEnable(GL11.GL_BLEND);
 				float var7 = 0.5F;
@@ -81,26 +85,27 @@ public class RenderFriendlyCreeper extends RenderLiving {
 				GL11.glDisable(GL11.GL_BLEND);
 			}
 		}
+
 		return -1;
 	}
 
-	protected int func_27007_b(EntityFriendlyCreeper par1EC_EntityFriendlyCreeper, int par2, float par3) {
+	protected int func_77061_b(EntityFriendlyCreeper par1EntityCreeper, int par2, float par3) {
 		return -1;
 	}
 
 	protected void preRenderCallback(EntityLiving par1EntityLiving, float par2) {
-		updateCreeperScale((EntityFriendlyCreeper)par1EntityLiving, par2);
+		this.updateCreeperScale((EntityFriendlyCreeper)par1EntityLiving, par2);
 	}
 
 	protected int getColorMultiplier(EntityLiving par1EntityLiving, float par2, float par3) {
-		return updateCreeperColorMultiplier((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
+		return this.updateCreeperColorMultiplier((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
 	}
 
 	protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3) {
-		return func_27006_a((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
+		return this.renderCreeperPassModel((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
 	}
 
 	protected int inheritRenderPass(EntityLiving par1EntityLiving, int par2, float par3) {
-		return func_27007_b((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
+		return this.func_77061_b((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
 	}
 }

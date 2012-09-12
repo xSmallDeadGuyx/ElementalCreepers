@@ -1,5 +1,6 @@
 package smalldeadguy.elementalcreepers;
 
+import net.minecraft.src.Entity;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.MathHelper;
@@ -9,6 +10,10 @@ import net.minecraft.src.RenderLiving;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class RenderGhostCreeper extends RenderLiving {
 	private ModelBase field_27008_a = new ModelCreeper(2.0F);
 
