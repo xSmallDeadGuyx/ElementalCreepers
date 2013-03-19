@@ -1,17 +1,16 @@
 package smalldeadguy.elementalcreepers;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityCreeper;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelCreeper;
-import net.minecraft.src.RenderLiving;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelCreeper;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderGhostCreeper extends RenderLiving {
@@ -32,7 +31,7 @@ public class RenderGhostCreeper extends RenderLiving {
 	}
 
 	protected void updateCreeperScale(EntityCreeper par1EntityCreeper, float par2) {
-		float var4 = par1EntityCreeper.setCreeperFlashTime(par2);
+		float var4 = par1EntityCreeper.getCreeperFlashIntensity(par2);
 		float var5 = 1.0F + MathHelper.sin(var4 * 100.0F) * var4 * 0.01F;
 
 		if (var4 < 0.0F)
@@ -49,7 +48,7 @@ public class RenderGhostCreeper extends RenderLiving {
 	}
 
 	protected int updateCreeperColorMultiplier(EntityCreeper par1EntityCreeper, float par2, float par3) {
-		float var5 = par1EntityCreeper.setCreeperFlashTime(par3);
+		float var5 = par1EntityCreeper.getCreeperFlashIntensity(par3);
 
 		if ((int)(var5 * 10.0F) % 2 == 0)
 			return 0;

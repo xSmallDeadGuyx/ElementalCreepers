@@ -1,8 +1,8 @@
 package smalldeadguy.elementalcreepers;
 
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.EntityCreeper;
-import net.minecraft.src.World;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 
 public class EntityElementalCreeper extends EntityCreeper {
 
@@ -51,6 +51,6 @@ public class EntityElementalCreeper extends EntityCreeper {
 	}
 
 	public void creeperEffect() {
-		worldObj.createExplosion(this, posX, posY, posZ, getPowered() ? 6.0F : 3.0F);
+		worldObj.createExplosion(this, posX, posY, posZ, getPowered() ? 6.0F : 3.0F, false);
 	}
 }

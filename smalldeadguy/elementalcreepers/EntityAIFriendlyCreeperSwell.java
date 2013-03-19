@@ -1,7 +1,7 @@
 package smalldeadguy.elementalcreepers;
 
-import net.minecraft.src.EntityAIBase;
-import net.minecraft.src.EntityLiving;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.EntityLiving;
 
 public class EntityAIFriendlyCreeperSwell extends EntityAIBase {
 	EntityFriendlyCreeper swellingCreeper;

@@ -2,34 +2,39 @@ package smalldeadguy.elementalcreepers;
 
 import java.util.List;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityAIAttackOnCollide;
-import net.minecraft.src.EntityAIAvoidEntity;
-import net.minecraft.src.EntityAIFollowOwner;
-import net.minecraft.src.EntityAIHurtByTarget;
-import net.minecraft.src.EntityAILookIdle;
-import net.minecraft.src.EntityAIMate;
-import net.minecraft.src.EntityAIOwnerHurtByTarget;
-import net.minecraft.src.EntityAIOwnerHurtTarget;
-import net.minecraft.src.EntityAISwimming;
-import net.minecraft.src.EntityAIWander;
-import net.minecraft.src.EntityAIWatchClosest;
-import net.minecraft.src.EntityAnimal;
-import net.minecraft.src.EntityArrow;
-import net.minecraft.src.EntityLightningBolt;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityOcelot;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntitySkeleton;
-import net.minecraft.src.EntityTameable;
-import net.minecraft.src.EntityWolf;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.PathEntity;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIFollowOwner;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
+import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemRecord;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
+
+
 
 
 public class EntityFriendlyCreeper extends EntityTameable {
@@ -147,7 +152,7 @@ public class EntityFriendlyCreeper extends EntityTameable {
 		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
 		if (!isTamed()) {
-			if (var2 != null && var2.itemID == Item.gunpowder.shiftedIndex && !isAngry() && !isTamed()) {
+			if (var2 != null && var2.itemID == Item.gunpowder.itemID && !isAngry() && !isTamed()) {
 				var2.stackSize--;
 
 				if (var2.stackSize <= 0)
@@ -197,7 +202,7 @@ public class EntityFriendlyCreeper extends EntityTameable {
 	}
 
 	public boolean isWheat(ItemStack par1ItemStack) {
-		return par1ItemStack == null ? false : par1ItemStack.itemID == Item.wheat.shiftedIndex;
+		return par1ItemStack == null ? false : par1ItemStack.itemID == ItemFood.wheat.itemID;
 	}
 
 	public int getMaxSpawnedInChunk() {
@@ -215,26 +220,6 @@ public class EntityFriendlyCreeper extends EntityTameable {
 			dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 | 2)));
 		else
 			dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 & -3)));
-	}
-
-	public EntityAnimal spawnBabyAnimal(EntityAnimal par1EntityAnimal) {
-		EntityFriendlyCreeper var2 = new EntityFriendlyCreeper(worldObj);
-		var2.setOwner(getOwnerName());
-		var2.setTamed(true);
-		return var2;
-	}
-
-	public boolean func_48135_b(EntityAnimal par1EntityAnimal) {
-		if (par1EntityAnimal == this)
-			return false;
-		else if (!isTamed())
-			return false;
-		else if (!(par1EntityAnimal instanceof EntityWolf))
-			return false;
-		else {
-			EntityWolf var2 = (EntityWolf)par1EntityAnimal;
-			return !var2.isTamed() ? false : (var2.isSitting() ? false : isInLove() && var2.isInLove());
-		}
 	}
 
 	int timeSinceIgnited;
@@ -270,7 +255,7 @@ public class EntityFriendlyCreeper extends EntityTameable {
 		super.onDeath(par1DamageSource);
 
 		if (par1DamageSource.getEntity() instanceof EntitySkeleton)
-			dropItem(Item.record13.shiftedIndex + rand.nextInt(10), 1);
+			dropItem(Item.record13.itemID + rand.nextInt(10), 1);
 	}
 
 	public boolean getPowered() {
@@ -282,7 +267,7 @@ public class EntityFriendlyCreeper extends EntityTameable {
 	}
 
 	protected int getDropItemId() {
-		return Item.gunpowder.shiftedIndex;
+		return Item.gunpowder.itemID;
 	}
 
 	public int getCreeperState() {
@@ -303,9 +288,17 @@ public class EntityFriendlyCreeper extends EntityTameable {
 	}
 
 	public FriendlyExplosion newFriendlyExplosion(Entity entity, double d, double d1, double d2, float f, boolean flag) {
-		FriendlyExplosion explosion = new FriendlyExplosion(worldObj, entity, d, d1, d2, f);
-		explosion.doExplosionA(this);
+		FriendlyExplosion explosion = new FriendlyExplosion(worldObj, this, d, d1, d2, f);
+		explosion.doExplosionA();
 		explosion.doExplosionB(true);
 		return explosion;
+	}
+
+	@Override
+	public EntityAgeable createChild(EntityAgeable entityageable) {
+		EntityFriendlyCreeper var2 = new EntityFriendlyCreeper(worldObj);
+		var2.setOwner(getOwnerName());
+		var2.setTamed(true);
+		return var2;
 	}
 }

@@ -2,8 +2,10 @@ package smalldeadguy.elementalcreepers;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
+
 
 public class EntityDarkCreeper extends EntityElementalCreeper {
 	public EntityDarkCreeper(World world) {
@@ -18,8 +20,8 @@ public class EntityDarkCreeper extends EntityElementalCreeper {
 			int id = worldObj.getBlockId((int) posX + x, (int) posY + y, (int) posZ + z);
 			if(Block.lightValue[id] > 0.5F && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius) {
 				Block.blocksList[id].dropBlockAsItem(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z, worldObj.getBlockMetadata((int) posX + x, (int) posY + y, (int) posZ + z), 0);
-				worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, 0);
-				Block.blocksList[id].onBlockDestroyedByExplosion(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z);
+				worldObj.func_94575_c((int) posX + x, (int) posY + y, (int) posZ + z, 0);
+				Block.blocksList[id].onBlockDestroyedByExplosion(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z, new Explosion(worldObj, this, 0.0D, 0.0D, 0.0D, 0.0F));
 			}
 		}
 		worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);

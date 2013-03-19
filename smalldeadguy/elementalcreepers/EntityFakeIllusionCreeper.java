@@ -3,7 +3,7 @@ package smalldeadguy.elementalcreepers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public class EntityFakeIllusionCreeper extends EntityElementalCreeper {
 	public EntityFakeIllusionCreeper(World world) {

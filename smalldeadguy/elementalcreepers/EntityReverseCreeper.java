@@ -3,8 +3,8 @@ package smalldeadguy.elementalcreepers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class EntityReverseCreeper extends EntityElementalCreeper {
 	public EntityReverseCreeper(World world) {
@@ -45,7 +45,7 @@ public class EntityReverseCreeper extends EntityElementalCreeper {
 					int meta = metas[x + (int) radius + 1][(2 * (int) radius) - (y + (int) radius)][z + (int) radius + 1];
 					TileEntity TE = TEs[x + (int) radius + 1][(2 * (int) radius) - (y + (int) radius)][z + (int) radius + 1];
 					if(id > -1) {
-						worldObj.setBlockAndMetadataWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, id, meta);
+						worldObj.setBlockAndMetadataWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, id, meta, 3);
 						if(TE != null)
 							worldObj.setBlockTileEntity((int) posX + x, (int) posY + y, (int) posZ + z, TE);
 					}

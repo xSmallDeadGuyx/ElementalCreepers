@@ -1,14 +1,15 @@
 package smalldeadguy.elementalcreepers;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelCreeper;
-import net.minecraft.src.RenderLiving;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelCreeper;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderFriendlyCreeper extends RenderLiving {

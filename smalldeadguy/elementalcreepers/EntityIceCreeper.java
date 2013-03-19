@@ -3,9 +3,10 @@ package smalldeadguy.elementalcreepers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.world.World;
+
 
 public class EntityIceCreeper extends EntityElementalCreeper {
 	public EntityIceCreeper(World world) {
@@ -19,11 +20,11 @@ public class EntityIceCreeper extends EntityElementalCreeper {
 		for(int x = (int) -radius - 1; x <= radius; x++) for(int y = (int) -radius - 1; y <= radius; y++) for(int z = (int) -radius - 1; z <= radius; z++)
 			if(Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2)) <= radius) {
 				if(worldObj.getBlockMaterial((int) posX + x, (int) posY + y, (int) posZ + z) == Material.water && worldObj.getBlockMetadata((int) posX + x, (int) posY + y, (int) posZ + z) == 0)
-					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.ice.blockID);
+					worldObj.func_94575_c((int) posX + x, (int) posY + y, (int) posZ + z, Block.ice.blockID);
 				else if(worldObj.getBlockMaterial((int) posX + x, (int) posY + y, (int) posZ + z) == Material.lava && worldObj.getBlockMetadata((int) posX + x, (int) posY + y, (int) posZ + z) == 0)
-					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.obsidian.blockID);
+					worldObj.func_94575_c((int) posX + x, (int) posY + y, (int) posZ + z, Block.obsidian.blockID);
 				else if(Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && !Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y - 1, (int) posZ + z))
-					worldObj.setBlockWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.snow.blockID);
+					worldObj.func_94575_c((int) posX + x, (int) posY + y, (int) posZ + z, Block.snow.blockID);
 			}
 
 		worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);

@@ -3,8 +3,9 @@ package smalldeadguy.elementalcreepers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
 
 public class EntityIllusionCreeper extends EntityElementalCreeper {
 	boolean split = false;

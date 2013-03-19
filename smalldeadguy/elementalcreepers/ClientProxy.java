@@ -1,6 +1,6 @@
 package smalldeadguy.elementalcreepers;
 
-import net.minecraft.src.RenderCreeper;
+import net.minecraft.client.renderer.entity.*;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -15,7 +15,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCookieCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMagmaCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostCreeper.class, new RenderGhostCreeper());
-		RenderingRegistry.registerEntityRenderingHandler(EntityFriendlyCreeper.class, new RenderFriendlyCreeper());
+		//RenderingRegistry.registerEntityRenderingHandler(EntityFriendlyCreeper.class, new RenderFriendlyCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIllusionCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFakeIllusionCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightCreeper.class, new RenderCreeper());

@@ -3,8 +3,9 @@ package smalldeadguy.elementalcreepers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.World;
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+
 
 public class EntityGhostCreeper extends EntityElementalCreeper {
 	public EntityGhostCreeper(World world) {
