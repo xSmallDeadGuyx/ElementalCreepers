@@ -20,7 +20,7 @@ public class RenderFriendlyCreeper extends RenderLiving {
 	}
 
 	protected void updateCreeperScale(EntityFriendlyCreeper par1EntityCreeper, float par2) {
-		float var4 = par1EntityCreeper.setCreeperFlashTime(par2);
+		float var4 = par1EntityCreeper.getCreeperFlashIntensity(par2);
 		float var5 = 1.0F + MathHelper.sin(var4 * 100.0F) * var4 * 0.01F;
 
 		if (var4 < 0.0F)
@@ -38,7 +38,7 @@ public class RenderFriendlyCreeper extends RenderLiving {
 
 	
 	protected int updateCreeperColorMultiplier(EntityFriendlyCreeper par1EntityCreeper, float par2, float par3) {
-		float var5 = par1EntityCreeper.setCreeperFlashTime(par3);
+		float var5 = par1EntityCreeper.getCreeperFlashIntensity(par3);
 
 		if((int)(var5 * 10.0F) % 2 == 0)
 			return 0;

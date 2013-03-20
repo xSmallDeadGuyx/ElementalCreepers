@@ -15,11 +15,12 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCookieCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMagmaCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostCreeper.class, new RenderGhostCreeper());
-		//RenderingRegistry.registerEntityRenderingHandler(EntityFriendlyCreeper.class, new RenderFriendlyCreeper());
+		RenderingRegistry.registerEntityRenderingHandler(EntityFriendlyCreeper.class, new RenderFriendlyCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityIllusionCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFakeIllusionCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityDarkCreeper.class, new RenderCreeper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityReverseCreeper.class, new RenderCreeper());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpiderCreeper.class, new RenderSpiderCreeper());
 	}
 }
