@@ -52,7 +52,8 @@ public class EntityFriendlyCreeper extends EntityTameable {
 	public EntityFriendlyCreeper(World par1World) {
 		super(par1World);
 		this.texture = "/mob/friendlycreeper0.png";
-		this.moveSpeed = 0.3F;
+		this.moveSpeed = 0.2F;
+		this.setSize(1.0F, 2.0F);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
 		this.tasks.addTask(3, new EntityAIFriendlyCreeperSwell(this));

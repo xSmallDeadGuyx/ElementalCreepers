@@ -13,10 +13,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderFriendlyCreeper extends RenderLiving {
-	private ModelBase creeperModel = new ModelCreeper(2.0F);
+	private ModelBase creeperModel = new ModelFriendlyCreeper(2.0F);
 
 	public RenderFriendlyCreeper() {
-		super(new ModelCreeper(), 0.5F);
+		super(new ModelFriendlyCreeper(), 0.5F);
 	}
 
 	protected void updateCreeperScale(EntityFriendlyCreeper par1EntityCreeper, float par2) {
