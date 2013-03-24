@@ -19,7 +19,7 @@ public class EntityWaterCreeper extends EntityElementalCreeper {
 			for(int y = (int) -radius - 1; y <= radius; y++)
 				for(int z = (int) -radius - 1; z <= radius; z++)
 					if(Block.waterStill.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && Math.sqrt(Math.pow(x, 2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius)
-						worldObj.setBlockAndMetadataWithNotify((int) posX + x, (int) posY + y, (int) posZ + z, Block.waterMoving.blockID, 4, 3);
+						worldObj.setBlock((int) posX + x, (int) posY + y, (int) posZ + z, Block.waterMoving.blockID, 4, 3);
 		worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 		spawnExplosionParticle();
 	}

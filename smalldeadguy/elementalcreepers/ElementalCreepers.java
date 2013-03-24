@@ -1,16 +1,29 @@
 package smalldeadguy.elementalcreepers;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event;
+import net.minecraftforge.event.EventPriority;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -22,6 +35,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = "ElementalCreepers", name = "ElementalCreepers", version = "3.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -64,6 +78,10 @@ public class ElementalCreepers {
 	public static int reverseCreeperRadius = 8;
 	public static int spiderCreeperRadius = 12;
 	
+	public static boolean spawnNormalCreepers = true;
+	
+	public static List<Class<? extends EntityElementalCreeper>> creepers = new ArrayList<Class<? extends EntityElementalCreeper>>();
+	
 	@PreInit
 	public void preload(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -99,6 +117,8 @@ public class ElementalCreepers {
 		darkCreeperRadius = config.get("darkCreeperRadius", Configuration.CATEGORY_GENERAL, 12).getInt();
 		reverseCreeperRadius = config.get("reverseCreeperRadius", Configuration.CATEGORY_GENERAL, 8).getInt();
 		spiderCreeperRadius = config.get("spiderCreeperRadius", Configuration.CATEGORY_GENERAL, 12).getInt();
+		
+		spawnNormalCreepers = config.get("spawnNormalCreepers", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
 
 		config.save();
 	}
@@ -108,6 +128,8 @@ public class ElementalCreepers {
 	}
 	
 	public void registerCreeper(Class<? extends Entity> creeper, String name, int id, Color colour1, Color colour2, Object[] eggRecipe, int spawnRate, int minGroup, int maxGroup, BiomeGenBase[] biomes) {
+		if(EntityElementalCreeper.class.isAssignableFrom(creeper)) creepers.add((Class<? extends EntityElementalCreeper>) creeper);
+		
 		EntityRegistry.registerModEntity(creeper, name, id, this, 128, 1, true);
 		EntityList.IDtoClassMapping.put(id, creeper);
 		if(eggRecipe != null) EntityList.entityEggs.put(id, new EntityEggInfo(id, colour1.getRGB(), colour2.getRGB()));
@@ -144,5 +166,20 @@ public class ElementalCreepers {
 		registerCreeper(EntitySpiderCreeper.class, "SpiderCreeper", 16, Color.red, new Object[] {Item.silk, new ItemStack(Item.monsterPlacer, 1, 50)}, spiderCreeperSpawn, 1, 3, normalBiomes);
 		
 		proxy.registerRenderers();
+		
+		MinecraftForge.EVENT_BUS.register(this);
+		
+		// Ignore this bit
+		TotallyNotAprilFools.nothingToSeeHere();
+	}
+	
+	@ForgeSubscribe
+	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+		if(event.entity instanceof EntityCreeper && !(event.entity instanceof EntityElementalCreeper) && !spawnNormalCreepers && event.isCancelable()) {
+			event.setCanceled(true);
+		}
+		
+		// Ignore this bit, too
+		TotallyNotAprilFools.stillNothingToSeeHere(event);
 	}
 }

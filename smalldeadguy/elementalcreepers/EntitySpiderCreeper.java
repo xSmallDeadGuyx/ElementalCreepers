@@ -60,7 +60,7 @@ public class EntitySpiderCreeper extends EntityElementalCreeper {
 		for(int x = (int) -radius - 1; x <= radius; x++) for(int y = (int) -radius - 1; y <= radius; y++) for(int z = (int) -radius - 1; z <= radius; z++)
 			if(Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius)
 				if(rand.nextInt(100) < 2)
-					worldObj.func_94575_c((int) posX + x, (int) posY + y, (int) posZ + z, Block.web.blockID);
+					worldObj.setBlock((int) posX + x, (int) posY + y, (int) posZ + z, Block.web.blockID);
 
 		List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(posX - radius, posY - radius, posZ - radius, posX + radius, posY + radius, posZ + radius));
 

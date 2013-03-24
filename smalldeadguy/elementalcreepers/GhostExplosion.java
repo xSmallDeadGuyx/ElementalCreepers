@@ -86,7 +86,7 @@ public class GhostExplosion extends Explosion {
 					d2 /= d8;
 					double d9 = (double)this.worldObj.getBlockDensity(vec3, entity.boundingBox);
 					double d10 = (1.0D - d7) * d9;
-					entity.attackEntityFrom(DamageSource.func_94539_a(this), (int)((d10 * d10 + d10) / 2.0D * 8.0D * (double)this.explosionSize + 1.0D));
+					entity.attackEntityFrom(DamageSource.setExplosionSource(this), (int)((d10 * d10 + d10) / 2.0D * 8.0D * (double)this.explosionSize + 1.0D));
 					double d11 = EnchantmentProtection.func_92092_a(entity, d10);
 					entity.motionX += d0 * d11;
 					entity.motionY += d1 * d11;
