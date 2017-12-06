@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = "ElementalCreepers", name = "ElementalCreepers", version = "3.0")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+//@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ElementalCreepers {
 
 	@Instance

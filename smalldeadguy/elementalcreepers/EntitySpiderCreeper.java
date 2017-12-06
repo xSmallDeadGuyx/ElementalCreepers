@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;
@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
@@ -58,9 +59,9 @@ public class EntitySpiderCreeper extends EntityElementalCreeper {
 	public void creeperEffect() {
 		double radius = getPowered() ? (int) (ElementalCreepers.spiderCreeperRadius * 1.5F) : ElementalCreepers.spiderCreeperRadius;
 		for(int x = (int) -radius - 1; x <= radius; x++) for(int y = (int) -radius - 1; y <= radius; y++) for(int z = (int) -radius - 1; z <= radius; z++)
-			if(Block.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius)
+			if(Blocks.dirt.canPlaceBlockAt(worldObj, (int) posX + x, (int) posY + y, (int) posZ + z) && Math.sqrt(Math.pow(x,  2) + Math.pow(y,  2) + Math.pow(z, 2)) <= radius)
 				if(rand.nextInt(100) < 2)
-					worldObj.setBlock((int) posX + x, (int) posY + y, (int) posZ + z, Block.web.blockID);
+					worldObj.setBlock((int) posX + x, (int) posY + y, (int) posZ + z, Blocks.web);
 
 		List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(posX - radius, posY - radius, posZ - radius, posX + radius, posY + radius, posZ + radius));
 

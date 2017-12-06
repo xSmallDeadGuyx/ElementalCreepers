@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCreeper;
