@@ -1,11 +1,13 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -20,12 +22,12 @@ public class RenderGhostCreeper extends RenderLiving {
 		super(new ModelCreeper(), 0.5F);
 	}
 	
-	@Override
+
 	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.3F);
-		super.doRenderLiving(par1EntityLiving, par2, par4, par6, par8, par9);
+		super.doRender(par1EntityLiving, par2, par4, par6, par8, par9);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
@@ -72,7 +74,7 @@ public class RenderGhostCreeper extends RenderLiving {
 		if (par1EntityCreeper.getPowered()) {
 			if (par2 == 1) {
 				float var4 = (float)par1EntityCreeper.ticksExisted + par3;
-				loadTexture("/armor/power.png");
+				bindEntityTexture(par1EntityCreeper);;
 				GL11.glMatrixMode(GL11.GL_TEXTURE);
 				GL11.glLoadIdentity();
 				float var5 = var4 * 0.01F;
@@ -118,5 +120,11 @@ public class RenderGhostCreeper extends RenderLiving {
 
 	protected int inheritRenderPass(EntityLiving par1EntityLiving, int par2, float par3) {
 		return func_27007_b((EntityCreeper)par1EntityLiving, par2, par3);
+	}
+
+	@Override
+	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

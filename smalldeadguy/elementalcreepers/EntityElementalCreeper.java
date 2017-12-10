@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.DamageSource;
@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 public class EntityElementalCreeper extends EntityCreeper {
 
 	int timeSinceIgnited;
-
 	int lastActiveTime;
 
 	public EntityElementalCreeper(World par1World) {

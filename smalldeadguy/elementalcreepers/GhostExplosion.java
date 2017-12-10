@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +66,8 @@ public class GhostExplosion extends Explosion {
 		int l1 = MathHelper.floor_double(this.explosionY + (double)this.explosionSize + 1.0D);
 		int i2 = MathHelper.floor_double(this.explosionZ - (double)this.explosionSize - 1.0D);
 		int j2 = MathHelper.floor_double(this.explosionZ + (double)this.explosionSize + 1.0D);
-		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, AxisAlignedBB.getAABBPool().getAABB((double)i, (double)k, (double)i2, (double)j, (double)l1, (double)j2));
-		Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.explosionX, this.explosionY, this.explosionZ);
+		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, AxisAlignedBB.getBoundingBox((double)i, (double)k, (double)i2, (double)j, (double)l1, (double)j2));
+		Vec3 vec3 = Vec3.createVectorHelper(explosionX, explosionY, explosionZ);
 
 		for(int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = (Entity)list.get(k2);
@@ -93,7 +93,7 @@ public class GhostExplosion extends Explosion {
 					entity.motionZ += d2 * d11;
 
 					if(entity instanceof EntityPlayer)
-						this.field_77288_k.put((EntityPlayer)entity, this.worldObj.getWorldVec3Pool().getVecFromPool(d0 * d10, d1 * d10, d2 * d10));
+						this.field_77288_k.put((EntityPlayer)entity, Vec3.createVectorHelper(d0 * d10, d1 * d10, d2 * d10));
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;

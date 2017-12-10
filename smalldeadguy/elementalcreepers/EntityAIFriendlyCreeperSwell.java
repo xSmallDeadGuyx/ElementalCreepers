@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.EntityLiving;

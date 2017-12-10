@@ -1,44 +1,33 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityEggInfo;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
-import net.minecraftforge.event.EventPriority;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.projectile.EntityEgg;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 @Mod(modid = "ElementalCreepers", name = "ElementalCreepers", version = "3.0")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+//@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ElementalCreepers {
 
 	@Instance
@@ -82,8 +71,8 @@ public class ElementalCreepers {
 	
 	public static List<Class<? extends EntityElementalCreeper>> creepers = new ArrayList<Class<? extends EntityElementalCreeper>>();
 	
-	@PreInit
-	public void preload(FMLPreInitializationEvent event) {
+
+	public void preInit(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 
@@ -132,54 +121,54 @@ public class ElementalCreepers {
 		
 		EntityRegistry.registerModEntity(creeper, name, id, this, 128, 1, true);
 		EntityList.IDtoClassMapping.put(id, creeper);
-		if(eggRecipe != null) EntityList.entityEggs.put(id, new EntityEggInfo(id, colour1.getRGB(), colour2.getRGB()));
+		if(eggRecipe != null) EntityList.entityEggs.put(id, new EntityEgg(MinecraftServer.getServer().getEntityWorld(), (double)id, (double)colour1.getRGB(), (double)colour2.getRGB()));
 		
-		if(eggRecipe != null) GameRegistry.addShapelessRecipe(new ItemStack(Item.monsterPlacer, 1, id), eggRecipe);
+		if(eggRecipe != null) GameRegistry.addShapelessRecipe(new ItemStack(Items.spawn_egg, 1, id), eggRecipe);
 		LanguageRegistry.instance().addStringLocalization("entity.ElementalCreepers." + name + ".name", name.replaceAll("([A-Z])", " $1").trim());
 		
 		if(spawnRate > 0) EntityRegistry.addSpawn("ElementalCreepers." + name, spawnRate, minGroup, maxGroup, EnumCreatureType.monster, biomes);
 	}
 
-	@Init
-	public void load(FMLInitializationEvent event) {
+
+	public void Init(FMLInitializationEvent event) {
 		BiomeGenBase[] normalBiomes = new BiomeGenBase[] { BiomeGenBase.beach, BiomeGenBase.desert, BiomeGenBase.desertHills, BiomeGenBase.extremeHills,
 				BiomeGenBase.extremeHillsEdge, BiomeGenBase.forest, BiomeGenBase.forestHills, BiomeGenBase.iceMountains, BiomeGenBase.icePlains,
 				BiomeGenBase.jungle, BiomeGenBase.jungleHills, BiomeGenBase.ocean, BiomeGenBase.plains, BiomeGenBase.frozenOcean, BiomeGenBase.frozenRiver,
 				BiomeGenBase.river, BiomeGenBase.swampland, BiomeGenBase.taiga, BiomeGenBase.taigaHills
 		};
 		
-		registerCreeper(EntityWaterCreeper.class, "WaterCreeper", 1, new Color(59, 115, 205), new Object[] {Item.bucketWater, new ItemStack(Item.monsterPlacer, 1, 50)}, waterCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityFireCreeper.class, "FireCreeper", 2, new Color(227, 111, 24), new Object[] {Item.flintAndSteel, new ItemStack(Item.monsterPlacer, 1, 50)}, fireCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityIceCreeper.class, "IceCreeper", 3, Color.white, new Object[] {Item.snowball, new ItemStack(Item.monsterPlacer, 1, 50)}, iceCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityElectricCreeper.class, "ElectricCreeper", 4, new Color(251, 234, 57), new Object[] {Item.redstone, new ItemStack(Item.monsterPlacer, 1, 50)}, electricCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityEarthCreeper.class, "EarthCreeper", 5, new Color(93, 50, 0), new Object[] {Block.dirt, new ItemStack(Item.monsterPlacer, 1, 50)}, earthCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityPsychicCreeper.class, "PsychicCreeper", 6, new Color(121, 51, 142), new Object[] {Item.feather, new ItemStack(Item.monsterPlacer, 1, 50)}, psychicCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityCookieCreeper.class, "CookieCreeper", 7, new Color(202, 147, 98), new Object[] {Item.cookie, new ItemStack(Item.monsterPlacer, 1, 50)}, cookieCreeperSpawn, 1, 2, normalBiomes);
-		registerCreeper(EntityMagmaCreeper.class, "MagmaCreeper", 8, new Color(165, 0, 16), new Object[] {Item.bucketLava, new ItemStack(Item.monsterPlacer, 1, 50)}, magmaCreeperSpawn, 1, 2, new BiomeGenBase[] {BiomeGenBase.hell});
+		registerCreeper(EntityWaterCreeper.class, "WaterCreeper", 1, new Color(59, 115, 205), new Object[] {Items.water_bucket, new ItemStack(Items.spawn_egg, 1, 50)}, waterCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityFireCreeper.class, "FireCreeper", 2, new Color(227, 111, 24), new Object[] {Items.flint_and_steel, new ItemStack(Items.spawn_egg, 1, 50)}, fireCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityIceCreeper.class, "IceCreeper", 3, Color.white, new Object[] {Items.snowball, new ItemStack(Items.spawn_egg, 1, 50)}, iceCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityElectricCreeper.class, "ElectricCreeper", 4, new Color(251, 234, 57), new Object[] {Items.redstone, new ItemStack(Items.spawn_egg, 1, 50)}, electricCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityEarthCreeper.class, "EarthCreeper", 5, new Color(93, 50, 0), new Object[] {Blocks.dirt, new ItemStack(Items.spawn_egg, 1, 50)}, earthCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityPsychicCreeper.class, "PsychicCreeper", 6, new Color(121, 51, 142), new Object[] {Items.feather, new ItemStack(Items.spawn_egg, 1, 50)}, psychicCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityCookieCreeper.class, "CookieCreeper", 7, new Color(202, 147, 98), new Object[] {Items.cookie, new ItemStack(Items.spawn_egg, 1, 50)}, cookieCreeperSpawn, 1, 2, normalBiomes);
+		registerCreeper(EntityMagmaCreeper.class, "MagmaCreeper", 8, new Color(165, 0, 16), new Object[] {Items.lava_bucket, new ItemStack(Items.spawn_egg, 1, 50)}, magmaCreeperSpawn, 1, 2, new BiomeGenBase[] {BiomeGenBase.hell});
 		registerCreeper(EntityGhostCreeper.class, "GhostCreeper", 9, null, null, 0, 0, 0, null);
-		registerCreeper(EntityFriendlyCreeper.class, "FriendlyCreeper", 10, new Color(215, 113, 211), new Object[] {Item.sugar, new ItemStack(Item.monsterPlacer, 1, 50)}, friendlyCreeperSpawn, 1, 1, normalBiomes);
-		registerCreeper(EntityIllusionCreeper.class, "IllusionCreeper", 11, new Color(158, 158, 158), new Object[] {Item.compass, new ItemStack(Item.monsterPlacer, 1, 50)}, illusionCreeperSpawn, 1, 1, normalBiomes);
+		registerCreeper(EntityFriendlyCreeper.class, "FriendlyCreeper", 10, new Color(215, 113, 211), new Object[] {Items.sugar, new ItemStack(Items.spawn_egg, 1, 50)}, friendlyCreeperSpawn, 1, 1, normalBiomes);
+		registerCreeper(EntityIllusionCreeper.class, "IllusionCreeper", 11, new Color(158, 158, 158), new Object[] {Items.compass, new ItemStack(Items.spawn_egg, 1, 50)}, illusionCreeperSpawn, 1, 1, normalBiomes);
 		registerCreeper(EntityFakeIllusionCreeper.class, "FakeIllusionCreeper", 12, null, null, 0, 0, 0, null);
-		registerCreeper(EntityLightCreeper.class, "LightCreeper", 13, new Color(255, 244, 125), new Object[] {Item.lightStoneDust, new ItemStack(Item.monsterPlacer, 1, 50)}, lightCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityDarkCreeper.class, "DarkCreeper", 14, new Color(50, 50, 50), new Object[] {Item.coal, new ItemStack(Item.monsterPlacer, 1, 50)}, darkCreeperSpawn, 1, 3, normalBiomes);
-		registerCreeper(EntityReverseCreeper.class, "ReverseCreeper", 15, Color.black, new Color(894731), new Object[] {Item.eyeOfEnder, new ItemStack(Item.monsterPlacer, 1, 50)}, reverseCreeperSpawn, 1, 1, normalBiomes);
-		registerCreeper(EntitySpiderCreeper.class, "SpiderCreeper", 16, Color.red, new Object[] {Item.silk, new ItemStack(Item.monsterPlacer, 1, 50)}, spiderCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityLightCreeper.class, "LightCreeper", 13, new Color(255, 244, 125), new Object[] {Items.glowstone_dust, new ItemStack(Items.spawn_egg, 1, 50)}, lightCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityDarkCreeper.class, "DarkCreeper", 14, new Color(50, 50, 50), new Object[] {Items.coal, new ItemStack(Items.spawn_egg, 1, 50)}, darkCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityReverseCreeper.class, "ReverseCreeper", 15, Color.black, new Color(894731), new Object[] {Items.ender_eye, new ItemStack(Items.spawn_egg, 1, 50)}, reverseCreeperSpawn, 1, 1, normalBiomes);
+		registerCreeper(EntitySpiderCreeper.class, "SpiderCreeper", 16, Color.red, new Object[] {Items.string, new ItemStack(Items.spawn_egg, 1, 50)}, spiderCreeperSpawn, 1, 3, normalBiomes);
 		
 		proxy.registerRenderers();
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		
 		// Ignore this bit
-		TotallyNotAprilFools.nothingToSeeHere();
+		//TotallyNotAprilFools.nothingToSeeHere();
 	}
 	
-	@ForgeSubscribe
+	//@ForgeSubscribe
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if(event.entity instanceof EntityCreeper && !(event.entity instanceof EntityElementalCreeper) && !spawnNormalCreepers && event.isCancelable()) {
 			event.setCanceled(true);
 		}
 		
 		// Ignore this bit, too
-		TotallyNotAprilFools.stillNothingToSeeHere(event);
+		//TotallyNotAprilFools.stillNothingToSeeHere(event);
 	}
 }

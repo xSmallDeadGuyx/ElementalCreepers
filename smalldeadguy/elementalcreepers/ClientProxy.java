@@ -1,4 +1,4 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import net.minecraft.client.renderer.entity.*;
 import cpw.mods.fml.client.registry.RenderingRegistry;

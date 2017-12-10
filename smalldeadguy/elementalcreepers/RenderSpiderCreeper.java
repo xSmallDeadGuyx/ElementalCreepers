@@ -1,13 +1,16 @@
-package smalldeadguy.elementalcreepers;
+package ElementalCreepers.smalldeadguy.elementalcreepers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -59,14 +62,14 @@ public class RenderSpiderCreeper extends RenderLiving {
 
 	protected int renderCreeperPassModel(EntityCreeper par1EntityCreeper, int par2, float par3) {
 		if (par1EntityCreeper.getPowered()) {
-			if (par1EntityCreeper.getHasActivePotion())
+			if (par1EntityCreeper.getActivePotionEffects().size() > 1)
 				GL11.glDepthMask(false);
 			else
 				GL11.glDepthMask(true);
 
 			if (par2 == 1) {
 				float f1 = (float)par1EntityCreeper.ticksExisted + par3;
-				this.loadTexture("/armor/power.png");
+				this.bindEntityTexture(par1EntityCreeper);;
 				GL11.glMatrixMode(GL11.GL_TEXTURE);
 				GL11.glLoadIdentity();
 				float f2 = f1 * 0.01F;
@@ -112,5 +115,11 @@ public class RenderSpiderCreeper extends RenderLiving {
 
 	protected int inheritRenderPass(EntityLiving par1EntityLiving, int par2, float par3) {
 		return this.func_77061_b((EntityCreeper)par1EntityLiving, par2, par3);
+	}
+
+	@Override
+	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
