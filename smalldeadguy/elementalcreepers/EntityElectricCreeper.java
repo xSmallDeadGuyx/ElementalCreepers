@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class EntityElectricCreeper extends EntityElementalCreeper {
 	public EntityElectricCreeper(World world) {
 		super(world);
-		texture = "/mob/electriccreeper.png";
+//		texture = "/mob/electriccreeper.png";
 	}
 
 	@Override

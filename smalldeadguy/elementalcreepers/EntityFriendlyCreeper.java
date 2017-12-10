@@ -1,9 +1,9 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCloth;
+//import net.minecraft.block.BlockCloth;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -51,17 +51,17 @@ public class EntityFriendlyCreeper extends EntityTameable {
 
 	public EntityFriendlyCreeper(World par1World) {
 		super(par1World);
-		this.texture = "/mob/friendlycreeper0.png";
-		this.moveSpeed = 0.2F;
+//		this.texture = "/mob/friendlycreeper0.png";
+//		this.moveSpeed = 0.2F;
 		this.setSize(1.0F, 2.0F);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
 		this.tasks.addTask(3, new EntityAIFriendlyCreeperSwell(this));
 		this.tasks.addTask(4, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 0.25F, 0.3F));
-		this.tasks.addTask(5, new EntityAIAttackOnCollide(this, this.moveSpeed, true));
-		this.tasks.addTask(6, new EntityAIFollowOwner(this, this.moveSpeed, 10.0F, 2.0F));
-		this.tasks.addTask(7, new EntityAIMate(this, this.moveSpeed));
-		this.tasks.addTask(8, new EntityAIWander(this, this.moveSpeed));
+//		this.tasks.addTask(5, new EntityAIAttackOnCollide(this, this.moveSpeed, true));
+//		this.tasks.addTask(6, new EntityAIFollowOwner(this, this.moveSpeed, 10.0F, 2.0F));
+//		this.tasks.addTask(7, new EntityAIMate(this, this.moveSpeed));
+//		this.tasks.addTask(8, new EntityAIWander(this, this.moveSpeed));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(10, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
@@ -81,27 +81,27 @@ public class EntityFriendlyCreeper extends EntityTameable {
 			this.timeSinceIgnited = this.fuseTime - 5;
 	}
 
-	public void setAttackTarget(EntityLiving par1EntityLiving) {
-		super.setAttackTarget(par1EntityLiving);
-		if (par1EntityLiving instanceof EntityPlayer)
-			this.setAngry(true);
-	}
+//	public void setAttackTarget(EntityLiving par1EntityLiving) {
+//		super.setAttackTarget(par1EntityLiving);
+//		if (par1EntityLiving instanceof EntityPlayer)
+//			this.setAngry(true);
+//	}
 
-	protected void updateAITick() {
-		this.dataWatcher.updateObject(18, Integer.valueOf(this.getHealth()));
-	}
+//	protected void updateAITick() {
+//		this.dataWatcher.updateObject(18, Integer.valueOf(this.getHealth()));
+//	}
 
-	public int getMaxHealth() {
-		return 20;
-	}
+//	public int getMaxHealth() {
+//		return 20;
+//	}
 
-	protected void entityInit() {
-		super.entityInit();
-		this.dataWatcher.addObject(20, Byte.valueOf((byte) - 1));
-		this.dataWatcher.addObject(21, Byte.valueOf((byte)0));
-		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
-		this.dataWatcher.addObject(19, new Byte((byte)0));
-	}
+//	protected void entityInit() {
+//		super.entityInit();
+//		this.dataWatcher.addObject(20, Byte.valueOf((byte) - 1));
+//		this.dataWatcher.addObject(21, Byte.valueOf((byte)0));
+//		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
+//		this.dataWatcher.addObject(19, new Byte((byte)0));
+//	}
 
 	@SideOnly(Side.CLIENT)
 	public String getTexture() {
@@ -148,9 +148,9 @@ public class EntityFriendlyCreeper extends EntityTameable {
 		return 0.4F;
 	}
 
-	protected int getDropItemId() {
-		return Item.gunpowder.itemID;
-	}
+//	protected int getDropItemId() {
+//		return Item.gunpowder.itemID;
+//	}
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
@@ -222,14 +222,14 @@ public class EntityFriendlyCreeper extends EntityTameable {
 		this.dataWatcher.updateObject(21, Byte.valueOf((byte)1));
 	}
 
-	public void onDeath(DamageSource par1DamageSource) {
-		super.onDeath(par1DamageSource);
-
-		if (par1DamageSource.getEntity() instanceof EntitySkeleton) {
-			int i = Item.record13.itemID + this.rand.nextInt(Item.recordWait.itemID - Item.record13.itemID + 1);
-			this.dropItem(i, 1);
-		}
-	}
+//	public void onDeath(DamageSource par1DamageSource) {
+//		super.onDeath(par1DamageSource);
+//
+//		if (par1DamageSource.getEntity() instanceof EntitySkeleton) {
+//			int i = Item.record13.itemID + this.rand.nextInt(Item.recordWait.itemID - Item.record13.itemID + 1);
+//			this.dropItem(i, 1);
+//		}
+//	}
 
 	@SideOnly(Side.CLIENT)
 	public float getInterestedAngle(float par1) {
@@ -263,66 +263,66 @@ public class EntityFriendlyCreeper extends EntityTameable {
 		return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), i);
 	}
 
-	public boolean interact(EntityPlayer par1EntityPlayer) {
-		ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+//	public boolean interact(EntityPlayer par1EntityPlayer) {
+//		ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+//
+//		if(this.isTamed()) {
+//			if(itemstack != null) {
+////				if(Item.itemsList[itemstack.itemID] instanceof ItemFood) {
+////					ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
+////					if(this.dataWatcher.getWatchableObjectInt(18) < 20) {
+////						if(!par1EntityPlayer.capabilities.isCreativeMode)
+////							--itemstack.stackSize;
+////
+////						this.heal(itemfood.getHealAmount());
+//
+//						if (itemstack.stackSize <= 0)
+//							par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+//
+//						return true;
+//					}
+//				}
+////			}
+//
+////			if (par1EntityPlayer.username.equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(itemstack)) {
+////				this.aiSit.setSitting(!this.isSitting());
+////				this.isJumping = false;
+////				this.setPathToEntity((PathEntity)null);
+////			}
+////		}
+////		else if(itemstack != null && itemstack.itemID == Item.gunpowder.itemID && !this.isAngry()) {
+//			if(!par1EntityPlayer.capabilities.isCreativeMode)
+//				--itemstack.stackSize;
+//
+//			if(itemstack.stackSize <= 0)
+//				par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+//
+//			if(!this.worldObj.isRemote) {
+//				if(this.rand.nextInt(3) == 0) {
+//					this.setTamed(true);
+//					this.setPathToEntity((PathEntity)null);
+//					this.setAttackTarget((EntityLiving)null);
+//					this.aiSit.setSitting(true);
+////					this.setEntityHealth(20);
+////					this.setOwner(par1EntityPlayer.username);
+//					this.playTameEffect(true);
+//					this.worldObj.setEntityState(this, (byte)7);
+//				}
+//				else {
+//					this.playTameEffect(false);
+//					this.worldObj.setEntityState(this, (byte)6);
+//				}
+//			}
+//
+//			return true;
+//		}
+//
+//		return super.interact(par1EntityPlayer);
+//	}
 
-		if(this.isTamed()) {
-			if(itemstack != null) {
-				if(Item.itemsList[itemstack.itemID] instanceof ItemFood) {
-					ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
-					if(this.dataWatcher.getWatchableObjectInt(18) < 20) {
-						if(!par1EntityPlayer.capabilities.isCreativeMode)
-							--itemstack.stackSize;
-
-						this.heal(itemfood.getHealAmount());
-
-						if (itemstack.stackSize <= 0)
-							par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-
-						return true;
-					}
-				}
-			}
-
-			if (par1EntityPlayer.username.equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(itemstack)) {
-				this.aiSit.setSitting(!this.isSitting());
-				this.isJumping = false;
-				this.setPathToEntity((PathEntity)null);
-			}
-		}
-		else if(itemstack != null && itemstack.itemID == Item.gunpowder.itemID && !this.isAngry()) {
-			if(!par1EntityPlayer.capabilities.isCreativeMode)
-				--itemstack.stackSize;
-
-			if(itemstack.stackSize <= 0)
-				par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-
-			if(!this.worldObj.isRemote) {
-				if(this.rand.nextInt(3) == 0) {
-					this.setTamed(true);
-					this.setPathToEntity((PathEntity)null);
-					this.setAttackTarget((EntityLiving)null);
-					this.aiSit.setSitting(true);
-					this.setEntityHealth(20);
-					this.setOwner(par1EntityPlayer.username);
-					this.playTameEffect(true);
-					this.worldObj.setEntityState(this, (byte)7);
-				}
-				else {
-					this.playTameEffect(false);
-					this.worldObj.setEntityState(this, (byte)6);
-				}
-			}
-
-			return true;
-		}
-
-		return super.interact(par1EntityPlayer);
-	}
-
-	public boolean isBreedingItem(ItemStack par1ItemStack) {
-		return par1ItemStack != null && (par1ItemStack.getItem().itemID == Block.plantRed.blockID || par1ItemStack.getItem().itemID == Block.plantYellow.blockID);
-	}
+//	public boolean isBreedingItem(ItemStack par1ItemStack) {
+//		return par1ItemStack != null && (par1ItemStack.getItem().itemID == Block.plantRed.blockID || par1ItemStack.getItem().itemID == Block.plantYellow.blockID);
+//	}
 
 	public int getMaxSpawnedInChunk() {
 		return 3;
@@ -343,12 +343,12 @@ public class EntityFriendlyCreeper extends EntityTameable {
 
 	public EntityFriendlyCreeper spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
 		EntityFriendlyCreeper entity = new EntityFriendlyCreeper(this.worldObj);
-		String s = this.getOwnerName();
+//		String s = this.getOwnerName();
 
-		if (s != null && s.trim().length() > 0) {
-			entity.setOwner(s);
-			entity.setTamed(true);
-		}
+//		if (s != null && s.trim().length() > 0) {
+//			entity.setOwner(s);
+//			entity.setTamed(true);
+//		}
 
 		return entity;
 	}

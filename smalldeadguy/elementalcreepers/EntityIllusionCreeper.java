@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;
@@ -12,7 +12,7 @@ public class EntityIllusionCreeper extends EntityElementalCreeper {
 	
 	public EntityIllusionCreeper(World world) {
 		super(world);
-		texture = "/mob/illusioncreeper.png";
+//		texture = "/mob/illusioncreeper.png";
 	}
 
 	@Override

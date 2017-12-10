@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.DamageSource;

@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class EntitySpiderCreeper extends EntityElementalCreeper {
 	public EntitySpiderCreeper(World world) {
 		super(world);
-		texture = "/mob/spidercreeper.png";
+//		texture = "/mob/spidercreeper.png";
 	}
 
 	protected void entityInit() {
@@ -63,23 +63,23 @@ public class EntitySpiderCreeper extends EntityElementalCreeper {
 				if(rand.nextInt(100) < 2)
 					worldObj.setBlock((int) posX + x, (int) posY + y, (int) posZ + z, Blocks.web);
 
-		List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(posX - radius, posY - radius, posZ - radius, posX + radius, posY + radius, posZ + radius));
+//		List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(posX - radius, posY - radius, posZ - radius, posX + radius, posY + radius, posZ + radius));
 
 		byte b0 = 0;
-		if(this.worldObj.difficultySetting == 1)
-			b0 = 7;
-		else if(this.worldObj.difficultySetting == 2)
-			b0 = 10;
-		else if(this.worldObj.difficultySetting == 3)
-			b0 = 15;
+//		if(this.worldObj.difficultySetting == 1)
+//			b0 = 7;
+//		else if(this.worldObj.difficultySetting == 2)
+//			b0 = 10;
+//		else if(this.worldObj.difficultySetting == 3)
+//			b0 = 15;
 
 		if(b0 > 0)
-			for(Entity e : list)
-				if(e instanceof EntityLiving) {
-					EntityLiving el = (EntityLiving) e;
-					if(el.getDistanceToEntity(this) <= radius)
-						el.addPotionEffect(new PotionEffect(Potion.poison.id, b0 * 20, 0));
-				}
+//			for(Entity e : list)
+//				if(e instanceof EntityLiving) {
+//					EntityLiving el = (EntityLiving) e;
+//					if(el.getDistanceToEntity(this) <= radius)
+//						el.addPotionEffect(new PotionEffect(Potion.poison.id, b0 * 20, 0));
+//				}
 
 		worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 		this.spawnExplosionParticle();
