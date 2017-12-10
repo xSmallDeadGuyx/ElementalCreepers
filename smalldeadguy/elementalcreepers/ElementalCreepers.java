@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -19,6 +20,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -137,7 +139,7 @@ public class ElementalCreepers {
 				BiomeGenBase.river, BiomeGenBase.swampland, BiomeGenBase.taiga, BiomeGenBase.taigaHills
 		};
 		
-		registerCreeper(EntityWaterCreeper.class, "WaterCreeper", 1, new Color(59, 115, 205), new Object[] {Items.water_bucket, new ItemStack(Items.spawn_egg, 1, 50)}, waterCreeperSpawn, 1, 3, normalBiomes);
+		registerCreeper(EntityWaterCreeper.class, "WaterCreeper", 1, new Color(59, 115, 205), new Object[] {Items.water_bucket, new ItemStack(Items.egg, 1, 50)}, waterCreeperSpawn, 1, 3, normalBiomes);
 		registerCreeper(EntityFireCreeper.class, "FireCreeper", 2, new Color(227, 111, 24), new Object[] {Items.flint_and_steel, new ItemStack(Items.spawn_egg, 1, 50)}, fireCreeperSpawn, 1, 3, normalBiomes);
 		registerCreeper(EntityIceCreeper.class, "IceCreeper", 3, Color.white, new Object[] {Items.snowball, new ItemStack(Items.spawn_egg, 1, 50)}, iceCreeperSpawn, 1, 3, normalBiomes);
 		registerCreeper(EntityElectricCreeper.class, "ElectricCreeper", 4, new Color(251, 234, 57), new Object[] {Items.redstone, new ItemStack(Items.spawn_egg, 1, 50)}, electricCreeperSpawn, 1, 3, normalBiomes);
