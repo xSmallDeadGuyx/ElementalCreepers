@@ -3,8 +3,10 @@ package ElementalCreepers.smalldeadguy.elementalcreepers;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -62,7 +64,7 @@ public class RenderFriendlyCreeper extends RenderLiving {
 		if(par1EntityCreeper.getPowered()) {
 			if(par2 == 1) {
 				float var4 = (float)par1EntityCreeper.ticksExisted + par3;
-				this.loadTexture("/armor/power.png");
+				this.bindEntityTexture(par1EntityCreeper);;
 				GL11.glMatrixMode(GL11.GL_TEXTURE);
 				GL11.glLoadIdentity();
 				float var5 = var4 * 0.01F;
@@ -108,5 +110,11 @@ public class RenderFriendlyCreeper extends RenderLiving {
 
 	protected int inheritRenderPass(EntityLiving par1EntityLiving, int par2, float par3) {
 		return this.func_77061_b((EntityFriendlyCreeper)par1EntityLiving, par2, par3);
+	}
+
+	@Override
+	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

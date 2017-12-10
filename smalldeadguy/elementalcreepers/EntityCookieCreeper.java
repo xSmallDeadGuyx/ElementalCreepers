@@ -3,6 +3,7 @@ package ElementalCreepers.smalldeadguy.elementalcreepers;
 import java.util.Random;
 
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -23,7 +24,7 @@ public class EntityCookieCreeper extends EntityElementalCreeper {
 			double d1 = (double)(worldObj.rand.nextFloat() * f1) + (double)(1.0F + f1) * 0.5D;
 			double d2 = (double)(worldObj.rand.nextFloat() * f1) + (double)(1.0F + f1) * 0.5D;
 			
-			EntityItem entityitem = new EntityItem(worldObj, (double)posX + d, (double)posY + d1, (double)posZ + d2, new ItemStack(Item.cookie, 1));
+			EntityItem entityitem = new EntityItem(worldObj, (double)posX + d, (double)posY + d1, (double)posZ + d2, new ItemStack(Items.cookie, 1));
 			entityitem.delayBeforeCanPickup = 10;
 			worldObj.spawnEntityInWorld(entityitem);
 		}
