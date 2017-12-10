@@ -12,7 +12,7 @@ public class EntityIllusionCreeper extends EntityElementalCreeper {
 	
 	public EntityIllusionCreeper(World world) {
 		super(world);
-		texture = "/mob/illusioncreeper.png";
+//		texture = "/mob/illusioncreeper.png";
 	}
 
 	@Override

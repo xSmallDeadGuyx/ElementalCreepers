@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class EntityFakeIllusionCreeper extends EntityElementalCreeper {
 	public EntityFakeIllusionCreeper(World world) {
 		super(world);
-		texture = "/mob/illusioncreeper.png";
+//		texture = "/mob/illusioncreeper.png";
 	}
 
 	@Override

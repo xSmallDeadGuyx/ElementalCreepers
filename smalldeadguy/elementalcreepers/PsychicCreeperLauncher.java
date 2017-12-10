@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.sun.javafx.geom.Vec3d;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
@@ -66,9 +69,11 @@ public class PsychicCreeperLauncher extends Explosion {
 		int l1 = MathHelper.floor_double(this.explosionY + (double)this.explosionSize + 1.0D);
 		int i2 = MathHelper.floor_double(this.explosionZ - (double)this.explosionSize - 1.0D);
 		int j2 = MathHelper.floor_double(this.explosionZ + (double)this.explosionSize + 1.0D);
-		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, AxisAlignedBB.getAABBPool().getAABB((double)i, (double)k, (double)i2, (double)j, (double)l1, (double)j2));
-		Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.explosionX, this.explosionY, this.explosionZ);
+		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, AxisAlignedBB.getBoundingBox((double)i, (double)k, (double)i2, (double)j, (double)l1, (double)j2));
+		//Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.explosionX, this.explosionY, this.explosionZ);
+		Vec3 vec3 = Vec3.createVectorHelper(explosionX, explosionY, explosionZ);
 
+		
 		for(int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = (Entity)list.get(k2);
 

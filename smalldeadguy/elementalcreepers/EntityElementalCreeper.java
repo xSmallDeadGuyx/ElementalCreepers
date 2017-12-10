@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 public class EntityElementalCreeper extends EntityCreeper {
 
 	int timeSinceIgnited;
-
 	int lastActiveTime;
 
 	public EntityElementalCreeper(World par1World) {

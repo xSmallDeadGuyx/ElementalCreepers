@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class EntityElectricCreeper extends EntityElementalCreeper {
 	public EntityElectricCreeper(World world) {
 		super(world);
-		texture = "/mob/electriccreeper.png";
+//		texture = "/mob/electriccreeper.png";
 	}
 
 	@Override

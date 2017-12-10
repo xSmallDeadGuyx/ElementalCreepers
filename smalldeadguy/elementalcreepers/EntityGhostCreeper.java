@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityGhostCreeper extends EntityElementalCreeper {
 	public EntityGhostCreeper(World world) {
 		super(world);
-		texture = "/mob/creeper.png";
+//		texture = "/mob/creeper.png";
 	}
 
 	@Override
