@@ -1,4 +1,4 @@
-package ElementalCreepers.smalldeadguy.elementalcreepers;
+package smalldeadguy.elementalcreepers;
 
 import java.util.List;
 import java.util.Random;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class EntityMagmaCreeper extends EntityElementalCreeper {
 	public EntityMagmaCreeper(World world) {
 		super(world);
-		texture = "/mob/magmacreeper.png";
+//		texture = "/mob/magmacreeper.png";
 		isImmuneToFire = true;
 	}
 
