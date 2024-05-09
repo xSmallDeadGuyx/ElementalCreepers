@@ -1,0 +1,11 @@
+{
+	"type": "forge:add_spawns",
+	"biomes": "#minecraft:is_savanna",
+	"spawners":
+	{
+		"type": "elementalcreepers:fire_creeper",
+		"weight": 120,
+		"minCount": 1,
+		"maxCount": 1
+	}
+}

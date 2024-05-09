@@ -1,0 +1,20 @@
+{
+	// Creative Mode Tab
+	"itemGroup.elementalcreepers.elemental_creeper_egg_tab": "Elemental Creeper Eggs",
+
+	// Spawn Egg Items
+	"item.elementalcreepers.cookie_creeper_spawn_egg": "Cookie Creeper Spawn Egg",
+	"item.elementalcreepers.dark_creeper_spawn_egg": "Dark Creeper Spawn Egg",
+	"item.elementalcreepers.earth_creeper_spawn_egg": "Earth Creeper Spawn Egg",
+	"item.elementalcreepers.electric_creeper_spawn_egg": "Electric Creeper Spawn Egg",
+	"item.elementalcreepers.fire_creeper_spawn_egg": "Fire Creeper Spawn Egg",
+	"item.elementalcreepers.friendly_creeper_spawn_egg": "Fire Creeper Spawn Egg",
+	"item.elementalcreepers.ice_creeper_spawn_egg": "Ice Creeper Spawn Egg",
+	"item.elementalcreepers.illusion_creeper_spawn_egg": "Illusion Creeper Spawn Egg",
+	"item.elementalcreepers.light_creeper_spawn_egg": "Light Creeper Spawn Egg",
+	"item.elementalcreepers.magma_creeper_spawn_egg": "Magma Creeper Spawn Egg",
+	"item.elementalcreepers.psychic_creeper_spawn_egg": "Psychic Creeper Spawn Egg",
+	"item.elementalcreepers.reverse_creeper_spawn_egg": "Reverse Creeper Spawn Egg",
+	"item.elementalcreepers.spider_creeper_spawn_egg": "Spider Creeper Spawn Egg",
+	"item.elementalcreepers.water_creeper_spawn_egg": "Water Creeper Spawn Egg"
+}

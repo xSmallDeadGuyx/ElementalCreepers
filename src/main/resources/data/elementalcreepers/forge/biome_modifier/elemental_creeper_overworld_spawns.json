@@ -1,0 +1,85 @@
+{
+	"type": "forge:add_spawns",
+	"biomes": "#minecraft:is_overworld",
+	"spawners":
+	[
+		{
+			"type": "elementalcreepers:cookie_creeper",
+			"weight": 5,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:dark_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:earth_creeper",
+			"weight": 25,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:electric_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:fire_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:friendly_creeper",
+			"weight": 2,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:ice_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:illusion_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:light_creeper",
+			"weight": 8,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:psychic_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:reverse_creeper",
+			"weight": 12,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:spider_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
+			"type": "elementalcreepers:water_creeper",
+			"weight": 20,
+			"minCount": 1,
+			"maxCount": 1
+		}
+	]
+}
