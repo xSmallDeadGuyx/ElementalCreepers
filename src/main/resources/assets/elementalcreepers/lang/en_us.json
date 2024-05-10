@@ -2,13 +2,31 @@
 	// Creative Mode Tab
 	"itemGroup.elementalcreepers.elemental_creeper_egg_tab": "Elemental Creeper Eggs",
 
+	// Creepers
+	"entity.elementalcreepers.cookie_creeper": "Cookie Creeper",
+	"entity.elementalcreepers.dark_creeper": "Dark Creeper",
+	"entity.elementalcreepers.earth_creeper": "Earth Creeper",
+	"entity.elementalcreepers.electric_creeper": "Electric Creeper",
+	"entity.elementalcreepers.fire_creeper": "Fire Creeper",
+	"entity.elementalcreepers.friendly_creeper": "Friendly Creeper",
+	"entity.elementalcreepers.ghost_creeper": "Ghost Creeper",
+	"entity.elementalcreepers.ice_creeper": "Ice Creeper",
+	"entity.elementalcreepers.illusion_creeper": "Illusion Creeper",
+	"entity.elementalcreepers.light_creeper": "Light Creeper",
+	"entity.elementalcreepers.magma_creeper": "Magma Creeper",
+	"entity.elementalcreepers.psychic_creeper": "Psychic Creeper",
+	"entity.elementalcreepers.reverse_creeper": "Reverse Creeper",
+	"entity.elementalcreepers.spider_creeper": "Spider Creeper",
+	"entity.elementalcreepers.water_creeper": "Water Creeper",
+
+
 	// Spawn Egg Items
 	"item.elementalcreepers.cookie_creeper_spawn_egg": "Cookie Creeper Spawn Egg",
 	"item.elementalcreepers.dark_creeper_spawn_egg": "Dark Creeper Spawn Egg",
 	"item.elementalcreepers.earth_creeper_spawn_egg": "Earth Creeper Spawn Egg",
 	"item.elementalcreepers.electric_creeper_spawn_egg": "Electric Creeper Spawn Egg",
 	"item.elementalcreepers.fire_creeper_spawn_egg": "Fire Creeper Spawn Egg",
-	"item.elementalcreepers.friendly_creeper_spawn_egg": "Fire Creeper Spawn Egg",
+	"item.elementalcreepers.friendly_creeper_spawn_egg": "Friendly Creeper Spawn Egg",
 	"item.elementalcreepers.ice_creeper_spawn_egg": "Ice Creeper Spawn Egg",
 	"item.elementalcreepers.illusion_creeper_spawn_egg": "Illusion Creeper Spawn Egg",
 	"item.elementalcreepers.light_creeper_spawn_egg": "Light Creeper Spawn Egg",
