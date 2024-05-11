@@ -24,7 +24,7 @@ public class PsychicCreeper extends ElementalCreeper {
 			radius *= 1.5d;
 		}
 		Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(this.level(), this, this.getX(), this.getY(),
-				this.getZ(), radius, 0, Config.psychicCreeperLaunchMultiplier, SoundEvents.ENDER_PEARL_THROW);
+				this.getZ(), radius, 0, Config.psychicCreeperLaunchMultiplier);
 
 		handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.ENDER_PEARL_THROW);
 	}

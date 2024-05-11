@@ -11,6 +11,7 @@ import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import io.github.xsmalldeadguyx.elementalcreepers.common.misc.EntityOnlyExplosion;
 import io.github.xsmalldeadguyx.elementalcreepers.common.misc.FriendlyCreeperSwellGoal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
@@ -31,7 +32,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,7 +61,6 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
@@ -74,7 +73,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData
 			.defineId(FriendlyCreeper.class, EntityDataSerializers.INT);
 	private static final float START_HEALTH = 8.0F;
-	private static final float TAME_HEALTH = 20.0F;
+	private static final float TAME_HEALTH = 40.0F;
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 
 	private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(FriendlyCreeper.class,
@@ -95,7 +94,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 
 	public FriendlyCreeper(EntityType<? extends FriendlyCreeper> p_30369_, Level p_30370_) {
 		super(p_30369_, p_30370_);
-		this.setTame(false);
+		this.setTame(false, false);
 	}
 
 	@Override
@@ -123,12 +122,14 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		return Creeper.createAttributes().add(Attributes.MAX_HEALTH, START_HEALTH);
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
-		this.entityData.define(DATA_SWELL_DIR, -1);
-		this.entityData.define(DATA_IS_POWERED, false);
-		this.entityData.define(DATA_IS_IGNITED, false);
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder p_332186_) {
+		super.defineSynchedData(p_332186_);
+		p_332186_.define(DATA_REMAINING_ANGER_TIME, 0);
+		p_332186_.define(DATA_SWELL_DIR, -1);
+		p_332186_.define(DATA_IS_POWERED, false);
+		p_332186_.define(DATA_IS_IGNITED, false);
 	}
 
 	public void addAdditionalSaveData(CompoundTag p_30418_) {
@@ -249,20 +250,20 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 				radius *= 1.5d;
 			}
 			
-			Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(level, this, this.getX(), this.getY(), this.getZ(), radius, 0.8d, 1.d, SoundEvents.GENERIC_EXPLODE);
+			Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(level, this, this.getX(), this.getY(), this.getZ(), radius, 0.8d, 1.d);
 			handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.GENERIC_EXPLODE);
 		}
 	}
 
 	protected void handleNetworkedExplosionEffects(double radius, @Nullable Map<Player, Vec3> hitPlayers,
-			SoundEvent soundEvent) {
+			Holder<SoundEvent> soundEvent) {
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
 
 		Level level = this.level();
 		if (this.level().isClientSide()) {
-			this.level().playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
+			this.level().playLocalSound(x, y, z, soundEvent.get(), SoundSource.BLOCKS, 4.0F,
 					(1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
@@ -324,31 +325,38 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		if (this.isInvulnerableTo(p_30386_)) {
 			return false;
 		} else {
-			Entity entity = p_30386_.getEntity();
 			Level level = this.level();
 			if (!level.isClientSide()) {
 				this.setOrderedToSit(false);
-			}
-
-			if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
-				p_30387_ = (p_30387_ + 1.0F) / 2.0F;
 			}
 
 			return super.hurt(p_30386_, p_30387_);
 		}
 	}
 
-	public void setTame(boolean p_30443_) {
-		super.setTame(p_30443_);
-		if (p_30443_) {
-			this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(TAME_HEALTH);
-			this.setHealth(20.0F);
-		} else {
-			this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(START_HEALTH);
-		}
+	@Override
+    public void setTame(boolean p_21836_, boolean p_332364_) {
+        byte b0 = this.entityData.get(DATA_FLAGS_ID);
+        if (p_21836_) {
+            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 4));
+        } else {
+            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -5));
+        }
 
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
-	}
+        if (p_332364_) {
+            this.applyTamingSideEffects();
+        }
+    }
+
+    @Override
+    protected void applyTamingSideEffects() {
+        if (this.isTame()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(TAME_HEALTH);
+            this.setHealth(40.0F);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(START_HEALTH);
+        }
+    }
 
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
@@ -433,7 +441,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 			UUID uuid = this.getOwnerUUID();
 			if (uuid != null) {
 				baby.setOwnerUUID(uuid);
-				baby.setTame(true);
+				baby.setTame(true, true);
 			}
 		}
 

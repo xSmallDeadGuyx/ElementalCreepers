@@ -31,14 +31,20 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.EntityFactory;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent.Operation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -89,6 +95,7 @@ public class ElementalCreepers {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		modEventBus.addListener(this::entityAttributeCreationEvent);
+		modEventBus.addListener(this::spawnPlacementRegisterEvent);
 		
 		EGG_ITEMS.add(ITEMS.register("friendly_creeper_spawn_egg", () -> new ForgeSpawnEggItem(FRIENDLY_CREEPER, 894731, new Color(215, 113, 211).getRGB(), new Item.Properties())));
 
@@ -126,7 +133,6 @@ public class ElementalCreepers {
 							new Item.Properties()));
 			EGG_ITEMS.add(eggRO);
 		}
-
 		return entityRO;
 	}
 
@@ -149,5 +155,26 @@ public class ElementalCreepers {
 		event.put(WATER_CREEPER.get(), WaterCreeper.createAttributes().build());
 
 		event.put(FRIENDLY_CREEPER.get(), FriendlyCreeper.createAttributes().build());
+	}
+	
+	@SubscribeEvent
+	public void spawnPlacementRegisterEvent(SpawnPlacementRegisterEvent event) {
+		event.register(COOKIE_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(DARK_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(EARTH_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(ELECTRIC_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(FAKE_ILLUSION_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(FIRE_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(ICE_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(ILLUSION_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(GHOST_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(LIGHT_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(MAGMA_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(PSYCHIC_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(REVERSE_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(SPIDER_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+		event.register(WATER_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
+
+		event.register(FRIENDLY_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, Operation.AND);
 	}
 }

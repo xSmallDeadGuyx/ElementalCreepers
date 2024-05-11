@@ -14,7 +14,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Creeper;
@@ -96,9 +95,9 @@ public class SpiderCreeper extends ElementalCreeper {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder p_334759_) {
+		super.defineSynchedData(p_334759_);
+		p_334759_.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	@Override
@@ -141,11 +140,6 @@ public class SpiderCreeper extends ElementalCreeper {
 		if (!p_33796_.is(Blocks.COBWEB)) {
 			super.makeStuckInBlock(p_33796_, p_33797_);
 		}
-	}
-
-	@Override
-	public MobType getMobType() {
-		return MobType.ARTHROPOD;
 	}
 
 	@Override

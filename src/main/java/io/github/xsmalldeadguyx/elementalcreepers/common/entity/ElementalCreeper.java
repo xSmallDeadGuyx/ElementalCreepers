@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.core.Holder;
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import net.minecraft.core.BlockPos;
@@ -147,7 +148,7 @@ public class ElementalCreeper extends Creeper {
 					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
 							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO,
 							Explosion.BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER,
-							soundEvent));
+							Holder.direct(soundEvent)));
 				}
 			}
 		}

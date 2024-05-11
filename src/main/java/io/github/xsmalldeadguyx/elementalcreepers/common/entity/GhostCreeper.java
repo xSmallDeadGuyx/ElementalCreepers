@@ -25,9 +25,8 @@ public class GhostCreeper extends ElementalCreeper {
 		}
 
 		Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(this.level(), this, this.getX(), this.getY(),
-				this.getZ(), Config.ghostCreeperExplosionRadius, Config.ghostCreeperDamageMultiplier, 0,
-				SoundEvents.GENERIC_EXPLODE);
+				this.getZ(), Config.ghostCreeperExplosionRadius, Config.ghostCreeperDamageMultiplier, 0);
 
-		handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.GENERIC_EXPLODE);
+		handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.GENERIC_EXPLODE.get());
 	}
 }

@@ -3,11 +3,8 @@ package io.github.xsmalldeadguyx.elementalcreepers.common.misc;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Maps;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class EntityOnlyExplosion {
 	public static Map<Player, Vec3> explodeAt(Level level, Entity source, double x, double y, double z, double radius,
-			double damageMulti, double launchMulti, @Nullable SoundEvent soundEvent) {
+			double damageMulti, double launchMulti) {
 		double diameter = radius * 2;
 		int k1 = Mth.floor(x - diameter - 1.0D);
 		int l1 = Mth.floor(x + diameter + 1.0D);
