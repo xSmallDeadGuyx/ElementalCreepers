@@ -4,6 +4,12 @@
 	"spawners":
 	[
 		{
+			"type": "elementalcreepers:celebration_creeper",
+			"weight": 3,
+			"minCount": 1,
+			"maxCount": 1
+		},
+		{
 			"type": "elementalcreepers:cookie_creeper",
 			"weight": 5,
 			"minCount": 1,

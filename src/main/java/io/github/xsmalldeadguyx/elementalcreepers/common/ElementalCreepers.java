@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import io.github.xsmalldeadguyx.elementalcreepers.common.entity.CelebrationCreeper;
 import io.github.xsmalldeadguyx.elementalcreepers.common.entity.CookieCreeper;
 import io.github.xsmalldeadguyx.elementalcreepers.common.entity.DarkCreeper;
 import io.github.xsmalldeadguyx.elementalcreepers.common.entity.EarthCreeper;
@@ -71,6 +72,7 @@ public class ElementalCreepers {
 
 	public static List<RegistryObject<ForgeSpawnEggItem>> EGG_ITEMS = new ArrayList<RegistryObject<ForgeSpawnEggItem>>();
 
+	public static RegistryObject<EntityType<CelebrationCreeper>> CELEBRATION_CREEPER = registerCreeper(CelebrationCreeper::new, "celebration_creeper", new Color(98, 182, 24));
 	public static RegistryObject<EntityType<CookieCreeper>> COOKIE_CREEPER = registerCreeper(CookieCreeper::new, "cookie_creeper", new Color(202, 147, 98));
 	public static RegistryObject<EntityType<DarkCreeper>> DARK_CREEPER = registerCreeper(DarkCreeper::new, "dark_creeper", new Color(50, 50, 50));
 	public static RegistryObject<EntityType<EarthCreeper>> EARTH_CREEPER = registerCreeper(EarthCreeper::new, "earth_creeper", new Color(93, 50, 0));
@@ -138,6 +140,7 @@ public class ElementalCreepers {
 
 	@SubscribeEvent
 	public void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
+		event.put(CELEBRATION_CREEPER.get(), CelebrationCreeper.createAttributes().build());
 		event.put(COOKIE_CREEPER.get(), CookieCreeper.createAttributes().build());
 		event.put(DARK_CREEPER.get(), DarkCreeper.createAttributes().build());
 		event.put(EARTH_CREEPER.get(), EarthCreeper.createAttributes().build());
@@ -159,6 +162,7 @@ public class ElementalCreepers {
 	
 	@SubscribeEvent
 	public void spawnPlacementRegisterEvent(SpawnPlacementRegisterEvent event) {
+		event.register(CELEBRATION_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
 		event.register(COOKIE_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
 		event.register(DARK_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);
 		event.register(EARTH_CREEPER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.AND);

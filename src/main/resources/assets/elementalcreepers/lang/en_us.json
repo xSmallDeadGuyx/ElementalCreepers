@@ -3,6 +3,7 @@
 	"itemGroup.elementalcreepers.elemental_creeper_egg_tab": "Elemental Creeper Eggs",
 
 	// Creepers
+	"entity.elementalcreepers.celebration_creeper": "Celebration Creeper",
 	"entity.elementalcreepers.cookie_creeper": "Cookie Creeper",
 	"entity.elementalcreepers.dark_creeper": "Dark Creeper",
 	"entity.elementalcreepers.earth_creeper": "Earth Creeper",
@@ -21,6 +22,7 @@
 
 
 	// Spawn Egg Items
+	"item.elementalcreepers.celebration_creeper_spawn_egg": "Celebration Creeper Spawn Egg",
 	"item.elementalcreepers.cookie_creeper_spawn_egg": "Cookie Creeper Spawn Egg",
 	"item.elementalcreepers.dark_creeper_spawn_egg": "Dark Creeper Spawn Egg",
 	"item.elementalcreepers.earth_creeper_spawn_egg": "Earth Creeper Spawn Egg",

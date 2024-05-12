@@ -1,6 +1,8 @@
 package io.github.xsmalldeadguyx.elementalcreepers.client;
 
+import io.github.xsmalldeadguyx.elementalcreepers.client.model.CelebrationCreeperModel;
 import io.github.xsmalldeadguyx.elementalcreepers.client.model.SpiderCreeperModel;
+import io.github.xsmalldeadguyx.elementalcreepers.client.renderer.CelebrationCreeperRenderer;
 import io.github.xsmalldeadguyx.elementalcreepers.client.renderer.CookieCreeperRenderer;
 import io.github.xsmalldeadguyx.elementalcreepers.client.renderer.DarkCreeperRenderer;
 import io.github.xsmalldeadguyx.elementalcreepers.client.renderer.EarthCreeperRenderer;
@@ -34,10 +36,14 @@ public class ElementalCreepersClient {
 	public static ModelLayerLocation SPIDER_CREEPER_MODEL_LAYER_LOCATION = new ModelLayerLocation(
 			new ResourceLocation(ElementalCreepers.MODID, "spider_creeper"), "main");
 
+	public static ModelLayerLocation CELEBRATION_CREEPER_MODEL_LAYER_LOCATION = new ModelLayerLocation(
+			new ResourceLocation(ElementalCreepers.MODID, "celebration_creeper"), "main");
+
 	@Mod.EventBusSubscriber(modid = ElementalCreepers.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientModEvents {
 		@SubscribeEvent(priority = EventPriority.LOW)
 		public static void onClientSetup(FMLClientSetupEvent event) {
+			EntityRenderers.register(ElementalCreepers.CELEBRATION_CREEPER.get(), CelebrationCreeperRenderer::new);
 			EntityRenderers.register(ElementalCreepers.COOKIE_CREEPER.get(), CookieCreeperRenderer::new);
 			EntityRenderers.register(ElementalCreepers.DARK_CREEPER.get(), DarkCreeperRenderer::new);
 			EntityRenderers.register(ElementalCreepers.EARTH_CREEPER.get(), EarthCreeperRenderer::new);
@@ -60,6 +66,7 @@ public class ElementalCreepersClient {
 		@SubscribeEvent
 		public static void setupModelLayers(RegisterLayerDefinitions event) {
 			event.registerLayerDefinition(SPIDER_CREEPER_MODEL_LAYER_LOCATION, SpiderCreeperModel::createBodyLayer);
+			event.registerLayerDefinition(CELEBRATION_CREEPER_MODEL_LAYER_LOCATION, CelebrationCreeperModel::createBodyLayer);
 		}
 	}
 }

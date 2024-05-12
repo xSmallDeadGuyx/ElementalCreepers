@@ -35,9 +35,20 @@ public class ReverseCreeper extends ElementalCreeper {
 						BlockPos posB = new BlockPos((int) this.getX() + x, (int) this.getY() - (y - 1),
 								(int) this.getZ() + z);
 
+						// Prevent flipping blocks out of build height.
+						if (level.isOutsideBuildHeight(posA) || level.isOutsideBuildHeight(posB))
+							continue;
+
 						BlockState stateA = level.getBlockState(posA);
 						BlockState stateB = level.getBlockState(posB);
 
+						// Prevent flipping blocks which can't be destroyed/pushed.
+						if (stateA.getDestroySpeed(this.level(), posA) == -1.0F
+								|| stateB.getDestroySpeed(this.level(), posB) == -1.0F) {
+							continue;
+						}
+
+						// Prevent flipping entities which we can't preserve properly.
 						if (stateA.hasBlockEntity() || stateB.hasBlockEntity()) {
 							continue;
 						}

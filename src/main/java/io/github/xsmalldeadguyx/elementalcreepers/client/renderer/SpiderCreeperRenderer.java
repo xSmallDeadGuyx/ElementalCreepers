@@ -16,7 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpiderCreeperRenderer extends MobRenderer<SpiderCreeper, SpiderCreeperModel<SpiderCreeper>> {
 	public SpiderCreeperRenderer(EntityRendererProvider.Context p_173958_) {
-		super(p_173958_, new SpiderCreeperModel<>(p_173958_.bakeLayer(ElementalCreepersClient.SPIDER_CREEPER_MODEL_LAYER_LOCATION)), 0.5F);
+		super(p_173958_, new SpiderCreeperModel<>(
+				p_173958_.bakeLayer(ElementalCreepersClient.SPIDER_CREEPER_MODEL_LAYER_LOCATION)), 0.5F);
 		this.addLayer(new SpiderCreeperPowerLayer(this, p_173958_.getModelSet()));
 	}
 
