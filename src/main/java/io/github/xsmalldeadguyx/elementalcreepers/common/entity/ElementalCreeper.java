@@ -6,11 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.core.Holder;
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +23,6 @@ import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -146,9 +143,7 @@ public class ElementalCreeper extends Creeper {
 			for (ServerPlayer serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
 					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
-							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO,
-							Explosion.BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER,
-							Holder.direct(soundEvent)));
+							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO));
 				}
 			}
 		}

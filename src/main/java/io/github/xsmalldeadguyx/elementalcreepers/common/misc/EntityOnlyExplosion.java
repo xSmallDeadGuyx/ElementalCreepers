@@ -51,7 +51,7 @@ public class EntityOnlyExplosion {
 				}
 			}
 
-			if (!entity.ignoreExplosion(null)) {
+			if (!entity.ignoreExplosion()) {
 				double d12 = Math.sqrt(entity.distanceToSqr(vec3)) / diameter;
 				if (d12 <= 1.0D) {
 					double d5 = entity.getX() - x;
