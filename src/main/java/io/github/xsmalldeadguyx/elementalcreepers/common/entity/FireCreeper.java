@@ -38,10 +38,10 @@ public class FireCreeper extends ElementalCreeper {
 								(int) this.getZ() + z);
 						BlockPos belowPos = blockPos.offset(0, -1, 0);
 
-						if (this.level().getBlockState(blockPos).isAir() && this.level().getBlockState(belowPos)
-								.isFaceSturdy(this.level(), belowPos, Direction.UP)
-								&& this.level().random.nextBoolean()) {
-							this.level().setBlockAndUpdate(blockPos, Blocks.FIRE.defaultBlockState());
+						if (this.level.getBlockState(blockPos).isAir() && this.level.getBlockState(belowPos)
+								.isFaceSturdy(this.level, belowPos, Direction.UP)
+								&& this.level.random.nextBoolean()) {
+							this.level.setBlockAndUpdate(blockPos, Blocks.FIRE.defaultBlockState());
 						}
 					}
 				}

@@ -26,7 +26,7 @@ public class ElectricCreeper extends ElementalCreeper {
 			radius *= 1.5;
 		}
 
-		List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class,
+		List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class,
 				AABB.ofSize(this.position(), radius, radius, radius));
 
 		for (LivingEntity entity : entities) {
@@ -34,10 +34,10 @@ public class ElectricCreeper extends ElementalCreeper {
 				continue;
 			}
 
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level());
+			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level);
 			if (bolt != null) {
 				bolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
-				this.level().addFreshEntity(bolt);
+				this.level.addFreshEntity(bolt);
 			}
 		}
 

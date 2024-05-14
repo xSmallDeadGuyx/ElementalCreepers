@@ -23,7 +23,7 @@ public class LightCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level();
+		Level level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = (int) -radius - 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {

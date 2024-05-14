@@ -81,7 +81,7 @@ public class ElementalCreeper extends Creeper {
 				this.swell = 0;
 			}
 
-			Level level = this.level();
+			Level level = this.level;
 			if (this.swell >= this.maxSwell) {
 				this.swell = this.maxSwell;
 				if (!level.isClientSide()) {
@@ -98,7 +98,7 @@ public class ElementalCreeper extends Creeper {
 
 	protected void creeperEffect() {
 		// float f = this.isPowered() ? 2.0F : 1.0F;
-		// this.level().explode(this, this.getX(), this.getY(), this.getZ(), (float)
+		// this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)
 		// this.explosionRadius * f,
 		// Level.ExplosionInteraction.MOB);
 		// this.spawnLingeringCloud();
@@ -107,7 +107,7 @@ public class ElementalCreeper extends Creeper {
 	protected void spawnLingeringCloud() {
 		Collection<MobEffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
+			AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
 			areaeffectcloud.setRadius(2.5F);
 			areaeffectcloud.setRadiusOnUse(-0.5F);
 			areaeffectcloud.setWaitTime(10);
@@ -118,7 +118,7 @@ public class ElementalCreeper extends Creeper {
 				areaeffectcloud.addEffect(new MobEffectInstance(mobeffectinstance));
 			}
 
-			this.level().addFreshEntity(areaeffectcloud);
+			this.level.addFreshEntity(areaeffectcloud);
 		}
 	}
 
@@ -132,14 +132,14 @@ public class ElementalCreeper extends Creeper {
 		double y = this.getY();
 		double z = this.getZ();
 
-		Level level = this.level();
-		if (this.level().isClientSide()) {
-			this.level().playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
+		Level level = this.level;
+		if (this.level.isClientSide()) {
+			this.level.playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
 					(1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
-		if (this.level() instanceof ServerLevel) {
-			ServerLevel serverLevel = (ServerLevel) this.level();
+		if (this.level instanceof ServerLevel) {
+			ServerLevel serverLevel = (ServerLevel) this.level;
 			for (ServerPlayer serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
 					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
@@ -155,13 +155,13 @@ public class ElementalCreeper extends Creeper {
 	public void die(DamageSource p_21014_) {
 		super.die(p_21014_);
 
-		Level level = this.level();
+		Level level = this.level;
 		if (level instanceof ServerLevel && level.random.nextDouble() < Config.ghostCreeperSpawnChance
 				&& !(this instanceof GhostCreeper)) {
-			ElementalCreeper ghost = ElementalCreepers.GHOST_CREEPER.get().create(this.level());
+			ElementalCreeper ghost = ElementalCreepers.GHOST_CREEPER.get().create(this.level);
 			if (ghost != null) {
 				ghost.moveTo(this.blockPosition(), this.getYRot(), this.getXRot());
-				this.level().addFreshEntity(ghost);
+				this.level.addFreshEntity(ghost);
 			}
 		}
 	}

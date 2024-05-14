@@ -30,9 +30,9 @@ public class EarthCreeper extends ElementalCreeper {
 					double distSqr = Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2);
 					BlockPos blockPos = new BlockPos((int) this.getX() + x, (int) this.getY() + y,
 							(int) this.getZ() + z);
-					if (this.level().getBlockState(blockPos).isAir() && distSqr <= rSqr
-							&& this.level().random.nextFloat() < 0.75f) {
-						this.level().setBlockAndUpdate(blockPos, Blocks.DIRT.defaultBlockState());
+					if (this.level.getBlockState(blockPos).isAir() && distSqr <= rSqr
+							&& this.level.random.nextFloat() < 0.75f) {
+						this.level.setBlockAndUpdate(blockPos, Blocks.DIRT.defaultBlockState());
 					}
 				}
 

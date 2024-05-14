@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -65,8 +66,11 @@ public class EntityOnlyExplosion {
 						double d14 = (double) Explosion.getSeenPercent(vec3, entity);
 						double d10 = (1.0D - d12) * d14;
 						if (damageMulti > 0) {
-							entity.hurt(level.damageSources().explosion(null, source), (float) ((int) (damageMulti
-									* ((d10 * d10 + d10) / 2.0D * 7.0D * diameter + 1.0D))));
+							entity.hurt(
+									DamageSource
+											.explosion(source instanceof LivingEntity ? (LivingEntity) source : null),
+									(float) ((int) (damageMulti
+											* ((d10 * d10 + d10) / 2.0D * 7.0D * diameter + 1.0D))));
 						}
 						double d11;
 						if (entity instanceof LivingEntity) {

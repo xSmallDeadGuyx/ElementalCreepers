@@ -34,32 +34,32 @@ public class CelebrationCreeper extends ElementalCreeper {
 					BlockPos blockPos = new BlockPos((int) this.getX() + x, (int) this.getY() + y,
 							(int) this.getZ() + z);
 
-					BlockState blockState = this.level().getBlockState(blockPos);
+					BlockState blockState = this.level.getBlockState(blockPos);
 					boolean isAir = blockState.isAir();
-					boolean isReplaceable = blockState.canBeReplaced();
+					boolean isReplaceable = blockState.getMaterial().isReplaceable();
 
 					if (x == 0 && z == 0) {
 						// Try and place a cake.
 						if (isAir || isReplaceable)
-							if (this.level().setBlockAndUpdate(blockPos,
+							if (this.level.setBlockAndUpdate(blockPos,
 									Blocks.LIME_CANDLE_CAKE.defaultBlockState().setValue(CandleCakeBlock.LIT, true))) {
-								this.level().getBlockState(blockPos).setValue(CandleCakeBlock.LIT, true);
+								this.level.getBlockState(blockPos).setValue(CandleCakeBlock.LIT, true);
 								break;
 							}
 					} else if (Math.abs(x) < 2 && Math.abs(z) < 2) {
 						// Try and place candles.
 						if (isAir || isReplaceable)
-							if (this.level().setBlockAndUpdate(blockPos, Blocks.LIME_CANDLE.defaultBlockState())) {
+							if (this.level.setBlockAndUpdate(blockPos, Blocks.LIME_CANDLE.defaultBlockState())) {
 								candles.add(blockPos);
 								break;
 							}
 					} else {
 						// Shoot fireworks!
 						if (isAir || isReplaceable) {
-							FireworkRocketEntity fireworkrocketentity = new FireworkRocketEntity(this.level(), this,
+							FireworkRocketEntity fireworkrocketentity = new FireworkRocketEntity(this.level, this,
 									this.getX() + x, this.getY() + y + 0.15D, this.getZ() + z,
 									new ItemStack(Items.FIREWORK_ROCKET));
-							this.level().addFreshEntity(fireworkrocketentity);
+							this.level.addFreshEntity(fireworkrocketentity);
 							break;
 						}
 					}
@@ -76,10 +76,10 @@ public class CelebrationCreeper extends ElementalCreeper {
 				numCandles++;
 
 			numCandles = Math.max(1, Math.min(4, numCandles));
-			BlockState newState = this.level().getBlockState(candles.get(i)).setValue(CandleBlock.CANDLES, numCandles)
+			BlockState newState = this.level.getBlockState(candles.get(i)).setValue(CandleBlock.CANDLES, numCandles)
 					.setValue(CandleBlock.LIT, true);
 
-			this.level().setBlockAndUpdate(candles.get(i), newState);
+			this.level.setBlockAndUpdate(candles.get(i), newState);
 		}
 
 		handleNetworkedExplosionEffects(3F, SoundEvents.FIREWORK_ROCKET_LAUNCH);

@@ -143,7 +143,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 
 	public void readAdditionalSaveData(CompoundTag p_30402_) {
 		super.readAdditionalSaveData(p_30402_);
-		this.readPersistentAngerSaveData(this.level(), p_30402_);
+		this.readPersistentAngerSaveData(this.level, p_30402_);
 		this.entityData.set(DATA_IS_POWERED, p_30402_.getBoolean("powered"));
 		if (p_30402_.contains("Fuse", 99)) {
 			this.maxSwell = p_30402_.getShort("Fuse");
@@ -239,7 +239,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 	}
 
 	private void explodeCreeper() {
-		Level level = this.level();
+		Level level = this.level;
 		if (!level.isClientSide()) {
 			double radius = this.explosionRadius;
 			if (this.isPowered())
@@ -258,14 +258,14 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		double y = this.getY();
 		double z = this.getZ();
 
-		Level level = this.level();
-		if (this.level().isClientSide()) {
-			this.level().playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
+		Level level = this.level;
+		if (this.level.isClientSide()) {
+			this.level.playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
 					(1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
-		if (this.level() instanceof ServerLevel) {
-			ServerLevel serverLevel = (ServerLevel) this.level();
+		if (this.level instanceof ServerLevel) {
+			ServerLevel serverLevel = (ServerLevel) this.level;
 			for (ServerPlayer serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
 					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
@@ -280,7 +280,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 	private void spawnLingeringCloud() {
 		Collection<MobEffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
+			AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
 			areaeffectcloud.setRadius(2.5F);
 			areaeffectcloud.setRadiusOnUse(-0.5F);
 			areaeffectcloud.setWaitTime(10);
@@ -291,7 +291,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 				areaeffectcloud.addEffect(new MobEffectInstance(mobeffectinstance));
 			}
 
-			this.level().addFreshEntity(areaeffectcloud);
+			this.level.addFreshEntity(areaeffectcloud);
 		}
 
 	}
@@ -310,7 +310,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 
 	public void aiStep() {
 		super.aiStep();
-		Level level = this.level();
+		Level level = this.level;
 		if (!level.isClientSide()) {
 			this.updatePersistentAnger((ServerLevel) level, true);
 		}
@@ -320,7 +320,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		if (this.isInvulnerableTo(p_30386_)) {
 			return false;
 		} else {
-			Level level = this.level();
+			Level level = this.level;
 			if (!level.isClientSide()) {
 				this.setOrderedToSit(false);
 			}
@@ -344,7 +344,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
-		Level level = this.level();
+		Level level = this.level;
 		if (level.isClientSide()) {
 			boolean flag = this.isOwnedBy(p_30412_) || this.isTame()
 					|| itemstack.is(Items.GUNPOWDER) && !this.isTame() && !this.isAngry();
@@ -381,9 +381,9 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 				this.navigation.stop();
 				this.setTarget((LivingEntity) null);
 				this.setOrderedToSit(true);
-				this.level().broadcastEntityEvent(this, (byte) 7);
+				this.level.broadcastEntityEvent(this, (byte) 7);
 			} else {
-				this.level().broadcastEntityEvent(this, (byte) 6);
+				this.level.broadcastEntityEvent(this, (byte) 6);
 			}
 
 			return InteractionResult.SUCCESS;

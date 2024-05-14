@@ -22,7 +22,7 @@ public class CookieCreeper extends ElementalCreeper {
 			amount = (int) (amount * 1.5);
 		}
 
-		Level level = this.level();
+		Level level = this.level;
 		for (int i = 0; i < amount; ++i) {
 			double dx = level.random.nextDouble() - 0.5;
 			double dy = level.random.nextDouble() + 0.5;
@@ -35,9 +35,9 @@ public class CookieCreeper extends ElementalCreeper {
 			if (captureDrops() != null)
 				captureDrops().add(cookieEntity);
 			else
-				this.level().addFreshEntity(cookieEntity);
+				this.level.addFreshEntity(cookieEntity);
 		}
 
-		handleNetworkedExplosionEffects(5.d, SoundEvents.DECORATED_POT_BREAK);
+		handleNetworkedExplosionEffects(5.d, SoundEvents.VILLAGER_CELEBRATE);
 	}
 }

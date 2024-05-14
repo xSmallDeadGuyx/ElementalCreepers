@@ -5,6 +5,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -20,7 +21,7 @@ public class IllusionCreeper extends ElementalCreeper {
 	public void tick() {
 		super.tick();
 
-		Level level = this.level();
+		Level level = this.level;
 		if (!hasSplit && !level.isClientSide()) {
 			Player player = level.getNearestPlayer(this, 8.d);
 			if (player != null) {
@@ -34,7 +35,7 @@ public class IllusionCreeper extends ElementalCreeper {
 
 						double launchX = random.nextDouble() * 0.5 - 0.25;
 						double launchZ = random.nextDouble() * 0.5 - 0.25;
-						fake.addDeltaMovement(new Vec3(launchX, 0.5, launchZ));
+						fake.setDeltaMovement(new Vec3(launchX, 0.5, launchZ));
 
 						level.addFreshEntity(fake);
 					}
@@ -42,7 +43,7 @@ public class IllusionCreeper extends ElementalCreeper {
 				double launchX = random.nextDouble() * 0.5 - 0.25;
 				double launchZ = random.nextDouble() * 0.5 - 0.25;
 
-				this.addDeltaMovement(new Vec3(launchX, 0.5, launchZ));
+				this.setDeltaMovement(new Vec3(launchX, 0.5, launchZ));
 
 				hasSplit = true;
 			}
@@ -52,7 +53,8 @@ public class IllusionCreeper extends ElementalCreeper {
 	@Override
 	public void creeperEffect() {
 		float f = this.isPowered() ? 1.5f : 1;
-		this.level().explode(this, this.getX(), this.getY(), this.getZ(), 3f * f, Level.ExplosionInteraction.MOB);
+        Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+		this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3f * f, explosion$blockinteraction);
 
 		this.spawnLingeringCloud();
 	}

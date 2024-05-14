@@ -23,7 +23,7 @@ public class ReverseCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level();
+		Level level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {
@@ -43,8 +43,8 @@ public class ReverseCreeper extends ElementalCreeper {
 						BlockState stateB = level.getBlockState(posB);
 
 						// Prevent flipping blocks which can't be destroyed/pushed.
-						if (stateA.getDestroySpeed(this.level(), posA) == -1.0F
-								|| stateB.getDestroySpeed(this.level(), posB) == -1.0F) {
+						if (stateA.getDestroySpeed(level, posA) == -1.0F
+								|| stateB.getDestroySpeed(level, posB) == -1.0F) {
 							continue;
 						}
 

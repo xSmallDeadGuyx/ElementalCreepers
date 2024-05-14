@@ -47,17 +47,17 @@ public class SpiderCreeper extends ElementalCreeper {
 					double distSqr = Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2);
 					BlockPos blockPos = new BlockPos((int) this.getX() + x, (int) this.getY() + y,
 							(int) this.getZ() + z);
-					if (this.level().getBlockState(blockPos).isAir() && distSqr <= rSqr
-							&& this.level().random.nextFloat() < 0.05f) {
-						this.level().setBlockAndUpdate(blockPos, Blocks.COBWEB.defaultBlockState());
+					if (this.level.getBlockState(blockPos).isAir() && distSqr <= rSqr
+							&& this.level.random.nextFloat() < 0.05f) {
+						this.level.setBlockAndUpdate(blockPos, Blocks.COBWEB.defaultBlockState());
 					}
 				}
 
-		List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class,
+		List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class,
 				AABB.ofSize(this.position(), radius, radius, radius));
 
 		double poisonTime = Config.spiderCreeperPoisonTimeMedium;
-		switch (this.level().getDifficulty()) {
+		switch (this.level.getDifficulty()) {
 		case EASY:
 			poisonTime *= 0.66;
 			break;
@@ -103,7 +103,7 @@ public class SpiderCreeper extends ElementalCreeper {
 	@Override
 	public void tick() {
 		super.tick();
-		Level level = this.level();
+		Level level = this.level;
 		if (!level.isClientSide) {
 			this.setClimbing(this.horizontalCollision);
 		}

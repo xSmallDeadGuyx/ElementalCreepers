@@ -42,7 +42,7 @@ public class WaterCreeper extends ElementalCreeper {
 							(int) this.getZ() + z);
 
 					double distSqr = Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2);
-					if (this.level().getBlockState(blockPos).isAir() && distSqr <= rSqr) {
+					if (this.level.getBlockState(blockPos).isAir() && distSqr <= rSqr) {
 						BlockState blockState;
 
 						if (distSqr <= fullSqr && !placedPermanentAtThisXY) {
@@ -52,7 +52,7 @@ public class WaterCreeper extends ElementalCreeper {
 							blockState = flowingState.createLegacyBlock();
 						}
 
-						this.level().setBlock(blockPos, blockState, 2);
+						this.level.setBlock(blockPos, blockState, 2);
 					}
 				}
 			}

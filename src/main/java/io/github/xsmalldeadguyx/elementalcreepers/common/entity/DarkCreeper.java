@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -35,7 +35,7 @@ public class DarkCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level();
+		Level level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = (int) -radius - 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {
@@ -56,7 +56,7 @@ public class DarkCreeper extends ElementalCreeper {
 									BlockEntity blockentity = blockState.hasBlockEntity()
 											? level.getBlockEntity(blockPos)
 											: null;
-									LootParams.Builder lootparams$builder = (new LootParams.Builder(serverlevel))
+									LootContext.Builder lootparams$builder = (new LootContext.Builder(serverlevel))
 											.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
 											.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
 											.withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockentity)
@@ -72,7 +72,7 @@ public class DarkCreeper extends ElementalCreeper {
 							}
 
 							for (Pair<ItemStack, BlockPos> pair : objectarraylist) {
-								Block.popResource(this.level(), pair.getSecond(), pair.getFirst());
+								Block.popResource(this.level, pair.getSecond(), pair.getFirst());
 							}
 						}
 					}
