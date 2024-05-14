@@ -1,32 +1,26 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.projectile.FireworkRocketEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.block.CandleCakeBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class CelebrationCreeper extends ElementalCreeper {
 
-	public CelebrationCreeper(EntityType<? extends Creeper> type, Level level) {
+	public CelebrationCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
 
 	@Override
 	public void creeperEffect() {
-		List<BlockPos> candles = new ArrayList<BlockPos>();
+		// List<BlockPos> candles = new ArrayList<BlockPos>();
 
 		for (int x = -3; x < 4; ++x)
 			for (int z = -3; z < 4; ++z)
@@ -41,22 +35,22 @@ public class CelebrationCreeper extends ElementalCreeper {
 					if (x == 0 && z == 0) {
 						// Try and place a cake.
 						if (isAir || isReplaceable)
-							if (this.level.setBlockAndUpdate(blockPos,
-									Blocks.LIME_CANDLE_CAKE.defaultBlockState().setValue(CandleCakeBlock.LIT, true))) {
-								this.level.getBlockState(blockPos).setValue(CandleCakeBlock.LIT, true);
+							if (this.level.setBlockAndUpdate(blockPos, Blocks.CAKE.defaultBlockState())) {
 								break;
 							}
 					} else if (Math.abs(x) < 2 && Math.abs(z) < 2) {
+						// CANDLES DON'T EXIST IN 1.16.5
 						// Try and place candles.
-						if (isAir || isReplaceable)
-							if (this.level.setBlockAndUpdate(blockPos, Blocks.LIME_CANDLE.defaultBlockState())) {
-								candles.add(blockPos);
-								break;
-							}
+						// if (isAir || isReplaceable)
+						// if (this.level.setBlockAndUpdate(blockPos,
+						// Blocks.LIME_CANDLE.defaultBlockState())) {
+						// candles.add(blockPos);
+						// break;
+						// }
 					} else {
 						// Shoot fireworks!
 						if (isAir || isReplaceable) {
-							FireworkRocketEntity fireworkrocketentity = new FireworkRocketEntity(this.level, this,
+							FireworkRocketEntity fireworkrocketentity = new FireworkRocketEntity(this.level,
 									this.getX() + x, this.getY() + y + 0.15D, this.getZ() + z,
 									new ItemStack(Items.FIREWORK_ROCKET));
 							this.level.addFreshEntity(fireworkrocketentity);
@@ -65,22 +59,23 @@ public class CelebrationCreeper extends ElementalCreeper {
 					}
 				}
 
-		Collections.shuffle(candles);
-
-		int candlesPerPos = 11 / candles.size();
-		int extraCandles = 11 % candles.size();
-
-		for (int i = 0; i < candles.size(); ++i) {
-			int numCandles = candlesPerPos;
-			if (i < extraCandles)
-				numCandles++;
-
-			numCandles = Math.max(1, Math.min(4, numCandles));
-			BlockState newState = this.level.getBlockState(candles.get(i)).setValue(CandleBlock.CANDLES, numCandles)
-					.setValue(CandleBlock.LIT, true);
-
-			this.level.setBlockAndUpdate(candles.get(i), newState);
-		}
+// CANDLES DON'T EXIST IN 1.16.5
+//		Collections.shuffle(candles);
+//
+//		int candlesPerPos = 11 / candles.size();
+//		int extraCandles = 11 % candles.size();
+//
+//		for (int i = 0; i < candles.size(); ++i) {
+//			int numCandles = candlesPerPos;
+//			if (i < extraCandles)
+//				numCandles++;
+//
+//			numCandles = Math.max(1, Math.min(4, numCandles));
+//			BlockState newState = this.level.getBlockState(candles.get(i)).setValue(CandleBlock.CANDLES, numCandles)
+//					.setValue(CandleBlock.LIT, true);
+//
+//			this.level.setBlockAndUpdate(candles.get(i), newState);
+//		}
 
 		handleNetworkedExplosionEffects(3F, SoundEvents.FIREWORK_ROCKET_LAUNCH);
 	}

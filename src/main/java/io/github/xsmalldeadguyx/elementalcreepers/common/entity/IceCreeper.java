@@ -1,22 +1,23 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SnowBlock;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class IceCreeper extends ElementalCreeper {
 
-	public IceCreeper(EntityType<? extends Creeper> type, Level level) {
+	public IceCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 
@@ -29,7 +30,7 @@ public class IceCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level;
+		World level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = (int) -radius - 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {
@@ -43,13 +44,13 @@ public class IceCreeper extends ElementalCreeper {
 
 						if (fluidState != null) {
 							// Freeze water and lava.
-							if (fluidState.is(Fluids.WATER) || fluidState.is(Fluids.FLOWING_WATER)) {
+							if (fluidState.is(FluidTags.WATER)) {
 								level.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());
 								continue;
-							} else if (fluidState.is(Fluids.FLOWING_LAVA)) {
+							} else if (fluidState.getType() == Fluids.FLOWING_LAVA) {
 								level.setBlockAndUpdate(blockPos, Blocks.COBBLESTONE.defaultBlockState());
 								continue;
-							} else if (fluidState.is(Fluids.LAVA)) {
+							} else if (fluidState.is(FluidTags.LAVA)) {
 								level.setBlockAndUpdate(blockPos, Blocks.OBSIDIAN.defaultBlockState());
 								continue;
 							}
@@ -70,7 +71,7 @@ public class IceCreeper extends ElementalCreeper {
 										* (radius - Math.sqrt(distSqr) - 1 + 2 * level.random.nextDouble()) / radius));
 
 								if (snowSize > 1) {
-									BlockState grownState = snowState.setValue(SnowLayerBlock.LAYERS, snowSize);
+									BlockState grownState = snowState.setValue(SnowBlock.LAYERS, snowSize);
 									Block.pushEntitiesUp(snowState, grownState, level, blockPos);
 									level.setBlockAndUpdate(blockPos, grownState);
 								}
@@ -79,6 +80,6 @@ public class IceCreeper extends ElementalCreeper {
 					}
 				}
 
-		handleNetworkedExplosionEffects(radius, SoundEvents.PLAYER_HURT_FREEZE);
+		handleNetworkedExplosionEffects(radius, SoundEvents.SNOW_PLACE);
 	}
 }

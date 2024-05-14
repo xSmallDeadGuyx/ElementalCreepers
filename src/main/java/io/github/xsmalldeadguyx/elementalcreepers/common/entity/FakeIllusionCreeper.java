@@ -1,13 +1,13 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 
 public class FakeIllusionCreeper extends ElementalCreeper {
 
-	public FakeIllusionCreeper(EntityType<? extends Creeper> type, Level level) {
+	public FakeIllusionCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 

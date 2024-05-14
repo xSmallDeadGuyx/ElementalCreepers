@@ -3,18 +3,18 @@ package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 import java.util.List;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
 public class ElectricCreeper extends ElementalCreeper {
 
-	public ElectricCreeper(EntityType<? extends Creeper> type, Level level) {
+	public ElectricCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
@@ -27,16 +27,16 @@ public class ElectricCreeper extends ElementalCreeper {
 		}
 
 		List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class,
-				AABB.ofSize(this.position(), radius, radius, radius));
+				AxisAlignedBB.ofSize(radius, radius, radius).move(this.position()));
 
 		for (LivingEntity entity : entities) {
 			if (entity == this) {
 				continue;
 			}
 
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level);
+			LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create(this.level);
 			if (bolt != null) {
-				bolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
+				bolt.moveTo(Vector3d.atBottomCenterOf(entity.blockPosition()));
 				this.level.addFreshEntity(bolt);
 			}
 		}

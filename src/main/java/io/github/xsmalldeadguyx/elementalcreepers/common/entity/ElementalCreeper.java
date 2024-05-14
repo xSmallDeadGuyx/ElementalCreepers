@@ -8,37 +8,39 @@ import javax.annotation.Nullable;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundExplodePacket;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.AreaEffectCloudEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SExplosionPacket;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ElementalCreeper extends Creeper {
+public class ElementalCreeper extends CreeperEntity {
 
 	protected int oldSwell;
 	protected int swell;
 	protected int maxSwell = 30;
 
-	public ElementalCreeper(EntityType<? extends Creeper> type, Level level) {
+	public ElementalCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 
-	public boolean causeFallDamage(float p_149687_, float p_149688_, DamageSource source) {
-		boolean flag = super.causeFallDamage(p_149687_, p_149688_, source);
+	@Override
+	public boolean causeFallDamage(float p_149687_, float p_149688_) {
+		boolean flag = super.causeFallDamage(p_149687_, p_149688_);
 		this.swell += (int) (p_149687_ * 1.5F);
 		if (this.swell > this.maxSwell - 5) {
 			this.swell = this.maxSwell - 5;
@@ -47,16 +49,17 @@ public class ElementalCreeper extends Creeper {
 		return flag;
 	}
 
-	public float getSwelling(float lerp) {
-		return Mth.lerp(lerp, (float) this.oldSwell, (float) this.swell) / (float) (this.maxSwell - 2);
+	@OnlyIn(Dist.CLIENT)
+	public float getSwelling(float p_70831_1_) {
+		return MathHelper.lerp(p_70831_1_, (float) this.oldSwell, (float) this.swell) / (float) (this.maxSwell - 2);
 	}
 
-	public void addAdditionalSaveData(CompoundTag p_32304_) {
+	public void addAdditionalSaveData(CompoundNBT p_32304_) {
 		super.addAdditionalSaveData(p_32304_);
 		p_32304_.putShort("Fuse", (short) this.maxSwell);
 	}
 
-	public void readAdditionalSaveData(CompoundTag p_32296_) {
+	public void readAdditionalSaveData(CompoundNBT p_32296_) {
 		super.readAdditionalSaveData(p_32296_);
 		if (p_32296_.contains("Fuse", 99)) {
 			this.maxSwell = p_32296_.getShort("Fuse");
@@ -73,7 +76,6 @@ public class ElementalCreeper extends Creeper {
 			int i = this.getSwellDir();
 			if (i > 0 && this.swell == 0) {
 				this.playSound(SoundEvents.CREEPER_PRIMED, 1.0F, 0.5F);
-				this.gameEvent(GameEvent.PRIME_FUSE);
 			}
 
 			this.swell += i;
@@ -81,13 +83,13 @@ public class ElementalCreeper extends Creeper {
 				this.swell = 0;
 			}
 
-			Level level = this.level;
+			World level = this.level;
 			if (this.swell >= this.maxSwell) {
 				this.swell = this.maxSwell;
 				if (!level.isClientSide()) {
 					this.dead = true;
 					creeperEffect();
-					this.discard();
+					this.remove();
 				}
 
 			}
@@ -105,17 +107,18 @@ public class ElementalCreeper extends Creeper {
 	}
 
 	protected void spawnLingeringCloud() {
-		Collection<MobEffectInstance> collection = this.getActiveEffects();
+		Collection<EffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
+			AreaEffectCloudEntity areaeffectcloud = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(),
+					this.getZ());
 			areaeffectcloud.setRadius(2.5F);
 			areaeffectcloud.setRadiusOnUse(-0.5F);
 			areaeffectcloud.setWaitTime(10);
 			areaeffectcloud.setDuration(areaeffectcloud.getDuration() / 2);
 			areaeffectcloud.setRadiusPerTick(-areaeffectcloud.getRadius() / (float) areaeffectcloud.getDuration());
 
-			for (MobEffectInstance mobeffectinstance : collection) {
-				areaeffectcloud.addEffect(new MobEffectInstance(mobeffectinstance));
+			for (EffectInstance mobeffectinstance : collection) {
+				areaeffectcloud.addEffect(new EffectInstance(mobeffectinstance));
 			}
 
 			this.level.addFreshEntity(areaeffectcloud);
@@ -126,24 +129,25 @@ public class ElementalCreeper extends Creeper {
 		handleNetworkedExplosionEffects(radius, null, soundEvent);
 	}
 
-	protected void handleNetworkedExplosionEffects(double radius, @Nullable Map<Player, Vec3> hitPlayers,
+	protected void handleNetworkedExplosionEffects(double radius, @Nullable Map<PlayerEntity, Vector3d> hitPlayers,
 			SoundEvent soundEvent) {
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
 
-		Level level = this.level;
+		World level = this.level;
 		if (this.level.isClientSide()) {
-			this.level.playLocalSound(x, y, z, soundEvent, SoundSource.BLOCKS, 4.0F,
+			this.level.playLocalSound(x, y, z, soundEvent, SoundCategory.BLOCKS, 4.0F,
 					(1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
-		if (this.level instanceof ServerLevel) {
-			ServerLevel serverLevel = (ServerLevel) this.level;
-			for (ServerPlayer serverPlayer : serverLevel.players()) {
+		if (this.level instanceof ServerWorld) {
+			ServerWorld serverLevel = (ServerWorld) this.level;
+			for (ServerPlayerEntity serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
-					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
-							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO));
+					serverPlayer.connection
+							.send(new SExplosionPacket(x, y, z, (float) radius, new ArrayList<BlockPos>(),
+									hitPlayers != null ? hitPlayers.get(serverPlayer) : Vector3d.ZERO));
 				}
 			}
 		}
@@ -155,12 +159,12 @@ public class ElementalCreeper extends Creeper {
 	public void die(DamageSource p_21014_) {
 		super.die(p_21014_);
 
-		Level level = this.level;
-		if (level instanceof ServerLevel && level.random.nextDouble() < Config.ghostCreeperSpawnChance
+		World level = this.level;
+		if (level instanceof ServerWorld && level.random.nextDouble() < Config.ghostCreeperSpawnChance
 				&& !(this instanceof GhostCreeper)) {
 			ElementalCreeper ghost = ElementalCreepers.GHOST_CREEPER.get().create(this.level);
 			if (ghost != null) {
-				ghost.moveTo(this.blockPosition(), this.getYRot(), this.getXRot());
+				ghost.moveTo(this.blockPosition(), this.yRot, this.xRot);
 				this.level.addFreshEntity(ghost);
 			}
 		}

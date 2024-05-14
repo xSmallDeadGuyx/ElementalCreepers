@@ -5,38 +5,37 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
+import net.minecraft.enchantment.ProtectionEnchantment;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class EntityOnlyExplosion {
-	public static Map<Player, Vec3> explodeAt(Level level, Entity source, double x, double y, double z, double radius,
+	public static Map<PlayerEntity, Vector3d> explodeAt(World World, Entity source, double x, double y, double z, double radius,
 			double damageMulti, double launchMulti) {
 		double diameter = radius * 2;
-		int k1 = Mth.floor(x - diameter - 1.0D);
-		int l1 = Mth.floor(x + diameter + 1.0D);
-		int i2 = Mth.floor(y - diameter - 1.0D);
-		int i1 = Mth.floor(y + diameter + 1.0D);
-		int j2 = Mth.floor(z - diameter - 1.0D);
-		int j1 = Mth.floor(z + diameter + 1.0D);
-		List<Entity> list = level.getEntities(source,
-				new AABB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vec3 vec3 = new Vec3(x, y, z);
+		int k1 = MathHelper.floor(x - diameter - 1.0D);
+		int l1 = MathHelper.floor(x + diameter + 1.0D);
+		int i2 = MathHelper.floor(y - diameter - 1.0D);
+		int i1 = MathHelper.floor(y + diameter + 1.0D);
+		int j2 = MathHelper.floor(z - diameter - 1.0D);
+		int j1 = MathHelper.floor(z + diameter + 1.0D);
+		List<Entity> list = World.getEntities(source,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vector3d Vector3d = new Vector3d(x, y, z);
 
-		Map<Player, Vec3> hitPlayers = Maps.newHashMap();
+		Map<PlayerEntity, Vector3d> hitPlayers = Maps.newHashMap();
 
 		for (Entity entity : list) {
-			if (source instanceof TamableAnimal) {
-				TamableAnimal tamable = (TamableAnimal) source;
+			if (source instanceof TameableEntity) {
+				TameableEntity tamable = (TameableEntity) source;
 				if (tamable.isTame()) {
 					// Don't harm our owner or players which cannot be harmed by our owner.
 					LivingEntity owner = tamable.getOwner();
@@ -44,8 +43,8 @@ public class EntityOnlyExplosion {
 						continue;
 					}
 
-					if (owner instanceof Player && entity instanceof Player) {
-						if (!((Player) owner).canHarmPlayer((Player) entity)) {
+					if (owner instanceof PlayerEntity && entity instanceof PlayerEntity) {
+						if (!((PlayerEntity) owner).canHarmPlayer((PlayerEntity) entity)) {
 							continue;
 						}
 					}
@@ -53,17 +52,17 @@ public class EntityOnlyExplosion {
 			}
 
 			if (!entity.ignoreExplosion()) {
-				double d12 = Math.sqrt(entity.distanceToSqr(vec3)) / diameter;
+				double d12 = Math.sqrt(entity.distanceToSqr(Vector3d)) / diameter;
 				if (d12 <= 1.0D) {
 					double d5 = entity.getX() - x;
-					double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - y;
+					double d7 = entity.getEyeY() - y;
 					double d9 = entity.getZ() - z;
 					double d13 = Math.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
 					if (d13 != 0.0D) {
 						d5 /= d13;
 						d7 /= d13;
 						d9 /= d13;
-						double d14 = (double) Explosion.getSeenPercent(vec3, entity);
+						double d14 = (double) Explosion.getSeenPercent(Vector3d, entity);
 						double d10 = (1.0D - d12) * d14;
 						if (damageMulti > 0) {
 							entity.hurt(
@@ -87,12 +86,12 @@ public class EntityOnlyExplosion {
 							d7 *= d11 * launchMulti;
 						}
 						d9 *= d11 * launchMulti;
-						Vec3 vec31 = new Vec3(d5, d7, d9);
-						entity.setDeltaMovement(entity.getDeltaMovement().add(vec31));
-						if (entity instanceof Player) {
-							Player player = (Player) entity;
-							if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
-								hitPlayers.put(player, vec31);
+						Vector3d Vector3d1 = new Vector3d(d5, d7, d9);
+						entity.setDeltaMovement(entity.getDeltaMovement().add(Vector3d1));
+						if (entity instanceof PlayerEntity) {
+							PlayerEntity PlayerEntity = (PlayerEntity) entity;
+							if (!PlayerEntity.isSpectator() && (!PlayerEntity.isCreative() || !PlayerEntity.abilities.flying)) {
+								hitPlayers.put(PlayerEntity, Vector3d1);
 							}
 						}
 					}

@@ -1,17 +1,17 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class MagmaCreeper extends ElementalCreeper {
 
-	public MagmaCreeper(EntityType<? extends Creeper> type, Level level) {
+	public MagmaCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
@@ -27,7 +27,7 @@ public class MagmaCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level;
+		World level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = (int) -radius - 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {

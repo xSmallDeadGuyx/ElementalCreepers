@@ -3,31 +3,31 @@ package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 import java.util.List;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
 public class SpiderCreeper extends ElementalCreeper {
-	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(SpiderCreeper.class,
-			EntityDataSerializers.BYTE);
+	private static final DataParameter<Byte> DATA_FLAGS_ID = EntityDataManager.defineId(SpiderCreeper.class,
+			DataSerializers.BYTE);
 
-	public SpiderCreeper(EntityType<? extends Creeper> type, Level level) {
+	public SpiderCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
@@ -54,7 +54,7 @@ public class SpiderCreeper extends ElementalCreeper {
 				}
 
 		List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class,
-				AABB.ofSize(this.position(), radius, radius, radius));
+				AxisAlignedBB.ofSize(radius, radius, radius).move(this.position()));
 
 		double poisonTime = Config.spiderCreeperPoisonTimeMedium;
 		switch (this.level.getDifficulty()) {
@@ -80,8 +80,7 @@ public class SpiderCreeper extends ElementalCreeper {
 
 				double strength = Math.min(0.5, 1 - (entity.distanceTo(this) / radius));
 				if (strength <= 1) {
-					entity.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (60 * poisonTime * strength), 1),
-							this);
+					entity.addEffect(new EffectInstance(Effects.POISON, (int) (60 * poisonTime * strength), 1));
 				}
 			}
 		}
@@ -90,8 +89,8 @@ public class SpiderCreeper extends ElementalCreeper {
 	}
 
 	@Override
-	protected PathNavigation createNavigation(Level p_33802_) {
-		return new WallClimberNavigation(this, p_33802_);
+	protected PathNavigator createNavigation(World p_33802_) {
+		return new ClimberPathNavigator(this, p_33802_);
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class SpiderCreeper extends ElementalCreeper {
 	@Override
 	public void tick() {
 		super.tick();
-		Level level = this.level;
+		World level = this.level;
 		if (!level.isClientSide) {
 			this.setClimbing(this.horizontalCollision);
 		}
@@ -136,15 +135,15 @@ public class SpiderCreeper extends ElementalCreeper {
 	}
 
 	@Override
-	public void makeStuckInBlock(BlockState p_33796_, Vec3 p_33797_) {
+	public void makeStuckInBlock(BlockState p_33796_, Vector3d p_33797_) {
 		if (!p_33796_.is(Blocks.COBWEB)) {
 			super.makeStuckInBlock(p_33796_, p_33797_);
 		}
 	}
 
 	@Override
-	public boolean canBeAffected(MobEffectInstance p_33809_) {
-		if (p_33809_.getEffect() == MobEffects.POISON) {
+	public boolean canBeAffected(EffectInstance p_33809_) {
+		if (p_33809_.getEffect() == Effects.POISON) {
 			net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent event = new net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent(
 					this, p_33809_);
 			net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);

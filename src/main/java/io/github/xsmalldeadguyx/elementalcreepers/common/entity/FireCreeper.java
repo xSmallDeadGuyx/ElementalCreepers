@@ -1,17 +1,17 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class FireCreeper extends ElementalCreeper {
 
-	public FireCreeper(EntityType<? extends Creeper> type, Level level) {
+	public FireCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 
@@ -38,8 +38,8 @@ public class FireCreeper extends ElementalCreeper {
 								(int) this.getZ() + z);
 						BlockPos belowPos = blockPos.offset(0, -1, 0);
 
-						if (this.level.getBlockState(blockPos).isAir() && this.level.getBlockState(belowPos)
-								.isFaceSturdy(this.level, belowPos, Direction.UP)
+						if (this.level.getBlockState(blockPos).isAir()
+								&& this.level.getBlockState(belowPos).isFaceSturdy(this.level, belowPos, Direction.UP)
 								&& this.level.random.nextBoolean()) {
 							this.level.setBlockAndUpdate(blockPos, Blocks.FIRE.defaultBlockState());
 						}

@@ -1,16 +1,16 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class EarthCreeper extends ElementalCreeper {
 
-	public EarthCreeper(EntityType<? extends Creeper> type, Level level) {
+	public EarthCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
@@ -36,6 +36,6 @@ public class EarthCreeper extends ElementalCreeper {
 					}
 				}
 
-		handleNetworkedExplosionEffects(radius, SoundEvents.ROOTED_DIRT_PLACE);
+		handleNetworkedExplosionEffects(radius, SoundEvents.GRASS_PLACE);
 	}
 }

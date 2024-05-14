@@ -4,24 +4,24 @@ import com.mojang.datafixers.util.Pair;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class DarkCreeper extends ElementalCreeper {
 
-	public DarkCreeper(EntityType<? extends Creeper> type, Level level) {
+	public DarkCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 
 	}
@@ -35,7 +35,7 @@ public class DarkCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level;
+		World level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = (int) -radius - 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {
@@ -51,19 +51,19 @@ public class DarkCreeper extends ElementalCreeper {
 							ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 							BlockPos blockpos1 = blockPos.immutable();
 							if (blockState.canDropFromExplosion(level, blockPos, null)) {
-								if (level instanceof ServerLevel) {
-									ServerLevel serverlevel = (ServerLevel) level;
-									BlockEntity blockentity = blockState.hasBlockEntity()
-											? level.getBlockEntity(blockPos)
+								if (level instanceof ServerWorld) {
+									ServerWorld serverlevel = (ServerWorld) level;
+									TileEntity blockentity = blockState.hasTileEntity() ? level.getBlockEntity(blockPos)
 											: null;
-									LootContext.Builder lootparams$builder = (new LootContext.Builder(serverlevel))
-											.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
-											.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
-											.withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockentity)
-											.withOptionalParameter(LootContextParams.THIS_ENTITY, this);
+									LootContext.Builder lootcontext$builder = (new LootContext.Builder(
+											(ServerWorld) this.level)).withRandom(this.level.random)
+											.withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockPos))
+											.withParameter(LootParameters.TOOL, ItemStack.EMPTY)
+											.withOptionalParameter(LootParameters.BLOCK_ENTITY, blockentity)
+											.withOptionalParameter(LootParameters.THIS_ENTITY, this);
 
 									blockState.spawnAfterBreak(serverlevel, blockPos, ItemStack.EMPTY);
-									blockState.getDrops(lootparams$builder).forEach((p_46074_) -> {
+									blockState.getDrops(lootcontext$builder).forEach((p_46074_) -> {
 										addBlockDrops(objectarraylist, p_46074_, blockpos1);
 									});
 								}
@@ -77,8 +77,8 @@ public class DarkCreeper extends ElementalCreeper {
 						}
 					}
 				}
-		
-		handleNetworkedExplosionEffects(radius, SoundEvents.CANDLE_EXTINGUISH);
+
+		handleNetworkedExplosionEffects(radius, SoundEvents.FIRE_EXTINGUISH);
 	}
 
 	private static void addBlockDrops(ObjectArrayList<Pair<ItemStack, BlockPos>> p_46068_, ItemStack p_46069_,

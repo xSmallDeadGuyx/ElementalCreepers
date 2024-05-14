@@ -3,18 +3,18 @@ package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 import java.util.Random;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
 
 public class IllusionCreeper extends ElementalCreeper {
 
 	private boolean hasSplit = false;
 
-	public IllusionCreeper(EntityType<? extends Creeper> type, Level level) {
+	public IllusionCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 
@@ -22,9 +22,9 @@ public class IllusionCreeper extends ElementalCreeper {
 	public void tick() {
 		super.tick();
 
-		Level level = this.level;
+		World level = this.level;
 		if (!hasSplit && !level.isClientSide()) {
-			Player player = level.getNearestPlayer(this, 8.d);
+			PlayerEntity player = level.getNearestPlayer(this, 8.d);
 			if (player != null) {
 
 				Random random = level.random;
@@ -32,11 +32,11 @@ public class IllusionCreeper extends ElementalCreeper {
 				for (int i = 0; i < 4; ++i) {
 					FakeIllusionCreeper fake = ElementalCreepers.FAKE_ILLUSION_CREEPER.get().create(level);
 					if (fake != null) {
-						fake.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+						fake.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, this.xRot);
 
 						double launchX = random.nextDouble() * 0.5 - 0.25;
 						double launchZ = random.nextDouble() * 0.5 - 0.25;
-						fake.setDeltaMovement(new Vec3(launchX, 0.5, launchZ));
+						fake.setDeltaMovement(new Vector3d(launchX, 0.5, launchZ));
 
 						level.addFreshEntity(fake);
 					}
@@ -44,7 +44,7 @@ public class IllusionCreeper extends ElementalCreeper {
 				double launchX = random.nextDouble() * 0.5 - 0.25;
 				double launchZ = random.nextDouble() * 0.5 - 0.25;
 
-				this.setDeltaMovement(new Vec3(launchX, 0.5, launchZ));
+				this.setDeltaMovement(new Vector3d(launchX, 0.5, launchZ));
 
 				hasSplit = true;
 			}
@@ -54,7 +54,8 @@ public class IllusionCreeper extends ElementalCreeper {
 	@Override
 	public void creeperEffect() {
 		float f = this.isPowered() ? 1.5f : 1;
-        Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+		Explosion.Mode explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory
+				.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
 		this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3f * f, explosion$blockinteraction);
 
 		this.spawnLingeringCloud();

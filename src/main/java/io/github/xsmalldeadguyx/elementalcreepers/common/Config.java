@@ -1,17 +1,16 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.config.ModConfig.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = ElementalCreepers.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -75,9 +74,8 @@ public class Config {
 
 	private static final ForgeConfigSpec.ConfigValue<List<? extends String>> DARK_CREEPER_DESTROY_BLOCKS = BUILDER
 			.comment("A list of blocks which dark creepers destroy").defineList("darkCreeperDestroyBlocks",
-					List.of("minecraft:torch", "minecraft:redstone_torch", "minecraft:redstone_lamp",
-							"minecraft:redstone_wall_torch", "minecraft:glowstone", "minecraft:lantern",
-							"minecraft:sea_lantern", "minecraft:shroomlight", "minecraft:campfire",
+					Arrays.asList("minecraft:torch", "minecraft:redstone_torch", "minecraft:redstone_lamp",
+							"minecraft:redstone_wall_torch", "minecraft:glowstone", "minecraft:lantern", "minecraft:shroomlight", "minecraft:campfire",
 							"minecraft:soul_campfire"),
 					Config::validateBlockName);
 

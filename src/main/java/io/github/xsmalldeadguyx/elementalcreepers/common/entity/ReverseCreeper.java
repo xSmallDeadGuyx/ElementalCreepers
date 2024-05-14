@@ -1,16 +1,16 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class ReverseCreeper extends ElementalCreeper {
 
-	public ReverseCreeper(EntityType<? extends Creeper> type, Level level) {
+	public ReverseCreeper(EntityType<? extends CreeperEntity> type, World level) {
 		super(type, level);
 	}
 
@@ -23,7 +23,7 @@ public class ReverseCreeper extends ElementalCreeper {
 
 		double rSqr = Math.pow(radius, 2);
 
-		Level level = this.level;
+		World level = this.level;
 		for (int x = (int) -radius - 1; x <= radius; x++)
 			for (int y = 1; y <= radius; y++)
 				for (int z = (int) -radius - 1; z <= radius; z++) {
@@ -36,7 +36,7 @@ public class ReverseCreeper extends ElementalCreeper {
 								(int) this.getZ() + z);
 
 						// Prevent flipping blocks out of build height.
-						if (level.isOutsideBuildHeight(posA) || level.isOutsideBuildHeight(posB))
+						if (World.isOutsideBuildHeight(posA) || World.isOutsideBuildHeight(posB))
 							continue;
 
 						BlockState stateA = level.getBlockState(posA);
@@ -49,7 +49,7 @@ public class ReverseCreeper extends ElementalCreeper {
 						}
 
 						// Prevent flipping entities which we can't preserve properly.
-						if (stateA.hasBlockEntity() || stateB.hasBlockEntity()) {
+						if (stateA.hasTileEntity() || stateB.hasTileEntity()) {
 							continue;
 						}
 

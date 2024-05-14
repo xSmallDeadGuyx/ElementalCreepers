@@ -5,8 +5,8 @@ import java.util.EnumSet;
 import javax.annotation.Nullable;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.entity.FriendlyCreeper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 
 public class FriendlyCreeperSwellGoal extends Goal {
 	private final FriendlyCreeper creeper;
@@ -43,7 +43,7 @@ public class FriendlyCreeperSwellGoal extends Goal {
 			this.creeper.setSwellDir(-1);
 		} else if (this.creeper.distanceToSqr(this.target) > 49.0D) {
 			this.creeper.setSwellDir(-1);
-		} else if (!this.creeper.getSensing().hasLineOfSight(this.target)) {
+		} else if (!this.creeper.getSensing().canSee(this.target)) {
 			this.creeper.setSwellDir(-1);
 		} else {
 			this.creeper.setSwellDir(1);
