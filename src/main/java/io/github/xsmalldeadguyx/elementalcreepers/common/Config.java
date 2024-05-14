@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -100,8 +102,8 @@ public class Config {
 	private static final ForgeConfigSpec.DoubleValue GHOST_CREEPER_SPAWN_CHANCE = BUILDER
 			.comment("Ghost Creeper spawn chance when an elemental creeper dies")
 			.defineInRange("ghoseCreeperSpawnChance", 0.01, 0, 1);
-
-	static final ForgeConfigSpec SPEC = BUILDER.build();
+	
+	public static final ForgeConfigSpec SPEC = BUILDER.build();
 
 	public static int cookieCreeperQuantity;
 	public static double darkCreeperExplosionRadius;
@@ -124,6 +126,9 @@ public class Config {
 	public static double waterCreeperPermanentRadius;
 
 	public static double ghostCreeperSpawnChance;
+
+	Config(ForgeConfigSpec.Builder builder) {
+	}
 
 	private static boolean validateBlockName(final Object obj) {
 		if (obj instanceof String) {

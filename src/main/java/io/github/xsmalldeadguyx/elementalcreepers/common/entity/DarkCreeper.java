@@ -62,7 +62,7 @@ public class DarkCreeper extends ElementalCreeper {
 											.withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockentity)
 											.withOptionalParameter(LootContextParams.THIS_ENTITY, this);
 
-									blockState.spawnAfterBreak(serverlevel, blockPos, ItemStack.EMPTY, false);
+									blockState.spawnAfterBreak(serverlevel, blockPos, ItemStack.EMPTY);
 									blockState.getDrops(lootparams$builder).forEach((p_46074_) -> {
 										addBlockDrops(objectarraylist, p_46074_, blockpos1);
 									});

@@ -145,7 +145,7 @@ public class SpiderCreeper extends ElementalCreeper {
 	@Override
 	public boolean canBeAffected(MobEffectInstance p_33809_) {
 		if (p_33809_.getEffect() == MobEffects.POISON) {
-			net.minecraftforge.event.entity.living.MobEffectEvent.Applicable event = new net.minecraftforge.event.entity.living.MobEffectEvent.Applicable(
+			net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent event = new net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent(
 					this, p_33809_);
 			net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
 			return event.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW;

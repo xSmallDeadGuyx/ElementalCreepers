@@ -46,6 +46,6 @@ public class GhostCreeperRenderer extends MobRenderer<GhostCreeper, GhostCreeper
 	@Override
 	protected RenderType getRenderType(GhostCreeper p_115322_, boolean p_115323_, boolean p_115324_,
 			boolean p_115325_) {
-		return RenderType.entityTranslucentEmissive(new ResourceLocation("textures/entity/creeper/creeper.png"));
+		return RenderType.entityTranslucent(new ResourceLocation("textures/entity/creeper/creeper.png"));
 	}
 }

@@ -1,7 +1,8 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
+import java.util.Random;
+
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +27,7 @@ public class IllusionCreeper extends ElementalCreeper {
 			Player player = level.getNearestPlayer(this, 8.d);
 			if (player != null) {
 
-				RandomSource random = level.random;
+				Random random = level.random;
 
 				for (int i = 0; i < 4; ++i) {
 					FakeIllusionCreeper fake = ElementalCreepers.FAKE_ILLUSION_CREEPER.get().create(level);
