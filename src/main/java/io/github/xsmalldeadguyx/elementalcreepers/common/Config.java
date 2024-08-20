@@ -94,12 +94,74 @@ public class Config {
 	private static final ForgeConfigSpec.DoubleValue WATER_CREEPER_PERMANENT_RADIUS = BUILDER
 			.comment("Water Creeper permanent puddle radius")
 			.defineInRange("waterCreeperPermanentRadius", 1.d, 0.d, Double.MAX_VALUE);
+	
+	// ==================== Spawns (<= 1.18 only) ====================
+	
+	private static final ForgeConfigSpec.IntValue CELEBRATION_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Celebration Creeper spawn rate in all overworld biomes")
+			.defineInRange("celebrationCreeperOverworldWeight", 3, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue COOKIE_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Cookie Creeper spawn rate in all overworld biomes")
+			.defineInRange("cookieCreeperOverworldWeight", 5, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue DARK_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Dark Creeper spawn rate in all overworld biomes")
+			.defineInRange("darkCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue EARTH_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Earth Creeper spawn rate in all overworld biomes")
+			.defineInRange("earthCreeperOverworldWeight", 25, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue ELECTRIC_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Electric Creeper spawn rate in all overworld biomes")
+			.defineInRange("electricCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue FIRE_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Fire Creeper spawn rate in all overworld biomes")
+			.defineInRange("fireCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue FRIENDLY_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Friendly Creeper spawn rate in all overworld biomes")
+			.defineInRange("friendlyCreeperOverworldWeight", 2, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue ICE_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Ice Creeper spawn rate in all overworld biomes")
+			.defineInRange("iceCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue ILLUSION_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Illusion Creeper spawn rate in all overworld biomes")
+			.defineInRange("illusionCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue LIGHT_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Light Creeper spawn rate in all overworld biomes")
+			.defineInRange("lightCreeperOverworldWeight", 8, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue PSYCHIC_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Psychic Creeper spawn rate in all overworld biomes")
+			.defineInRange("psychicCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue REVERSE_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Reverse Creeper spawn rate in all overworld biomes")
+			.defineInRange("reverseCreeperOverworldWeight", 12, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue SPIDER_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Spider Creeper spawn rate in all overworld biomes")
+			.defineInRange("spiderCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue WATER_CREEPER_OVERWORLD_WEIGHT = BUILDER
+			.comment("Water Creeper spawn rate in all overworld biomes")
+			.defineInRange("waterCreeperOverworldWeight", 20, 0, Integer.MAX_VALUE);
+	
+	private static final ForgeConfigSpec.IntValue MAGMA_CREEPER_NETHER_WEIGHT = BUILDER
+			.comment("Magma Creeper spawn rate in the nether")
+			.defineInRange("magmaCreeperNetherWeight", 100, 0, Integer.MAX_VALUE);
 
 	// ==================== Misc ====================
 
 	private static final ForgeConfigSpec.DoubleValue GHOST_CREEPER_SPAWN_CHANCE = BUILDER
 			.comment("Ghost Creeper spawn chance when an elemental creeper dies")
-			.defineInRange("ghoseCreeperSpawnChance", 0.01, 0, 1);
+			.defineInRange("ghostCreeperSpawnChance", 0.01, 0, 1);
 	
 	public static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -122,6 +184,23 @@ public class Config {
 	public static double psychicCreeperLaunchMultiplier;
 	public static double spiderCreeperPoisonTimeMedium;
 	public static double waterCreeperPermanentRadius;
+	
+	public static int celebrationCreeperOverworldWeight;
+	public static int cookieCreeperOverworldWeight;
+	public static int darkCreeperOverworldWeight;
+	public static int earthCreeperOverworldWeight;
+	public static int electricCreeperOverworldWeight;
+	public static int fireCreeperOverworldWeight;
+	public static int friendlyCreeperOverworldWeight;
+	public static int iceCreeperOverworldWeight;
+	public static int illusionCreeperOverworldWeight;
+	public static int lightCreeperOverworldWeight;
+	public static int psychicCreeperOverworldWeight;
+	public static int reverseCreeperOverworldWeight;
+	public static int spiderCreeperOverworldWeight;
+	public static int waterCreeperOverworldWeight;
+	
+	public static int magmaCreeperNetherWeight;
 
 	public static double ghostCreeperSpawnChance;
 
@@ -162,6 +241,23 @@ public class Config {
 		psychicCreeperLaunchMultiplier = PSYCHIC_CREEPER_LAUNCH_MULTIPLIER.get();
 		spiderCreeperPoisonTimeMedium = SPIDER_CREEPER_POISON_TIME_MEDIUM.get();
 		waterCreeperPermanentRadius = WATER_CREEPER_PERMANENT_RADIUS.get();
+		
+		celebrationCreeperOverworldWeight = CELEBRATION_CREEPER_OVERWORLD_WEIGHT.get();
+		cookieCreeperOverworldWeight= COOKIE_CREEPER_OVERWORLD_WEIGHT.get();
+		darkCreeperOverworldWeight = DARK_CREEPER_OVERWORLD_WEIGHT.get();
+		earthCreeperOverworldWeight = EARTH_CREEPER_OVERWORLD_WEIGHT.get();
+		electricCreeperOverworldWeight = ELECTRIC_CREEPER_OVERWORLD_WEIGHT.get();
+		fireCreeperOverworldWeight = FIRE_CREEPER_OVERWORLD_WEIGHT.get();
+		friendlyCreeperOverworldWeight = FRIENDLY_CREEPER_OVERWORLD_WEIGHT.get();
+		iceCreeperOverworldWeight = ICE_CREEPER_OVERWORLD_WEIGHT.get();
+		illusionCreeperOverworldWeight = ILLUSION_CREEPER_OVERWORLD_WEIGHT.get();
+		lightCreeperOverworldWeight = LIGHT_CREEPER_OVERWORLD_WEIGHT.get();
+		psychicCreeperOverworldWeight = PSYCHIC_CREEPER_OVERWORLD_WEIGHT.get();
+		reverseCreeperOverworldWeight = REVERSE_CREEPER_OVERWORLD_WEIGHT.get();
+		spiderCreeperOverworldWeight = SPIDER_CREEPER_OVERWORLD_WEIGHT.get();
+		waterCreeperOverworldWeight = WATER_CREEPER_OVERWORLD_WEIGHT.get();
+
+		magmaCreeperNetherWeight = MAGMA_CREEPER_NETHER_WEIGHT.get();
 
 		ghostCreeperSpawnChance = GHOST_CREEPER_SPAWN_CHANCE.get();
 	}

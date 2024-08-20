@@ -34,15 +34,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -140,6 +145,36 @@ public class ElementalCreepers {
 		}
 		return entityRO;
 	}
+	
+	@Mod.EventBusSubscriber(modid = ElementalCreepers.MODID, bus = Bus.FORGE)
+	public static class ElementalCreepersForgeBusSubscriber {
+		@SubscribeEvent
+		public static void biomeLoadingEvent(BiomeLoadingEvent event) {
+			MobSpawnInfoBuilder spawns = event.getSpawns();
+			
+			ElementalCreepers.LOGGER.info("Adding elemental creeper spawns");
+			
+			if (event.getCategory() == Biome.Category.NETHER) {
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(MAGMA_CREEPER.get(), Config.magmaCreeperNetherWeight, 4, 4));
+			}
+			else if (event.getCategory() != Biome.Category.NONE && event.getCategory() != Biome.Category.THEEND) {
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CELEBRATION_CREEPER.get(), Config.celebrationCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(COOKIE_CREEPER.get(), Config.cookieCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(DARK_CREEPER.get(), Config.darkCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EARTH_CREEPER.get(), Config.earthCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(ELECTRIC_CREEPER.get(), Config.electricCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(FIRE_CREEPER.get(), Config.fireCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(FRIENDLY_CREEPER.get(), Config.friendlyCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(ICE_CREEPER.get(), Config.iceCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(ILLUSION_CREEPER.get(), Config.illusionCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(LIGHT_CREEPER.get(), Config.lightCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(PSYCHIC_CREEPER.get(), Config.psychicCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(REVERSE_CREEPER.get(), Config.reverseCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(SPIDER_CREEPER.get(), Config.spiderCreeperOverworldWeight, 4, 4));
+				spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(WATER_CREEPER.get(), Config.waterCreeperOverworldWeight, 4, 4));
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
@@ -220,6 +255,5 @@ public class ElementalCreepers {
 					EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 					AnimalEntity::checkAnimalSpawnRules);
 		});
-
 	}
 }
