@@ -1,6 +1,7 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -37,14 +38,18 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -142,6 +147,37 @@ public class ElementalCreepers {
 							new Item.Properties().tab(CREATIVE_MODE_TAB)));
 		}
 		return entityRO;
+	}
+	
+	@Mod.EventBusSubscriber(modid = ElementalCreepers.MODID, bus = Bus.FORGE)
+	public static class ElementalCreepersForgeBusSubscriber {
+		@SubscribeEvent
+		public static void biomeLoadingEvent(BiomeLoadingEvent event) {
+			List<MobSpawnSettings.SpawnerData> creatureSpawner = event.getSpawns().getSpawner(MobCategory.CREATURE);
+			List<MobSpawnSettings.SpawnerData> mobSpawner = event.getSpawns().getSpawner(MobCategory.MONSTER);
+			
+			ElementalCreepers.LOGGER.info("Adding elemental creeper spawns");
+			
+			if (event.getCategory() == Biome.BiomeCategory.NETHER) {
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(MAGMA_CREEPER.get(), Config.magmaCreeperNetherWeight, 4, 4));
+			}
+			else if (event.getCategory() != Biome.BiomeCategory.NONE && event.getCategory() != Biome.BiomeCategory.THEEND) {
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(CELEBRATION_CREEPER.get(), Config.celebrationCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(COOKIE_CREEPER.get(), Config.cookieCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(DARK_CREEPER.get(), Config.darkCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(EARTH_CREEPER.get(), Config.earthCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(ELECTRIC_CREEPER.get(), Config.electricCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(FIRE_CREEPER.get(), Config.fireCreeperOverworldWeight, 4, 4));
+				creatureSpawner.add(new MobSpawnSettings.SpawnerData(FRIENDLY_CREEPER.get(), Config.friendlyCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(ICE_CREEPER.get(), Config.iceCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(ILLUSION_CREEPER.get(), Config.illusionCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(LIGHT_CREEPER.get(), Config.lightCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(PSYCHIC_CREEPER.get(), Config.psychicCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(REVERSE_CREEPER.get(), Config.reverseCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(SPIDER_CREEPER.get(), Config.spiderCreeperOverworldWeight, 4, 4));
+				mobSpawner.add(new MobSpawnSettings.SpawnerData(WATER_CREEPER.get(), Config.waterCreeperOverworldWeight, 4, 4));
+			}
+		}
 	}
 
 	@SubscribeEvent
