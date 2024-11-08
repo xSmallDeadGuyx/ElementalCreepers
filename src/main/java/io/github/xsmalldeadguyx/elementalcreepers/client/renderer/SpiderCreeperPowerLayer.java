@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class SpiderCreeperPowerLayer extends EnergySwirlLayer<SpiderCreeper, SpiderCreeperModel<SpiderCreeper>> {
-	private static final ResourceLocation POWER_LOCATION = new ResourceLocation(
+	private static final ResourceLocation POWER_LOCATION = ResourceLocation.withDefaultNamespace(
 			"textures/entity/creeper/creeper_armor.png");
 	private final CreeperModel<SpiderCreeper> model;
 

@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CelebrationCreeperPowerLayer extends EnergySwirlLayer<CelebrationCreeper, CelebrationCreeperModel<CelebrationCreeper>> {
-	private static final ResourceLocation POWER_LOCATION = new ResourceLocation(
+	private static final ResourceLocation POWER_LOCATION = ResourceLocation.withDefaultNamespace(
 			"textures/entity/creeper/creeper_armor.png");
 	private final CelebrationCreeperModel<CelebrationCreeper> model;
 

@@ -16,6 +16,6 @@ public class PsychicCreeperRenderer extends CreeperRenderer {
 
 	@Override
 	public ResourceLocation getTextureLocation(Creeper p_114041_) {
-		return new ResourceLocation(ElementalCreepers.MODID, "textures/entity/psychiccreeper.png");
+		return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/psychiccreeper.png");
 	}
 }

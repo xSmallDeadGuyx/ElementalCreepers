@@ -128,9 +128,7 @@ public class Config {
 	private static boolean validateBlockName(final Object obj) {
 		if (obj instanceof String) {
 			final String blockName = (String) obj;
-			ElementalCreepers.LOGGER.info(
-					blockName + " is valid = " + ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(blockName)));
-			return ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(blockName));
+			return ForgeRegistries.BLOCKS.containsKey(ResourceLocation.parse(blockName));
 		}
 
 		return false;
@@ -153,7 +151,7 @@ public class Config {
 		waterCreeperExplosionRadius = WATER_CREEPER_EXPLOSION_RADIUS.get();
 
 		darkCreeperDestroyBlocks = DARK_CREEPER_DESTROY_BLOCKS.get().stream()
-				.map(blockName -> ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName)))
+				.map(blockName -> ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(blockName)))
 				.collect(Collectors.toSet());
 		ghostCreeperDamageMultiplier = GHOST_CREEPER_DAMAGE_MULTIPLIER.get();
 		psychicCreeperLaunchMultiplier = PSYCHIC_CREEPER_LAUNCH_MULTIPLIER.get();

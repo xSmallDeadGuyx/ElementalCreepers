@@ -32,10 +32,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityType.EntityFactory;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -116,7 +117,7 @@ public class ElementalCreepers {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+		FMLJavaModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 	}
 
 	private static <T extends ElementalCreeper> RegistryObject<EntityType<T>> registerCreeper(EntityFactory<T> creeperFactory,

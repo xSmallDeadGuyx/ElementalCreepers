@@ -73,7 +73,6 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData
 			.defineId(FriendlyCreeper.class, EntityDataSerializers.INT);
 	private static final float START_HEALTH = 8.0F;
-	private static final float TAME_HEALTH = 40.0F;
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 
 	private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(FriendlyCreeper.class,
@@ -105,7 +104,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Ocelot.class, 6.0F, 1.0D, 1.2D));
 		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F));
 		this.goalSelector.addGoal(7, new BreedGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -122,9 +121,8 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		return Creeper.createAttributes().add(Attributes.MAX_HEALTH, START_HEALTH);
 	}
 
-
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder p_332186_) {
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder p_332186_) {
 		super.defineSynchedData(p_332186_);
 		p_332186_.define(DATA_REMAINING_ANGER_TIME, 0);
 		p_332186_.define(DATA_SWELL_DIR, -1);
@@ -245,25 +243,25 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		Level level = this.level();
 		if (!level.isClientSide()) {
 			double radius = this.explosionRadius;
-			if (this.isPowered())
-			{
+			if (this.isPowered()) {
 				radius *= 1.5d;
 			}
-			
-			Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(level, this, this.getX(), this.getY(), this.getZ(), radius, 0.8d, 1.d);
-			handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.GENERIC_EXPLODE);
+
+			Map<Player, Vec3> hitPlayers = EntityOnlyExplosion.explodeAt(level, this, this.getX(), this.getY(),
+					this.getZ(), radius, 0.8d, 1.d);
+			handleNetworkedExplosionEffects(radius, hitPlayers, SoundEvents.GENERIC_EXPLODE.get());
 		}
 	}
 
 	protected void handleNetworkedExplosionEffects(double radius, @Nullable Map<Player, Vec3> hitPlayers,
-			Holder<SoundEvent> soundEvent) {
+			SoundEvent genericExplode) {
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
 
 		Level level = this.level();
 		if (this.level().isClientSide()) {
-			this.level().playLocalSound(x, y, z, soundEvent.get(), SoundSource.BLOCKS, 4.0F,
+			this.level().playLocalSound(x, y, z, genericExplode, SoundSource.BLOCKS, 4.0F,
 					(1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
@@ -274,7 +272,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
 							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO,
 							Explosion.BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER,
-							soundEvent));
+							Holder.direct(genericExplode)));
 				}
 			}
 		}
@@ -333,30 +331,6 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 			return super.hurt(p_30386_, p_30387_);
 		}
 	}
-
-	@Override
-    public void setTame(boolean p_21836_, boolean p_332364_) {
-        byte b0 = this.entityData.get(DATA_FLAGS_ID);
-        if (p_21836_) {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 4));
-        } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -5));
-        }
-
-        if (p_332364_) {
-            this.applyTamingSideEffects();
-        }
-    }
-
-    @Override
-    protected void applyTamingSideEffects() {
-        if (this.isTame()) {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(TAME_HEALTH);
-            this.setHealth(40.0F);
-        } else {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(START_HEALTH);
-        }
-    }
 
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
@@ -428,7 +402,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 	public void setPersistentAngerTarget(@Nullable UUID p_30400_) {
 		this.persistentAngerTarget = p_30400_;
 	}
-	
+
 	@Override
 	public boolean isFood(ItemStack p_27600_) {
 		return p_27600_.is(Items.GUNPOWDER);
@@ -485,8 +459,8 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		}
 	}
 
-	public boolean canBeLeashed(Player p_30396_) {
-		return !this.isAngry() && super.canBeLeashed(p_30396_);
+	@Override
+	public boolean canBeLeashed() {
+		return !this.isAngry();
 	}
-
 }

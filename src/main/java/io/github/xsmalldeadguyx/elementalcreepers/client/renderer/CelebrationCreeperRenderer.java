@@ -38,7 +38,7 @@ public class CelebrationCreeperRenderer
 
 	@Override
 	public ResourceLocation getTextureLocation(CelebrationCreeper p_114482_) {
-		return new ResourceLocation(ElementalCreepers.MODID, "textures/entity/celebrationcreeper.png");
+		return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/celebrationcreeper.png");
 	}
 
 }

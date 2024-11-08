@@ -95,9 +95,9 @@ public class SpiderCreeper extends ElementalCreeper {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder p_334759_) {
-		super.defineSynchedData(p_334759_);
-		p_334759_.define(DATA_FLAGS_ID, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder p_332186_) {
+		super.defineSynchedData(p_332186_);
+		p_332186_.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	@Override

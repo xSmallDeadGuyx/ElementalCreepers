@@ -16,6 +16,6 @@ public class CookieCreeperRenderer extends CreeperRenderer {
 
 	@Override
 	public ResourceLocation getTextureLocation(Creeper p_114041_) {
-		return new ResourceLocation(ElementalCreepers.MODID, "textures/entity/cookiecreeper.png");
+		return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/cookiecreeper.png");
 	}
 }

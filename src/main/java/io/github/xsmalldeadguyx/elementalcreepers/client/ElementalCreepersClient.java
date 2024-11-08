@@ -34,10 +34,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ElementalCreepersClient {
 
 	public static ModelLayerLocation SPIDER_CREEPER_MODEL_LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ElementalCreepers.MODID, "spider_creeper"), "main");
+			ResourceLocation.tryBuild(ElementalCreepers.MODID, "spider_creeper"), "main");
 
 	public static ModelLayerLocation CELEBRATION_CREEPER_MODEL_LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ElementalCreepers.MODID, "celebration_creeper"), "main");
+			ResourceLocation.tryBuild(ElementalCreepers.MODID, "celebration_creeper"), "main");
 
 	@Mod.EventBusSubscriber(modid = ElementalCreepers.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientModEvents {

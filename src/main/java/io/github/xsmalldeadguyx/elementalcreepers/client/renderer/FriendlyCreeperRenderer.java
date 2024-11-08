@@ -12,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class FriendlyCreeperRenderer extends MobRenderer<FriendlyCreeper, FriendlyCreeperModel<FriendlyCreeper>> {
-	private static ResourceLocation NORMAL_TEXTURE = new ResourceLocation(ElementalCreepers.MODID,
+	private static ResourceLocation NORMAL_TEXTURE = ResourceLocation.tryBuild(ElementalCreepers.MODID,
 			"textures/entity/friendlycreeper0.png");
-	private static ResourceLocation TAME_TEXTURE = new ResourceLocation(ElementalCreepers.MODID,
+	private static ResourceLocation TAME_TEXTURE = ResourceLocation.tryBuild(ElementalCreepers.MODID,
 			"textures/entity/friendlycreeper1.png");
 
 	public FriendlyCreeperRenderer(EntityRendererProvider.Context p_173958_) {

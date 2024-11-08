@@ -17,7 +17,7 @@ public class LightCreeperRenderer extends CreeperRenderer {
 
 	@Override
 	public ResourceLocation getTextureLocation(Creeper p_114041_) {
-		return new ResourceLocation(ElementalCreepers.MODID, "textures/entity/lightcreeper.png");
+		return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/lightcreeper.png");
 	}
 
 	@Override

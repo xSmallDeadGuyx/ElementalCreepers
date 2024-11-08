@@ -40,6 +40,6 @@ public class SpiderCreeperRenderer extends MobRenderer<SpiderCreeper, SpiderCree
 
 	@Override
 	public ResourceLocation getTextureLocation(SpiderCreeper p_114041_) {
-		return new ResourceLocation(ElementalCreepers.MODID, "textures/entity/spidercreeper.png");
+		return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/spidercreeper.png");
 	}
 }

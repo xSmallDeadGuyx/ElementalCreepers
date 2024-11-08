@@ -9,9 +9,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -68,10 +68,11 @@ public class EntityOnlyExplosion {
 							entity.hurt(level.damageSources().explosion(null, source), (float) ((int) (damageMulti
 									* ((d10 * d10 + d10) / 2.0D * 7.0D * diameter + 1.0D))));
 						}
+						
 						double d11;
 						if (entity instanceof LivingEntity) {
 							LivingEntity livingentity = (LivingEntity) entity;
-							d11 = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingentity, d10);
+							d11 = d10 * (1.0 - livingentity.getAttributeValue(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE));
 						} else {
 							d11 = d10;
 						}
