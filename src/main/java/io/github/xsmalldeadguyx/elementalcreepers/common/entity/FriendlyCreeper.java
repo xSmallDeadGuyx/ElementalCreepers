@@ -1,8 +1,8 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import io.github.xsmalldeadguyx.elementalcreepers.common.misc.EntityOnlyExplosion;
 import io.github.xsmalldeadguyx.elementalcreepers.common.misc.FriendlyCreeperSwellGoal;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -32,11 +31,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -63,12 +62,11 @@ import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
-public class FriendlyCreeper extends TamableAnimal implements NeutralMob, PowerableMob {
+public class FriendlyCreeper extends TamableAnimal implements NeutralMob {
 
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData
 			.defineId(FriendlyCreeper.class, EntityDataSerializers.INT);
@@ -269,10 +267,8 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 			ServerLevel serverLevel = (ServerLevel) this.level();
 			for (ServerPlayer serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
-					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
-							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO,
-							Explosion.BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER,
-							Holder.direct(genericExplode)));
+	                Optional<Vec3> optional = Optional.ofNullable(hitPlayers.get(serverPlayer));
+	                serverPlayer.connection.send(new ClientboundExplodePacket(this.position(), optional, ParticleTypes.EXPLOSION, Holder.direct(genericExplode)));
 				}
 			}
 		}
@@ -319,18 +315,15 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 		}
 	}
 
-	public boolean hurt(DamageSource p_30386_, float p_30387_) {
-		if (this.isInvulnerableTo(p_30386_)) {
-			return false;
-		} else {
-			Level level = this.level();
-			if (!level.isClientSide()) {
-				this.setOrderedToSit(false);
-			}
-
-			return super.hurt(p_30386_, p_30387_);
-		}
-	}
+    @Override
+    public boolean hurtServer(ServerLevel p_364255_, DamageSource p_365563_, float p_368092_) {
+        if (this.isInvulnerableTo(p_364255_, p_365563_)) {
+            return false;
+        } else {
+            this.setOrderedToSit(false);
+            return super.hurtServer(p_364255_, p_365563_, p_368092_);
+        }
+    }
 
 	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
 		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
@@ -410,7 +403,7 @@ public class FriendlyCreeper extends TamableAnimal implements NeutralMob, Powera
 
 	@Nullable
 	public FriendlyCreeper getBreedOffspring(ServerLevel p_149088_, AgeableMob p_149089_) {
-		FriendlyCreeper baby = ElementalCreepers.FRIENDLY_CREEPER.get().create(p_149088_);
+		FriendlyCreeper baby = ElementalCreepers.FRIENDLY_CREEPER.get().create(p_149088_, EntitySpawnReason.BREEDING);
 		if (baby != null) {
 			UUID uuid = this.getOwnerUUID();
 			if (uuid != null) {

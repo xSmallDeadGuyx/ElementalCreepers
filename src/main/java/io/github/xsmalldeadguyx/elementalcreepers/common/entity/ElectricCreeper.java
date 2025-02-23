@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +35,7 @@ public class ElectricCreeper extends ElementalCreeper {
 				continue;
 			}
 
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level());
+			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
 			if (bolt != null) {
 				bolt.moveTo(Vec3.atBottomCenterOf(entity.blockPosition()));
 				this.level().addFreshEntity(bolt);

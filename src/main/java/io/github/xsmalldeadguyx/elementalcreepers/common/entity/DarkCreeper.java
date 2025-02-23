@@ -68,7 +68,7 @@ public class DarkCreeper extends ElementalCreeper {
 									});
 								}
 
-								blockState.onBlockExploded(level, blockPos, null);
+								blockState.onBlockExploded((ServerLevel) level, blockPos, null);
 							}
 
 							for (Pair<ItemStack, BlockPos> pair : objectarraylist) {

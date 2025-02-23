@@ -3,8 +3,8 @@ package io.github.xsmalldeadguyx.elementalcreepers.client.renderer;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.state.CreeperRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,7 +15,7 @@ public class FireCreeperRenderer extends CreeperRenderer {
 	}
 
 	@Override
-   public ResourceLocation getTextureLocation(Creeper p_114041_) {
+   public ResourceLocation getTextureLocation(CreeperRenderState p_114041_) {
       return ResourceLocation.tryBuild(ElementalCreepers.MODID, "textures/entity/firecreeper.png");
    }
 }

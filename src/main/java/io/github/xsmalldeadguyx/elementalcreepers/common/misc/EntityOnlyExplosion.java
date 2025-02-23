@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,10 +15,56 @@ import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class EntityOnlyExplosion {
+	
+	// Only for implementing entity iteration interface
+	public static class EntityOnlyExplosionSettings implements Explosion {
+		@Override
+		public ServerLevel level() {
+			return null;
+		}
+
+		@Override
+		public BlockInteraction getBlockInteraction() {
+			return null;
+		}
+
+		@Override
+		public LivingEntity getIndirectSourceEntity() {
+			return null;
+		}
+
+		@Override
+		public Entity getDirectSourceEntity() {
+			return null;
+		}
+
+		@Override
+		public float radius() {
+			return 0;
+		}
+
+		@Override
+		public Vec3 center() {
+			return null;
+		}
+
+		@Override
+		public boolean canTriggerBlocks() {
+			return false;
+		}
+
+		@Override
+		public boolean shouldAffectBlocklikeEntities() {
+			return false;
+		}
+		
+	}
+	
 	public static Map<Player, Vec3> explodeAt(Level level, Entity source, double x, double y, double z, double radius,
 			double damageMulti, double launchMulti) {
 		double diameter = radius * 2;
@@ -51,7 +98,7 @@ public class EntityOnlyExplosion {
 				}
 			}
 
-			if (!entity.ignoreExplosion(null)) {
+			if (!entity.ignoreExplosion(new EntityOnlyExplosionSettings())) {
 				double d12 = Math.sqrt(entity.distanceToSqr(vec3)) / diameter;
 				if (d12 <= 1.0D) {
 					double d5 = entity.getX() - x;
@@ -62,10 +109,10 @@ public class EntityOnlyExplosion {
 						d5 /= d13;
 						d7 /= d13;
 						d9 /= d13;
-						double d14 = (double) Explosion.getSeenPercent(vec3, entity);
+						double d14 = (double) ServerExplosion.getSeenPercent(vec3, entity);
 						double d10 = (1.0D - d12) * d14;
-						if (damageMulti > 0) {
-							entity.hurt(level.damageSources().explosion(null, source), (float) ((int) (damageMulti
+						if (damageMulti > 0 && level instanceof ServerLevel) {
+							entity.hurtServer((ServerLevel) level, level.damageSources().explosion(null, source), (float) ((int) (damageMulti
 									* ((d10 * d10 + d10) / 2.0D * 7.0D * diameter + 1.0D))));
 						}
 						

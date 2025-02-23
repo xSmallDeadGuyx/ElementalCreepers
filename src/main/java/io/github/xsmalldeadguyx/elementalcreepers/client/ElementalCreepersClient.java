@@ -66,7 +66,8 @@ public class ElementalCreepersClient {
 		@SubscribeEvent
 		public static void setupModelLayers(RegisterLayerDefinitions event) {
 			event.registerLayerDefinition(SPIDER_CREEPER_MODEL_LAYER_LOCATION, SpiderCreeperModel::createBodyLayer);
-			event.registerLayerDefinition(CELEBRATION_CREEPER_MODEL_LAYER_LOCATION, CelebrationCreeperModel::createBodyLayer);
+			event.registerLayerDefinition(CELEBRATION_CREEPER_MODEL_LAYER_LOCATION,
+					CelebrationCreeperModel::createBodyLayer);
 		}
 	}
 }

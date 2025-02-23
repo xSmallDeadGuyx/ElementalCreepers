@@ -1,6 +1,6 @@
 package io.github.xsmalldeadguyx.elementalcreepers.client.model;
 
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -8,14 +8,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.CreeperRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CelebrationCreeperModel<T extends Entity> extends HierarchicalModel<T> {
-	private final ModelPart root;
+public class CelebrationCreeperModel extends EntityModel<CreeperRenderState> {
 	private final ModelPart head;
 	private final ModelPart rightHindLeg;
 	private final ModelPart leftHindLeg;
@@ -23,7 +22,7 @@ public class CelebrationCreeperModel<T extends Entity> extends HierarchicalModel
 	private final ModelPart leftFrontLeg;
 
 	public CelebrationCreeperModel(ModelPart p_170524_) {
-		this.root = p_170524_;
+        super(p_170524_);
 		this.head = p_170524_.getChild("head");
 		this.rightHindLeg = p_170524_.getChild("right_hind_leg");
 		this.leftHindLeg = p_170524_.getChild("left_hind_leg");
@@ -54,18 +53,16 @@ public class CelebrationCreeperModel<T extends Entity> extends HierarchicalModel
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
 
-	public ModelPart root() {
-		return this.root;
-	}
-
 	@Override
-	public void setupAnim(T p_102463_, float p_102464_, float p_102465_, float p_102466_, float p_102467_,
-			float p_102468_) {
-		this.head.yRot = p_102467_ * (float) (Math.PI / 180.0);
-		this.head.xRot = p_102468_ * (float) (Math.PI / 180.0);
-		this.rightHindLeg.xRot = Mth.cos(p_102464_ * 0.6662F) * 1.4F * p_102465_;
-		this.leftHindLeg.xRot = Mth.cos(p_102464_ * 0.6662F + (float) Math.PI) * 1.4F * p_102465_;
-		this.rightFrontLeg.xRot = Mth.cos(p_102464_ * 0.6662F + (float) Math.PI) * 1.4F * p_102465_;
-		this.leftFrontLeg.xRot = Mth.cos(p_102464_ * 0.6662F) * 1.4F * p_102465_;
+	public void setupAnim(CreeperRenderState p_361525_) {
+        super.setupAnim(p_361525_);
+        this.head.yRot = p_361525_.yRot * (float) (Math.PI / 180.0);
+        this.head.xRot = p_361525_.xRot * (float) (Math.PI / 180.0);
+        float f = p_361525_.walkAnimationSpeed;
+        float f1 = p_361525_.walkAnimationPos;
+        this.rightHindLeg.xRot = Mth.cos(f1 * 0.6662F) * 1.4F * f;
+        this.leftHindLeg.xRot = Mth.cos(f1 * 0.6662F + (float) Math.PI) * 1.4F * f;
+        this.rightFrontLeg.xRot = Mth.cos(f1 * 0.6662F + (float) Math.PI) * 1.4F * f;
+        this.leftFrontLeg.xRot = Mth.cos(f1 * 0.6662F) * 1.4F * f;
 	}
 }

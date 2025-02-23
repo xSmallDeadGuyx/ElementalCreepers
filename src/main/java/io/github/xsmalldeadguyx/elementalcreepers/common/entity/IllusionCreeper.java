@@ -2,6 +2,7 @@ package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +29,7 @@ public class IllusionCreeper extends ElementalCreeper {
 				RandomSource random = level.random;
 
 				for (int i = 0; i < 4; ++i) {
-					FakeIllusionCreeper fake = ElementalCreepers.FAKE_ILLUSION_CREEPER.get().create(level);
+					FakeIllusionCreeper fake = ElementalCreepers.FAKE_ILLUSION_CREEPER.get().create(level, EntitySpawnReason.MOB_SUMMONED);
 					if (fake != null) {
 						fake.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
 

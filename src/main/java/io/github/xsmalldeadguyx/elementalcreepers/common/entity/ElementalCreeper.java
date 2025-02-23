@@ -1,14 +1,13 @@
 package io.github.xsmalldeadguyx.elementalcreepers.common.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
 import io.github.xsmalldeadguyx.elementalcreepers.common.Config;
 import io.github.xsmalldeadguyx.elementalcreepers.common.ElementalCreepers;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -22,11 +21,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -146,11 +144,8 @@ public class ElementalCreeper extends Creeper {
 			ServerLevel serverLevel = (ServerLevel) this.level();
 			for (ServerPlayer serverPlayer : serverLevel.players()) {
 				if (serverPlayer.distanceToSqr(x, y, z) < 4096.0D) {
-					Explosion.BlockInteraction blockInteraction = serverLevel.getGameRules().getBoolean(GameRules.RULE_BLOCK_EXPLOSION_DROP_DECAY) ? Explosion.BlockInteraction.DESTROY_WITH_DECAY : Explosion.BlockInteraction.DESTROY;
-					
-					serverPlayer.connection.send(new ClientboundExplodePacket(x, y, z, (float) radius,
-							new ArrayList<BlockPos>(), hitPlayers != null ? hitPlayers.get(serverPlayer) : Vec3.ZERO, blockInteraction, ParticleTypes.EXPLOSION,
-						            ParticleTypes.EXPLOSION_EMITTER, Holder.direct(soundEvent)));
+	                Optional<Vec3> optional = Optional.ofNullable(hitPlayers != null ? hitPlayers.get(serverPlayer) : null);
+	                serverPlayer.connection.send(new ClientboundExplodePacket(this.position(), optional, ParticleTypes.EXPLOSION, Holder.direct(soundEvent)));
 				}
 			}
 		}
@@ -165,7 +160,7 @@ public class ElementalCreeper extends Creeper {
 		Level level = this.level();
 		if (level instanceof ServerLevel && level.random.nextDouble() < Config.ghostCreeperSpawnChance
 				&& !(this instanceof GhostCreeper)) {
-			ElementalCreeper ghost = ElementalCreepers.GHOST_CREEPER.get().create(this.level());
+			ElementalCreeper ghost = ElementalCreepers.GHOST_CREEPER.get().create(this.level(), EntitySpawnReason.CONVERSION);
 			if (ghost != null) {
 				ghost.moveTo(this.blockPosition(), this.getYRot(), this.getXRot());
 				this.level().addFreshEntity(ghost);
